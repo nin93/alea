@@ -149,7 +149,7 @@ module Alea
           c = 1.0 / Math.sqrt(9.0 * b)
           while true
             while true
-              x = next_gaussian
+              x = next_normal
               v = 1.0 + c * x
               break unless v <= 0.0
             end
