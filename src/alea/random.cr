@@ -179,7 +179,7 @@ module Alea
 
       # Generate a random chi^2-distributed random `Float64`
       # with given degrees of freedom and sigma
-      def next_chi_square(freedom : {{type}}, sigma)
+      def next_chi_square(freedom : {{type}}, sigma : {{type}}) : Float64
         next_gamma(freedom / 2.0) * 2.0 * sigma
       end
     {% end %}
