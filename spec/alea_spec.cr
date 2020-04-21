@@ -25,7 +25,7 @@ describe Alea do
         SpecRng.next_normal 1_i128, 1_i128
       end
 
-      pending "accepts any sized UInt" do
+      it "accepts any sized UInt" do
         SpecRng.next_normal 1_u8
         SpecRng.next_normal 1_u16
         SpecRng.next_normal 1_u32
