@@ -1,5 +1,5 @@
 require "random/secure"
-require "./libxoshiro"
+require "./lib/libxoshiro"
 
 # `Xoshiro` is a replacement of the default `Random` stdlib module that implements
 # the **xoshiro/xoroshiro** algotithms for generating pseudo-random `UInt` in both 32 and 64 bits
@@ -15,7 +15,7 @@ module Alea::Xoshiro
   # rng => Alea::Xoshiro::XSR64
   # ```
   def self.new
-    XSR64.new(Random::Secure.next_u.to_u64)
+    XSR64.new(::Random::Secure.next_u.to_u64)
   end
 
   # Returns an instance of `XSR64` with given initial state
@@ -70,7 +70,7 @@ module Alea::Xoshiro
 
   # The actual PRNG in use for generating uniformly-distributed values to support the library
   # distributions. It uses **xoshiro** rock-solid algorithms to perform sampling
-  struct XSR64
+  class XSR64
     include Xoshiro
 
     def initialize(initstate : UInt64)
@@ -78,7 +78,7 @@ module Alea::Xoshiro
     end
 
     def self.new
-      new Random::Secure.next_u.to_u64
+      new ::Random::Secure.next_u.to_u64
     end
   end
 end
