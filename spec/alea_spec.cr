@@ -5,7 +5,7 @@ def stdev(ary, mean, n)
   ary.each do |e|
     ans += (e - mean) ** 2
   end
-  Math.sqrt(ans / (n-1))
+  Math.sqrt(ans / (n - 1))
 end
 
 describe Alea do
