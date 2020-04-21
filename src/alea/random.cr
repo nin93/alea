@@ -1,5 +1,5 @@
-require "random/pcg32"
 require "./ziggurat"
+require "./xoshiro"
 
 module Alea
   # `Alea::Random` provides the base interface for distribution sampling, using the `Random::PCG32` Crystal
@@ -10,12 +10,12 @@ module Alea
   # rgn = Alea::Random.new(seed)
   # rgn # => Alea::Random
   # ```
-  class Random < ::Random::PCG32
+  class Random < Xoshiro::XSR64
     # Generate a nomally-distributed random `Float64`
     # with mean 0.0 and standard deviation 1.0
     def next_normal : Float64
       while true
-        r = rand(UInt64) >> 12
+        r = next_u64 >> 12
         rabs = Int64.new(r >> 1)
         idx = rabs & 0xff
         x = (r & 0x1 == 1 ? -rabs : rabs) * Ziggurat::Normal::W[idx]
@@ -25,14 +25,14 @@ module Alea
         end
         if idx == 0
           while true
-            xx = -Ziggurat::Normal::RINV * Math.log(next_float)
-            yy = -Math.log(next_float)
+            xx = -Ziggurat::Normal::RINV * Math.log(rand)
+            yy = -Math.log(rand)
             if yy + yy > xx * xx
               return (rabs >> 8) & 0x1 == 1 ? -Ziggurat::Normal::R - xx : Ziggurat::Normal::R + xx
             end
           end
         else
-          if (Ziggurat::Normal::F[idx - 1] - Ziggurat::Normal::F[idx]) * next_float + \
+          if (Ziggurat::Normal::F[idx - 1] - Ziggurat::Normal::F[idx]) * rand + \
                Ziggurat::Normal::F[idx] < Math.exp(-0.5 * x * x)
             # return from the triangular area
             return x
@@ -50,7 +50,7 @@ module Alea
     # Generate a standard exp-distributed random `Float64` with sigma 1.0
     def next_exponential : Float64
       while true
-        r = rand(UInt64) >> 12
+        r = next_u64 >> 12
         idx = r & 0xff
         x = r * Ziggurat::Exp::W[idx]
         if r < Ziggurat::Exp::K[idx]
@@ -58,9 +58,9 @@ module Alea
           return x
         end
         if idx == 0
-          return Ziggurat::Exp::R - Math.log(next_float)
+          return Ziggurat::Exp::R - Math.log(rand)
         end
-        if (Ziggurat::Exp::F[idx - 1] - Ziggurat::Exp::F[idx]) * next_float + \
+        if (Ziggurat::Exp::F[idx - 1] - Ziggurat::Exp::F[idx]) * rand + \
              Ziggurat::Exp::F[idx] < Math.exp(-x)
           # return from the triangular area
           return x
@@ -108,8 +108,8 @@ module Alea
       def next_beta(alfa : {{type}}, beta : {{type}}) : Float64
         if alfa <= 1.0 && beta <= 1.0
           while true
-            u = next_float
-            v = next_float
+            u = rand
+            v = rand
             x = u ** (1.0 / alfa)
             y = v ** (1.0 / beta)
             if (x + y) <= 1.0
@@ -141,7 +141,7 @@ module Alea
 
         if shape < 1.0
           while true
-            u = next_float
+            u = rand
             v = next_exponential
             if u <= 1.0 - shape
               x = u ** (1.0 / shape)
@@ -162,7 +162,7 @@ module Alea
               break unless v <= 0.0
             end
             v = v * v * v
-            u = next_float
+            u = rand
             if u < (1.0 - 0.0331_f64 * (x * x) * (x * x))
               return b * v
             end

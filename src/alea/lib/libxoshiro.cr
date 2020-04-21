@@ -1,4 +1,4 @@
-@[Link(ldflags: "#{__DIR__}/lib/libxoshiro.a")]
+@[Link(ldflags: "#{__DIR__}/libxoshiro.a")]
 lib LibXoshiro
   fun init = xoshiro_splitmix_init64(init : UInt64) : Void
   # TODO:
