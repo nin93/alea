@@ -11,27 +11,6 @@ module Alea
   # rgn # => Alea::Random
   # ```
   class Random < ::Random::PCG32
-    # Generate a standard exp-distributed random `Float64` with sigma 1.0
-    def next_exponential : Float64
-      while true
-        r = rand(UInt64) >> 12
-        idx = r & 0xff
-        x = r * Ziggurat::Exp::W[idx]
-        if r < Ziggurat::Exp::K[idx]
-          # this returns 98.9% of the time on 1st try
-          return x
-        end
-        if idx == 0
-          return Ziggurat::Exp::R - Math.log(next_float)
-        end
-        if (Ziggurat::Exp::F[idx - 1] - Ziggurat::Exp::F[idx]) * next_float + \
-             Ziggurat::Exp::F[idx] < Math.exp(-x)
-          # return from the triangular area
-          return x
-        end
-      end
-    end
-
     # Generate a nomally-distributed random `Float64`
     # with mean 0.0 and standard deviation 1.0
     def next_normal : Float64
@@ -58,6 +37,33 @@ module Alea
             # return from the triangular area
             return x
           end
+        end
+      end
+    end
+
+    # Generate a random lognomally-distributed random `Float64`
+    # with underlying standard normal distribution
+    def next_lognormal : Float64
+      Math.exp(next_normal)
+    end
+
+    # Generate a standard exp-distributed random `Float64` with sigma 1.0
+    def next_exponential : Float64
+      while true
+        r = rand(UInt64) >> 12
+        idx = r & 0xff
+        x = r * Ziggurat::Exp::W[idx]
+        if r < Ziggurat::Exp::K[idx]
+          # this returns 98.9% of the time on 1st try
+          return x
+        end
+        if idx == 0
+          return Ziggurat::Exp::R - Math.log(next_float)
+        end
+        if (Ziggurat::Exp::F[idx - 1] - Ziggurat::Exp::F[idx]) * next_float + \
+             Ziggurat::Exp::F[idx] < Math.exp(-x)
+          # return from the triangular area
+          return x
         end
       end
     end
