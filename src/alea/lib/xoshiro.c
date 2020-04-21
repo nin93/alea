@@ -1,6 +1,5 @@
-#include <stdint.h>
-#include <stdio.h>
 #include "xoshiro.h"
+#include <math.h>
 
 uint32_t state32[4];
 uint64_t state64[4];
@@ -37,16 +36,40 @@ static inline uint64_t rotl64(const uint64_t x, int k) {
 }
 
 uint64_t xoshiro_next_u64(void) {
-  const uint64_t r = rotl64(state64[0] + state64[3], 23) + state64[0];
-  const uint64_t t = state64[1] << 17;
+  const uint64_t rnd = state64[0] + state64[3];
+  const uint64_t tmp = state64[1] << 17;
 
   state64[2] ^= state64[0];
 	state64[3] ^= state64[1];
 	state64[1] ^= state64[2];
 	state64[0] ^= state64[3];
-	state64[2] ^= t;
-
+	state64[2] ^= tmp;
 	state64[3] = rotl64(state64[3], 45);
 
-  return r;
+  return rnd;
+}
+
+double xoshiro_next_f64(void) {
+  uint64_t mnt;
+  int16_t exp = -64;
+  uint8_t sft;
+
+  while((mnt = xoshiro_next_u64()) == 0) {
+    exp -= 0x40;
+    if(exp < -1074) {
+      return 0.0;
+    }
+  }
+
+  sft = __builtin_clzll(mnt);
+
+  if(sft != 0) {
+    exp -= sft;
+    mnt <<= sft;
+    mnt |= (xoshiro_next_u64() >> (64 - sft));
+  }
+
+  mnt |= 1;
+
+  return ldexp((double)mnt, exp);
 }
