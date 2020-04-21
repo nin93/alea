@@ -90,13 +90,13 @@ module Alea
       # Generate a random lognomally-distributed random `Float64`
       # with given mean of the underlying normal distribution
       def next_lognormal(mean : {{type}}) : Float64
-        Math.exp(next_normal mean)
+        Math.exp(next_normal + mean)
       end
 
       # Generate a random lognomally-distributed random `Float64` with given
       # mean and standard deviation of the underlying normal distribution
       def next_lognormal(mean : {{type}}, sigma : {{type}}) : Float64
-        Math.exp(next_normal mean, sigma)
+        Math.exp(next_normal * sigma + mean)
       end
 
       # Generate a random exp-distributed random `Float64` with given standard deviation
