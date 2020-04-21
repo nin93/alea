@@ -65,8 +65,10 @@ module Alea
     {% for type in [
                      "Int8".id, "Int16".id,
                      "Int32".id, "Int64".id,
-                     "Int128".id, "Float32".id,
-                     "Float64".id,
+                     "Int128".id, "UInt8".id,
+                     "UInt16".id, "UInt32".id,
+                     "UInt64".id, "UInt128".id,
+                     "Float32".id, "Float64".id,
                    ] %}
       # Generate a random nomally-distributed random `Float64` with given mean
       def next_normal(mean : {{type}}) : Float64
