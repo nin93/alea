@@ -52,9 +52,9 @@ describe Alea do
         ans = 0.0
 
         200_000.times do
-          norm = SpecRng.next_normal
-          ans += norm
-          ary << norm
+          ran = SpecRng.next_normal
+          ans += ran
+          ary << ran
         end
 
         mean = ans / 200_000
@@ -68,9 +68,9 @@ describe Alea do
         ans = 0.0
 
         200_000.times do
-          norm = SpecRng.next_normal mean: 93.0
-          ans += norm
-          ary << norm
+          ran = SpecRng.next_normal mean: 93.0
+          ans += ran
+          ary << ran
         end
 
         mean = ans / 200_000
@@ -84,9 +84,9 @@ describe Alea do
         ans = 0.0
 
         200_000.times do
-          norm = SpecRng.next_normal mean: 93.0, sigma: 9.3
-          ans += norm
-          ary << norm
+          ran = SpecRng.next_normal mean: 93.0, sigma: 9.3
+          ans += ran
+          ary << ran
         end
 
         mean = ans / 200_000
@@ -100,9 +100,9 @@ describe Alea do
         ans = 0.0
 
         200_000.times do
-          norm = SpecRng.next_normal mean: -93.0, sigma: -9.3
-          ans += norm
-          ary << norm
+          ran = SpecRng.next_normal mean: -93.0, sigma: -9.3
+          ans += ran
+          ary << ran
         end
 
         mean = ans / 200_000
@@ -154,9 +154,9 @@ describe Alea do
         ans = 0.0
 
         200_000.times do
-          norm = SpecRng.next_lognormal
-          ans += norm
-          ary << norm
+          ran = SpecRng.next_lognormal
+          ans += ran
+          ary << ran
         end
 
         mean = ans / 200_000
@@ -170,9 +170,9 @@ describe Alea do
         ans = 0.0
 
         200_000.times do
-          norm = SpecRng.next_lognormal mean: 3.0
-          ans += norm
-          ary << norm
+          ran = SpecRng.next_lognormal mean: 3.0
+          ans += ran
+          ary << ran
         end
 
         mean = ans / 200_000
@@ -186,9 +186,9 @@ describe Alea do
         ans = 0.0
 
         200_000.times do
-          norm = SpecRng.next_lognormal mean: 3.0, sigma: 0.5
-          ans += norm
-          ary << norm
+          ran = SpecRng.next_lognormal mean: 3.0, sigma: 0.5
+          ans += ran
+          ary << ran
         end
 
         mean = ans / 200_000
@@ -202,9 +202,9 @@ describe Alea do
         ans = 0.0
 
         200_000.times do
-          norm = SpecRng.next_lognormal mean: -3.0, sigma: -0.5
-          ans += norm
-          ary << norm
+          ran = SpecRng.next_lognormal mean: -3.0, sigma: -0.5
+          ans += ran
+          ary << ran
         end
 
         mean = ans / 200_000
@@ -241,9 +241,9 @@ describe Alea do
         ans = 0.0
 
         200_000.times do
-          norm = SpecRng.next_exponential
-          ans += norm
-          ary << norm
+          ran = SpecRng.next_exponential
+          ans += ran
+          ary << ran
         end
 
         mean = ans / 200_000
@@ -257,31 +257,15 @@ describe Alea do
         ans = 0.0
 
         200_000.times do
-          norm = SpecRng.next_exponential sigma: 3.0
-          ans += norm
-          ary << norm
+          ran = SpecRng.next_exponential sigma: 3.0
+          ans += ran
+          ary << ran
         end
 
         mean = ans / 200_000
         mean.should be_close(3.0, 0.05)
         stdev = stdev(ary, mean, 200_000)
         stdev.should be_close(3.0, 0.05)
-      end
-
-      it "generates exp-distributed random values with negative fixed stdev" do
-        ary = Array(Float64).new
-        ans = 0.0
-
-        200_000.times do
-          norm = SpecRng.next_exponential sigma: -9.3
-          ans += norm
-          ary << norm
-        end
-
-        mean = ans / 200_000
-        mean.should be_close(-9.3, 0.05)
-        stdev = stdev(ary, mean, 200_000)
-        stdev.should be_close(9.3, 0.05)
       end
     end
   end
