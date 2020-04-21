@@ -1,5 +1,7 @@
 # Alea
 
+[![Build Status](https://travis-ci.org/nin93/alea.svg?branch=master)](https://travis-ci.org/nin93/alea)
+
 `Alea` is a library for generating pseudo-random samples from most known probability distributions,
 written in pure Crystal.
 
