@@ -323,7 +323,7 @@ describe Alea do
         ans = 0.0
 
         300_000.times do
-          ran = SpecRng.next_exponential sigma: 3.0
+          ran = SpecRng.next_exponential scale: 3.0
           ans += ran
           ary << ran
         end
