@@ -24,24 +24,18 @@ module Alea
         rabs = Int64.new(r >> 1)
         idx = rabs & 0xff
         x = (r & 0x1 == 1 ? -rabs : rabs) * Ziggurat::Normal::W[idx]
-        if rabs < Ziggurat::Normal::K[idx]
-          # this returns 99.3% of the time on 1st try
-          return x
-        end
+        # this returns 99.3% of the time on 1st try
+        rabs < Ziggurat::Normal::K[idx] && return x
         if idx == 0
           while true
             xx = -Ziggurat::Normal::RINV * Math.log(rand)
             yy = -Math.log(rand)
-            if yy + yy > xx * xx
-              return (rabs >> 8) & 0x1 == 1 ? -Ziggurat::Normal::R - xx : Ziggurat::Normal::R + xx
-            end
+            (yy + yy > xx * xx) && return (rabs >> 8) & 0x1 == 1 ? -Ziggurat::Normal::R - xx : Ziggurat::Normal::R + xx
           end
         else
-          if (Ziggurat::Normal::F[idx - 1] - Ziggurat::Normal::F[idx]) * rand + \
-               Ziggurat::Normal::F[idx] < Math.exp(-0.5 * x * x)
-            # return from the triangular area
-            return x
-          end
+          # return from the triangular area
+          (Ziggurat::Normal::F[idx - 1] - Ziggurat::Normal::F[idx]) * rand + \
+            Ziggurat::Normal::F[idx] < Math.exp(-0.5 * x * x) && return x
         end
       end
     end
@@ -68,18 +62,12 @@ module Alea
         r = next_u64 >> 12
         idx = r & 0xff
         x = r * Ziggurat::Exp::W[idx]
-        if r < Ziggurat::Exp::K[idx]
-          # this returns 98.9% of the time on 1st try
-          return x
-        end
-        if idx == 0
-          return Ziggurat::Exp::R - Math.log(rand)
-        end
-        if (Ziggurat::Exp::F[idx - 1] - Ziggurat::Exp::F[idx]) * rand + \
-             Ziggurat::Exp::F[idx] < Math.exp(-x)
-          # return from the triangular area
-          return x
-        end
+        # this returns 98.9% of the time on 1st try
+        r < Ziggurat::Exp::K[idx] && return x
+        idx == 0 && return Ziggurat::Exp::R - Math.log(rand)
+        # return from the triangular area
+        (Ziggurat::Exp::F[idx - 1] - Ziggurat::Exp::F[idx]) * rand + \
+          Ziggurat::Exp::F[idx] < Math.exp(-x) && return x
       end
     end
 
@@ -135,14 +123,14 @@ module Alea
         Math.exp(next_normal * sigma + mean)
       end
 
-      # Generate a exp-distributed random `Float64` with given standard deviation
+      # Generate a exp-distributed random `Float64` with given scale
       #
       # ```
       # rng = Alea::Random.new
       # rng.next_exponential 3.2 # => 8.07507379961553
       # ```
-      def next_exponential(sigma : {{type}}) : Float64
-        next_exponential * sigma
+      def next_exponential(scale : {{type}}) : Float64
+        next_exponential * scale
       end
 
       # Generate a beta-distributed random `Float64` in range [0, 1)
@@ -153,30 +141,27 @@ module Alea
       # rng.next_beta(a: 0.5, b: 0.5) # => 0.9807570320273012
       # ```
       def next_beta(*, a : {{type}}, b : {{type}}) : Float64
-        if alfa <= 1.0 && beta <= 1.0
+        if a <= 1.0 && b <= 1.0
           while true
             u = rand
             v = rand
-            x = u ** (1.0 / alfa)
-            y = v ** (1.0 / beta)
+            x = u ** (1.0 / a)
+            y = v ** (1.0 / b)
             if (x + y) <= 1.0
-              if (x + y) > 0.0
-                return x / (x + y)
-              else
-                logx = Math.log(u) / alfa
-                logy = Math.log(v) / beta
-                logm = logx > logy ? logx : logy
-                logx -= logm
-                logy -= logm
-                expx = Math.exp(logx)
-                expy = Math.exp(logy)
-                return Math.exp(logx - Math.log(expx + expy))
-              end
+              (x + y) > 0.0 && return x / (x + y)
+              logx = Math.log(u) / a
+              logy = Math.log(v) / b
+              logm = logx > logy ? logx : logy
+              logx -= logm
+              logy -= logm
+              expx = Math.exp(logx)
+              expy = Math.exp(logy)
+              return Math.exp(logx - Math.log(expx + expy))
             end
           end
         else
-          ga = next_gamma(alfa)
-          gb = next_gamma(beta)
+          ga = next_gamma(a)
+          gb = next_gamma(b)
           ga / (ga + gb)
         end
       end
@@ -188,23 +173,23 @@ module Alea
       # rng.next_gamma 2.5 # => 2.852113536270907
       # ```
       def next_gamma(shape : {{type}}) : Float64
-        return next_exponential if shape == 1.0
-        return 0.0 if shape == 0.0
+        shape == 1.0 && return next_exponential
+        shape == 0.0 && return 0.0
         if shape < 1.0
           while true
             u = rand
             v = next_exponential
             if u <= 1.0 - shape
               x = u ** (1.0 / shape)
-              return x if x <= v
+              x <= v && return x
             else
               y = -Math.log((1.0 - u) / shape)
               x = (1.0 - shape + shape * y) ** (1.0 / shape)
-              return x if x <= v + y
+              x <= v + y && return x
             end
           end
         else
-          b = shape - 0.3333333333333333_f64
+          b = -0.3333333333333333_f64 + shape
           c = 1.0 / Math.sqrt(9.0 * b)
           while true
             while true
@@ -214,12 +199,8 @@ module Alea
             end
             v = v * v * v
             u = rand
-            if u < (1.0 - 0.0331_f64 * (x * x) * (x * x))
-              return b * v
-            end
-            if Math.log(u) < 0.5 * x * x + b * (1.0 - v + Math.log(v))
-              return b * v
-            end
+            u < (1.0 - 0.0331_f64 * (x * x) * (x * x)) && return b * v
+            Math.log(u) < 0.5 * x * x + b * (1.0 - v + Math.log(v)) && return b * v
           end
         end
       end
