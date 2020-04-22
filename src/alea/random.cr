@@ -2,7 +2,7 @@ require "./ziggurat"
 require "./xoshiro"
 
 module Alea
-  # `Alea::Random` provides the base interface for distribution sampling, using the `Random::PCG32` Crystal
+  # `Alea::Random` provides the base interface for distribution sampling, using the **xoshiro256++**
   # pseudo random number generator. Most of the implementations are from *numpy*.
   #
   # ```
@@ -11,8 +11,13 @@ module Alea
   # rgn # => Alea::Random
   # ```
   class Random < Xoshiro::XSR64
-    # Generate a nomally-distributed random `Float64`
+    # Generate a normally-distributed random `Float64`
     # with mean 0.0 and standard deviation 1.0
+    #
+    # ```
+    # rng = Alea::Random.new
+    # rng.next_normal # => -0.36790519967553736
+    # ```
     def next_normal : Float64
       while true
         r = next_u64 >> 12
@@ -41,13 +46,23 @@ module Alea
       end
     end
 
-    # Generate a random lognomally-distributed random `Float64`
+    # Generate a lognormally-distributed random `Float64`
     # with underlying standard normal distribution
+    #
+    # ```
+    # rng = Alea::Random.new
+    # rng.next_lognormal # => -0.36790519967553736
+    # ```
     def next_lognormal : Float64
       Math.exp(next_normal)
     end
 
     # Generate a standard exp-distributed random `Float64` with sigma 1.0
+    #
+    # ```
+    # rng = Alea::Random.new
+    # rng.next_exponential # => 0.07119782748354186
+    # ```
     def next_exponential : Float64
       while true
         r = next_u64 >> 12
@@ -76,36 +91,68 @@ module Alea
                      "UInt64".id, "UInt128".id,
                      "Float32".id, "Float64".id,
                    ] %}
-      # Generate a random nomally-distributed random `Float64` with given mean
+      # Generate a normally-distributed random `Float64`
+      # with given mean and standard deviation 1.0
+      #
+      # ```
+      # rng = Alea::Random.new
+      # rng.next_normal 10 # => 9.38761513979513230
+      # ```
       def next_normal(mean : {{type}}) : Float64
         next_normal + mean
       end
 
-      # Generate a random nomally-distributed random `Float64`
+      # Generate a normally-distributed random `Float64`
       # with given mean and standard deviation
+      #
+      # ```
+      # rng = Alea::Random.new
+      # rng.next_normal(9, 3) # => 7.722170952103513
+      # ```
       def next_normal(mean : {{type}}, sigma : {{type}}) : Float64
         next_normal * sigma + mean
       end
 
-      # Generate a random lognomally-distributed random `Float64`
+      # Generate a lognormally-distributed random `Float64`
       # with given mean of the underlying normal distribution
+      #
+      # ```
+      # rng = Alea::Random.new
+      # rng.next_lognormal 23 # => 23064336689.760487
+      # ```
       def next_lognormal(mean : {{type}}) : Float64
         Math.exp(next_normal + mean)
       end
 
-      # Generate a random lognomally-distributed random `Float64` with given
+      # Generate a lognormally-distributed random `Float64` with given
       # mean and standard deviation of the underlying normal distribution
+      #
+      # ```
+      # rng = Alea::Random.new
+      # rng.next_lognormal(2.0, 0.5) # => 9.206759439680813
+      # ```
       def next_lognormal(mean : {{type}}, sigma : {{type}}) : Float64
         Math.exp(next_normal * sigma + mean)
       end
 
-      # Generate a random exp-distributed random `Float64` with given standard deviation
+      # Generate a exp-distributed random `Float64` with given standard deviation
+      #
+      # ```
+      # rng = Alea::Random.new
+      # rng.next_exponential 3.2 # => 8.07507379961553
+      # ```
       def next_exponential(sigma : {{type}}) : Float64
         next_exponential * sigma
       end
 
-      # Generate a random beta-distributed random `Float64`
-      def next_beta(alfa : {{type}}, beta : {{type}}) : Float64
+      # Generate a beta-distributed random `Float64` in range [0, 1)
+      # Named arguments are mandatory to prevent ambiguity
+      #
+      # ```
+      # rng = Alea::Random.new
+      # rng.next_beta(a: 0.5, b: 0.5) # => 0.9807570320273012
+      # ```
+      def next_beta(*, a : {{type}}, b : {{type}}) : Float64
         if alfa <= 1.0 && beta <= 1.0
           while true
             u = rand
@@ -134,11 +181,15 @@ module Alea
         end
       end
 
-      # Generate a random gamma-distributed random `Float64` with given shape
+      # Generate a gamma-distributed random `Float64` with given shape
+      #
+      # ```
+      # rng = Alea::Random.new
+      # rng.next_gamma 2.5 # => 2.852113536270907
+      # ```
       def next_gamma(shape : {{type}}) : Float64
         return next_exponential if shape == 1.0
         return 0.0 if shape == 0.0
-
         if shape < 1.0
           while true
             u = rand
@@ -173,22 +224,26 @@ module Alea
         end
       end
 
-      # Generate a random gamma-distributed random `Float64`
+      # Generate a gamma-distributed random `Float64`
       # with given shape and scale
+      #
+      # ```
+      # rng = Alea::Random.new
+      # rng.next_gamma(2.5, 10.0) # => 2.852113536270907
+      # ```
       def next_gamma(shape : {{type}}, scale : {{type}}) : Float64
         next_gamma(shape) * scale
       end
 
-      # Generate a random chi^2-distributed random `Float64`
+      # Generate a chi^2-distributed random `Float64`
       # with given degrees of freedom
+      #
+      # ```
+      # rng = Alea::Random.new
+      # rng.next_chi_square 100 # => 92.59632908638439
+      # ```
       def next_chi_square(freedom : {{type}}) : Float64
         next_gamma(freedom / 2.0) * 2.0
-      end
-
-      # Generate a random chi^2-distributed random `Float64`
-      # with given degrees of freedom and sigma
-      def next_chi_square(freedom : {{type}}, sigma : {{type}}) : Float64
-        next_gamma(freedom / 2.0) * 2.0 * sigma
       end
     {% end %}
   end
