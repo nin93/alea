@@ -31,7 +31,10 @@ programming languages standards providing a nice and clean interface.
 require "alea"
 ```
 
-The PRNG in use is `Random::PCG32` from the [Crystal Stdlib](https://crystal-lang.org/api/0.34.0/), good for distribution sampling (low bias), but cryptographically unsecure.
+The PRNG in use for generating 64-bit unsigned ints is **xoshiro256++**, designed by David Blackman and Sebastiano Vigna: way better than Crystal default [Random::PCG32](https://crystal-lang.org/api/0.34.0/Random/PCG32.html) in terms of efficiency (6.3x times faster than `rand(UInt64)`) and quality of variables as well.
+
+
+Read more about this PRNG at: http://prng.di.unimi.it/
 
 Example of use:
 ```crystal
@@ -40,7 +43,7 @@ rng.next_normal # => -0.36790519967553736
 ```
 It also accepts an initial seed:
 ```crystal
-seed = 9377_u64
+seed = 9377
 rng = Alea::Random.new(seed)
 rng.next_exponential # => 0.07119782748354186
 ```
