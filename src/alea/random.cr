@@ -1,5 +1,5 @@
 require "./ziggurat"
-require "./xoshiro"
+require "./xsr"
 
 module Alea
   # `Alea::Random` provides the base interface for distribution sampling, using the **xoshiro256++**
@@ -10,7 +10,28 @@ module Alea
   # rgn = Alea::Random.new(seed)
   # rgn # => Alea::Random
   # ```
-  class Random < Xoshiro::XSR64
+  class Random
+    DEFAULT = Alea::XSR128
+
+    # The PRNG in use by this class
+    getter prng : Alea::XSR
+
+    def initialize(initstate : UInt64, prng : Alea::XSR.class = DEFAULT)
+      @prng = prng.new initstate
+    end
+
+    def initialize(prng : Alea::XSR.class = DEFAULT)
+      @prng = prng.new
+    end
+
+    def next_u : UInt64
+      @prng.next_u
+    end
+
+    def next_f : Float64
+      @prng.next_f
+    end
+
     # Generate a normally-distributed random `Float64`
     # with mean 0.0 and standard deviation 1.0
     #
@@ -20,7 +41,7 @@ module Alea
     # ```
     def next_normal : Float64
       while true
-        r = next_u64 >> 12
+        r = @prng.next_u >> 12
         rabs = Int64.new(r >> 1)
         idx = rabs & 0xff
         x = (r & 0x1 == 1 ? -rabs : rabs) * Ziggurat::Normal::W[idx]
@@ -28,13 +49,13 @@ module Alea
         rabs < Ziggurat::Normal::K[idx] && return x
         if idx == 0
           while true
-            xx = -Ziggurat::Normal::RINV * Math.log(rand)
-            yy = -Math.log(rand)
+            xx = -Ziggurat::Normal::RINV * Math.log(@prng.next_f)
+            yy = -Math.log(@prng.next_f)
             (yy + yy > xx * xx) && return (rabs >> 8) & 0x1 == 1 ? -Ziggurat::Normal::R - xx : Ziggurat::Normal::R + xx
           end
         else
           # return from the triangular area
-          (Ziggurat::Normal::F[idx - 1] - Ziggurat::Normal::F[idx]) * rand + \
+          (Ziggurat::Normal::F[idx - 1] - Ziggurat::Normal::F[idx]) * @prng.next_f + \
             Ziggurat::Normal::F[idx] < Math.exp(-0.5 * x * x) && return x
         end
       end
@@ -59,14 +80,14 @@ module Alea
     # ```
     def next_exponential : Float64
       while true
-        r = next_u64 >> 12
+        r = @prng.next_u >> 12
         idx = r & 0xff
         x = r * Ziggurat::Exp::W[idx]
         # this returns 98.9% of the time on 1st try
         r < Ziggurat::Exp::K[idx] && return x
-        idx == 0 && return Ziggurat::Exp::R - Math.log(rand)
+        idx == 0 && return Ziggurat::Exp::R - Math.log(@prng.next_f)
         # return from the triangular area
-        (Ziggurat::Exp::F[idx - 1] - Ziggurat::Exp::F[idx]) * rand + \
+        (Ziggurat::Exp::F[idx - 1] - Ziggurat::Exp::F[idx]) * @prng.next_f + \
           Ziggurat::Exp::F[idx] < Math.exp(-x) && return x
       end
     end
@@ -143,8 +164,8 @@ module Alea
       def next_beta(*, a : {{type}}, b : {{type}}) : Float64
         if a <= 1.0 && b <= 1.0
           while true
-            u = rand
-            v = rand
+            u = @prng.next_f
+            v = @prng.next_f
             x = u ** (1.0 / a)
             y = v ** (1.0 / b)
             if (x + y) <= 1.0
@@ -177,7 +198,7 @@ module Alea
         shape == 0.0 && return 0.0
         if shape < 1.0
           while true
-            u = rand
+            u = @prng.next_f
             v = next_exponential
             if u <= 1.0 - shape
               x = u ** (1.0 / shape)
@@ -198,7 +219,7 @@ module Alea
               break unless v <= 0.0
             end
             v = v * v * v
-            u = rand
+            u = @prng.next_f
             u < (1.0 - 0.0331_f64 * (x * x) * (x * x)) && return b * v
             Math.log(u) < 0.5 * x * x + b * (1.0 - v + Math.log(v)) && return b * v
           end
