@@ -9,46 +9,45 @@ def stdev(ary, mean, n)
 end
 
 describe Alea do
-  describe Alea::Xoshiro::XSR64 do
-    it "returns a new instance from module" do
-      Alea::Xoshiro.new.should be_a(Alea::Xoshiro::XSR64)
-      Alea::Xoshiro.new(12345).should be_a(Alea::Xoshiro::XSR64)
+  describe Alea::XSR128 do
+    pending "returns a new instance from module" do
+      Alea::Xoshiro.new.should be_a(Alea::XSR128)
+      Alea::Xoshiro.new(12345).should be_a(Alea::XSR128)
     end
 
     it "returns a new instance from class" do
-      Alea::Xoshiro::XSR64.new.should be_a(Alea::Xoshiro::XSR64)
-      Alea::Xoshiro::XSR64.new(12345).should be_a(Alea::Xoshiro::XSR64)
+      Alea::XSR128.new.should be_a(Alea::XSR128)
+      Alea::XSR128.new(12345).should be_a(Alea::XSR128)
     end
 
-    pending "generates sames numbers from same initial state concurrently" do
-      rng1 = Alea::Xoshiro::XSR64.new 93
-      rng2 = Alea::Xoshiro::XSR64.new 93
+    it "generates sames numbers from same initial state concurrently" do
+      rng1 = Alea::XSR128.new 93
+      rng2 = Alea::XSR128.new 93
 
       1_000_000.times do
-        rng1.next_u64.should eq(rng2.next_u64)
+        rng1.next_u.should eq(rng2.next_u)
       end
     end
 
-    pending "generates different numbers from different initial state" do
-      rng1 = Alea::Xoshiro::XSR64.new 0
-      foo = Array(UInt64).new(1_000_000) { rng1.next_u64 }
+    it "generates different numbers from different initial state" do
+      rng1 = Alea::XSR128.new 93
+      rng2 = Alea::XSR128.new 193
 
-      rng2 = Alea::Xoshiro::XSR64.new 1
-      bar = Array(UInt64).new(1_000_000) { rng2.next_u64 }
-
-      foo.should_not eq(bar)
+      1_000_000.times do
+        rng1.next_u.should_not eq(rng2.next_u)
+      end
     end
 
-    describe "#next_u64" do
+    describe "#next_u" do
       it "returns a UInt64" do
-        rng = Alea::Xoshiro::XSR64.new
-        rnd = rng.next_u64
+        rng = Alea::XSR128.new
+        rnd = rng.next_u
         rnd.should be_a(UInt64)
       end
 
       it "returns a UInt64 with given initial state" do
-        rng = Alea::Xoshiro::XSR64.new 9377
-        rnd = rng.next_u64
+        rng = Alea::XSR128.new 9377
+        rnd = rng.next_u
         rnd.should be_a(UInt64)
       end
 
@@ -57,7 +56,7 @@ describe Alea do
         ans = 0.0
 
         SpecNdata.times do
-          ran = SpecRng.next_u64
+          ran = SpecRng.next_u
           ans += ran
           ary << ran
         end
@@ -69,16 +68,16 @@ describe Alea do
       end
     end
 
-    describe "#next_f64" do
+    describe "#next_f" do
       it "generates a Float64" do
-        rng = Alea::Xoshiro.new
-        rnd = rng.next_f64
+        rng = Alea::XSR128.new
+        rnd = rng.next_f
         rnd.should be_a(Float64)
       end
 
       it "generates a Float64 with given initial state" do
-        rng = Alea::Xoshiro.new 9377
-        rnd = rng.next_f64
+        rng = Alea::XSR128.new 9377
+        rnd = rng.next_f
         rnd.should be_a(Float64)
       end
 
@@ -87,7 +86,7 @@ describe Alea do
         ans = 0.0
 
         SpecNdata.times do
-          ran = SpecRng.next_f64
+          ran = SpecRng.next_f
           ans += ran
           ary << ran
         end
