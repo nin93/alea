@@ -1,7 +1,7 @@
 require "./alea/ziggurat"
 require "./alea/version"
-require "./alea/xoshiro"
 require "./alea/random"
+require "./alea/xsr"
 
 # `Alea` is a library for generating pseudo-random samples from most known probability distributions,
 # written in pure Crystal.

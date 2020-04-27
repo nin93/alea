@@ -1,18 +1,63 @@
 require "./ziggurat"
-require "./xoshiro"
+require "./xsr"
 
 module Alea
-  # `Alea::Random` provides the base interface for distribution sampling, using the **xoshiro256++**
-  # pseudo random number generator. Most of the implementations are from *numpy*.
+  # `Alea::Random` provides the interface for distribution sampling, using the
+  # **xoshiro** pseudo random number generators written by Sebastiano Vigna and David Blackman.
   #
   # ```
   # seed = 9377
-  # rgn = Alea::Random.new(seed)
-  # rgn # => Alea::Random
+  # rng = Alea::Random.new(seed)
+  # rng # => Alea::Random
   # ```
-  class Random < Xoshiro::XSR64
+  #
+  # The default generator is `Alea::XSR128`, faster than `Alea::XSR256`, but less capable state.
+  # To use the 256-bits version call the constructor like this:
+  #
+  # ```
+  # seed = 12345
+  # random = Alea::Random.new(seed, Alea::XSR256)
+  # random.prng # => Alea::XSR256
+  # ```
+  #
+  # You can build your own custom PRNG by inheriting `Alea::XSR` and implementing `#next_u`,
+  # `#next_f` and `#jump`, as they are needed by every other call (except for `#jump`);
+  # then create a new instance of `Alea::Random` passing you class by its name like above.
+  #
+  # Most of the following implementations are from **numpy**.
+  class Random
+    DEFAULT = Alea::XSR128
+
+    # The PRNG in use by this class.
+    getter prng : Alea::XSR
+
+    # Initializes the PRNG with initial state.
+    def initialize(initstate : UInt64, prng : Alea::XSR.class = DEFAULT)
+      @prng = prng.new initstate
+    end
+
+    # Initializes the PRNG with initial state readed from system resorces.
+    def initialize(prng : Alea::XSR.class = DEFAULT)
+      @prng = prng.new
+    end
+
+    # Returns the next generated `UInt64`.
+    def next_u : UInt64
+      @prng.next_u
+    end
+
+    # Returns the next generated `Float64`.
+    def next_f : Float64
+      @prng.next_f
+    end
+
+    # This equals to 2^(STATE_STORAGE * 32) calls to `#next_u` or `#next_f`.
+    def jump : self
+      @prng.jump
+    end
+
     # Generate a normally-distributed random `Float64`
-    # with mean 0.0 and standard deviation 1.0
+    # with mean 0.0 and standard deviation 1.0.
     #
     # ```
     # rng = Alea::Random.new
@@ -20,7 +65,7 @@ module Alea
     # ```
     def next_normal : Float64
       while true
-        r = next_u64 >> 12
+        r = @prng.next_u >> 12
         rabs = Int64.new(r >> 1)
         idx = rabs & 0xff
         x = (r & 0x1 == 1 ? -rabs : rabs) * Ziggurat::Normal::W[idx]
@@ -28,20 +73,20 @@ module Alea
         rabs < Ziggurat::Normal::K[idx] && return x
         if idx == 0
           while true
-            xx = -Ziggurat::Normal::RINV * Math.log(rand)
-            yy = -Math.log(rand)
+            xx = -Ziggurat::Normal::RINV * Math.log(@prng.next_f)
+            yy = -Math.log(@prng.next_f)
             (yy + yy > xx * xx) && return (rabs >> 8) & 0x1 == 1 ? -Ziggurat::Normal::R - xx : Ziggurat::Normal::R + xx
           end
         else
           # return from the triangular area
-          (Ziggurat::Normal::F[idx - 1] - Ziggurat::Normal::F[idx]) * rand + \
+          (Ziggurat::Normal::F[idx - 1] - Ziggurat::Normal::F[idx]) * @prng.next_f + \
             Ziggurat::Normal::F[idx] < Math.exp(-0.5 * x * x) && return x
         end
       end
     end
 
     # Generate a lognormally-distributed random `Float64`
-    # with underlying standard normal distribution
+    # with underlying standard normal distribution.
     #
     # ```
     # rng = Alea::Random.new
@@ -51,7 +96,8 @@ module Alea
       Math.exp(next_normal)
     end
 
-    # Generate a standard exp-distributed random `Float64` with sigma 1.0
+    # Generate a standard exp-distributed random `Float64`
+    # with standard deviation 1.0.
     #
     # ```
     # rng = Alea::Random.new
@@ -59,14 +105,14 @@ module Alea
     # ```
     def next_exponential : Float64
       while true
-        r = next_u64 >> 12
+        r = @prng.next_u >> 12
         idx = r & 0xff
         x = r * Ziggurat::Exp::W[idx]
         # this returns 98.9% of the time on 1st try
         r < Ziggurat::Exp::K[idx] && return x
-        idx == 0 && return Ziggurat::Exp::R - Math.log(rand)
+        idx == 0 && return Ziggurat::Exp::R - Math.log(@prng.next_f)
         # return from the triangular area
-        (Ziggurat::Exp::F[idx - 1] - Ziggurat::Exp::F[idx]) * rand + \
+        (Ziggurat::Exp::F[idx - 1] - Ziggurat::Exp::F[idx]) * @prng.next_f + \
           Ziggurat::Exp::F[idx] < Math.exp(-x) && return x
       end
     end
@@ -80,7 +126,7 @@ module Alea
                      "Float32".id, "Float64".id,
                    ] %}
       # Generate a normally-distributed random `Float64`
-      # with given mean and standard deviation 1.0
+      # with given mean and standard deviation 1.0.
       #
       # ```
       # rng = Alea::Random.new
@@ -91,7 +137,7 @@ module Alea
       end
 
       # Generate a normally-distributed random `Float64`
-      # with given mean and standard deviation
+      # with given mean and standard deviation.
       #
       # ```
       # rng = Alea::Random.new
@@ -102,7 +148,7 @@ module Alea
       end
 
       # Generate a lognormally-distributed random `Float64`
-      # with given mean of the underlying normal distribution
+      # with given mean of the underlying normal distribution.
       #
       # ```
       # rng = Alea::Random.new
@@ -113,7 +159,7 @@ module Alea
       end
 
       # Generate a lognormally-distributed random `Float64` with given
-      # mean and standard deviation of the underlying normal distribution
+      # mean and standard deviation of the underlying normal distribution.
       #
       # ```
       # rng = Alea::Random.new
@@ -123,7 +169,7 @@ module Alea
         Math.exp(next_normal * sigma + mean)
       end
 
-      # Generate a exp-distributed random `Float64` with given scale
+      # Generate a exp-distributed random `Float64` with given scale.
       #
       # ```
       # rng = Alea::Random.new
@@ -133,8 +179,8 @@ module Alea
         next_exponential * scale
       end
 
-      # Generate a beta-distributed random `Float64` in range [0, 1)
-      # Named arguments are mandatory to prevent ambiguity
+      # Generate a beta-distributed random `Float64` in range [0, 1).
+      # Named arguments are mandatory to prevent ambiguity.
       #
       # ```
       # rng = Alea::Random.new
@@ -143,8 +189,8 @@ module Alea
       def next_beta(*, a : {{type}}, b : {{type}}) : Float64
         if a <= 1.0 && b <= 1.0
           while true
-            u = rand
-            v = rand
+            u = @prng.next_f
+            v = @prng.next_f
             x = u ** (1.0 / a)
             y = v ** (1.0 / b)
             if (x + y) <= 1.0
@@ -166,7 +212,7 @@ module Alea
         end
       end
 
-      # Generate a gamma-distributed random `Float64` with given shape
+      # Generate a gamma-distributed random `Float64` with given shape.
       #
       # ```
       # rng = Alea::Random.new
@@ -177,7 +223,7 @@ module Alea
         shape == 0.0 && return 0.0
         if shape < 1.0
           while true
-            u = rand
+            u = @prng.next_f
             v = next_exponential
             if u <= 1.0 - shape
               x = u ** (1.0 / shape)
@@ -198,7 +244,7 @@ module Alea
               break unless v <= 0.0
             end
             v = v * v * v
-            u = rand
+            u = @prng.next_f
             u < (1.0 - 0.0331_f64 * (x * x) * (x * x)) && return b * v
             Math.log(u) < 0.5 * x * x + b * (1.0 - v + Math.log(v)) && return b * v
           end
@@ -206,7 +252,7 @@ module Alea
       end
 
       # Generate a gamma-distributed random `Float64`
-      # with given shape and scale
+      # with given shape and scale.
       #
       # ```
       # rng = Alea::Random.new
@@ -217,7 +263,7 @@ module Alea
       end
 
       # Generate a chi^2-distributed random `Float64`
-      # with given degrees of freedom
+      # with given degrees of freedom.
       #
       # ```
       # rng = Alea::Random.new
