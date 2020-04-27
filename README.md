@@ -17,11 +17,11 @@ programming languages standards providing a nice and clean interface.
 
 1. Add the dependency to your `shard.yml`:
 
-   ```yaml
-   dependencies:
-     alea:
-       github: nin93/alea
-   ```
+  ```yaml
+  dependencies:
+    alea:
+      github: nin93/alea
+  ```
 
 2. Run `shards install`
 
@@ -31,7 +31,7 @@ The algorithms in use for generating 64-bit uints and floats are from the **xosh
 Read more about this PRNGs at: http://prng.di.unimi.it/
 
 By default the PRNG is `Alea::XSR128`, loaded with 128-bits of state and carrying a period of 2^128 - 1, but if more state is needed you can use `Alea::XSR256`, with corresponding state and period.
-**NOTE**: *~20% of generation speed loss when using the extended version*. [Benchmarks](https://github.com/nin93/alea/tree/master/benchmarks).
+**NOTE**: *~20% speed loss when using the extended version*. [Benchmarks](https://github.com/nin93/alea/tree/master/benchmarks).
 
 
 ## Usage
@@ -39,37 +39,40 @@ By default the PRNG is `Alea::XSR128`, loaded with 128-bits of state and carryin
 ```crystal
 require "alea"
 
-rng = Alea::Random.new
-rng.next_normal # => -0.36790519967553736
+alea = Alea::Random.new
+alea.next_normal # => -0.36790519967553736
 ```
-It also accepts an initial seed to reproduce the same seemingly randomness across runs:
+It also accepts an initial seed to reproduce the same seemingly random events across runs:
 ```crystal
-seed = 9377
-rng = Alea::Random.new(seed)
-rng.next_exponential # => 0.07119782748354186
+seed = 9377u64
+alea = Alea::Random.new(seed)
+alea.next_exponential # => 2.8445710982736148
 ```
-To specify the PRNG to use you must enter its class name into the constructor:
+
+You can also implement your own custom PRNG by inheriting `Alea::XSR` and passing it to the constructor by its class name.
+Here is an example using the 256-bit state PRNG `Alea:XSR256`:
 ```crystal
-rng = Alea::Random.new(Alea::XSR256)
-rng.next_f # => 0.90346205785676437
+alea = Alea::Random.new(Alea::XSR256)
+alea.next_f # => 0.6533582874035311
+alea.prng   # => Alea::XSR256
 
-# or
-
-seed = 193
-rng = Alea::Random.new(seed, Alea::XSR256)
-rng.next_f # => 0.11049632857847848
+# or seeded as well
+seed = 193u64
+alea = Alea::Random.new(seed, Alea::XSR256)
+alea.next_f # => 0.80750616724688
 ```
 
 ## Development state
 
 Library is in development, current sampling methods are implemented for:
-  - Uniform
-  - Normal
-  - Exponential
-  - Lognormal
-  - Chi Square
-  - Gamma
   - Beta
+  - Chi Square
+  - Exponential
+  - Gamma
+  - Laplace
+  - Lognormal
+  - Normal
+  - Uniform
 
 ## Contributing
 

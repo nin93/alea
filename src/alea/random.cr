@@ -102,6 +102,16 @@ module Alea
       end
     end
 
+    # Generate a standard laplace-distributed random `Float64`
+    # centred in 0.0 and scaled by 1.0.
+    def next_laplace : Float64
+      while true
+        u = @prng.next_f
+        u >= 0.5 && return -Math.log(2.0 - u - u)
+        u > 0.0 && return Math.log(u + u)
+      end
+    end
+
     # This are written to allow any combination of
     # argument types and avoid tedious manual casting.
     {% for t1 in ["Int".id, "Float".id] %}
@@ -202,6 +212,26 @@ module Alea
         # with given shape and scale.
         def next_gamma(shape : {{t1}}, scale : {{t2}}) : Float64
           next_gamma(shape) * scale
+        end
+
+        # Generate a standard laplace-distributed random `Float64`
+        # centred in 0.0 and scaled by 1.0.
+        def next_laplace(location : {{t1}}) : Float64
+          while true
+            u = @prng.next_f
+            u >= 0.5 && return location - Math.log(2.0 - u - u)
+            u > 0.0 && return location + Math.log(u + u)
+          end
+        end
+
+        # Generate a laplace-distributed random `Float64`
+        # with given center and scale.
+        def next_laplace(location : {{t1}}, scale : {{t2}}) : Float64
+          while true
+            u = @prng.next_f
+            u >= 0.5 && return location - scale * Math.log(2.0 - u - u)
+            u > 0.0 && return location + scale * Math.log(u + u)
+          end
         end
 
         # Generate a chi^2-distributed random `Float64`
