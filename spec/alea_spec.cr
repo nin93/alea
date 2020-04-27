@@ -10,11 +10,6 @@ end
 
 describe Alea do
   describe Alea::XSR128 do
-    pending "returns a new instance from module" do
-      Alea::Xoshiro.new.should be_a(Alea::XSR128)
-      Alea::Xoshiro.new(12345).should be_a(Alea::XSR128)
-    end
-
     it "returns a new instance from class" do
       Alea::XSR128.new.should be_a(Alea::XSR128)
       Alea::XSR128.new(12345).should be_a(Alea::XSR128)
@@ -506,6 +501,94 @@ describe Alea do
 
         mean_r = 0.6666666666666666
         stdev_r = 0.20100756305184242
+        tol = 0.005
+
+        mean = ans / SpecNdata
+        stdev = stdev(ary, mean, SpecNdata)
+        mean.should be_close(mean_r, tol * stdev_r)
+        stdev.should be_close(stdev_r, tol * stdev_r)
+      end
+    end
+
+    describe "#next_gamma" do
+      it "accepts any sized Int as argument(s)" do
+        {% for bits in %i[8 16 32 64 128] %}
+          SpecRng.next_gamma 1_i{{bits.id}}
+        {% end %}
+      end
+
+      it "accepts any sized UInt as argument(s)" do
+        {% for bits in %i[8 16 32 64 128] %}
+          SpecRng.next_gamma 1_u{{bits.id}}
+        {% end %}
+      end
+
+      it "accepts any sized Float as argument(s)" do
+        SpecRng.next_gamma 1.0_f32
+        SpecRng.next_gamma 1.0_f64
+      end
+
+      it "generates laplace-distributed random values with mean 0.0 and scale 1.0" do
+        ary = Array(Float64).new
+        ans = 0.0
+
+        SpecNdata.times do
+          ran = SpecRng.next_laplace
+          ans += ran
+          ary << ran
+        end
+
+        # mean  is:   m
+        # stdev is:   k * sqrt( 2 )
+
+        mean_r = 0.0
+        stdev_r = 1.4142135623730951
+        tol = 0.005
+
+        mean = ans / SpecNdata
+        stdev = stdev(ary, mean, SpecNdata)
+        mean.should be_close(mean_r, tol * stdev_r)
+        stdev.should be_close(stdev_r, tol * stdev_r)
+      end
+
+      it "generates laplace-distributed random values with fixed mean and scale 1.0" do
+        ary = Array(Float64).new
+        ans = 0.0
+
+        SpecNdata.times do
+          ran = SpecRng.next_laplace location: 3.0
+          ans += ran
+          ary << ran
+        end
+
+        # mean  is:   m
+        # stdev is:   k * sqrt( 2 )
+
+        mean_r = 3.0
+        stdev_r = 1.4142135623730951
+        tol = 0.005
+
+        mean = ans / SpecNdata
+        stdev = stdev(ary, mean, SpecNdata)
+        mean.should be_close(mean_r, tol * stdev_r)
+        stdev.should be_close(stdev_r, tol * stdev_r)
+      end
+
+      it "generates laplace-distributed random values with fixed shape and fixed scale" do
+        ary = Array(Float64).new
+        ans = 0.0
+
+        SpecNdata.times do
+          ran = SpecRng.next_laplace location: 3.0, scale: 1.5
+          ans += ran
+          ary << ran
+        end
+
+        # mean  is:   m
+        # stdev is:   k * sqrt( 2 )
+
+        mean_r = 3.0
+        stdev_r = 2.121320343559643
         tol = 0.005
 
         mean = ans / SpecNdata
