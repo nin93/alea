@@ -4,6 +4,17 @@ require "./ziggurat"
 module Alea
   class Random
     # Generate a normal-distributed random `Float64`
+    # with given mean and standard deviation.
+    # Raises ArgumentError if sigma parameter is negative or zero.
+    def normal(mean = 0.0, sigma = 1.0)
+      if sigma <= 0.0
+        raise ArgumentError.new "Expected standard deviation to be greater than 0.0."
+      end
+
+      next_normal mean, sigma
+    end
+
+    # Generate a normal-distributed random `Float64`
     # with mean 0.0 and standard deviation 1.0.
     def next_normal : Float64
       while true

@@ -4,6 +4,17 @@ require "./exponential"
 
 module Alea
   class Random
+    # Generate a gamma-distributed random `Float64`
+    # with given shape and scale.
+    # Raises ArgumentError if parameters are negative or zero.
+    def gamma(shape, scale = 1.0)
+      if shape <= 0.0 || scale <= 0.0
+        raise ArgumentError.new "Expected shape and scale parameters to be greater than 0.0."
+      end
+
+      next_gamma shape, scale
+    end
+
     # This are written to allow any combination of
     # argument types and avoid tedious manual casting.
     {% for t1 in ["Int".id, "Float".id] %}
