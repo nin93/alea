@@ -3,8 +3,19 @@ require "./ziggurat"
 
 module Alea
   class Random
+    # Generate a exp-distributed random `Float64` with given scale.
+    # Scale parameter is lambda^-1.
+    # Raises ArgumentError if parameter is negative or zero.
+    def exponential(scale = 1.0)
+      if scale <= 0.0
+        raise ArgumentError.new "Expected scale parameter to be greater than 0.0."
+      end
+
+      next_exponential scale
+    end
+
     # Generate a exp-distributed random `Float64` with scale 1.0.
-    # Scale parameter is lambda^-1
+    # Scale parameter is lambda^-1.
     def next_exponential : Float64
       while true
         r = @prng.next_u >> 12
@@ -23,7 +34,7 @@ module Alea
     # argument types and avoid tedious manual casting.
     {% for t1 in ["Int".id, "Float".id] %}
       # Generate a exp-distributed random `Float64` with given scale.
-      # Scale parameter is lambda^-1
+      # Scale parameter is lambda^-1.
       def next_exponential(scale : {{t1}}) : Float64
         next_exponential * scale
       end

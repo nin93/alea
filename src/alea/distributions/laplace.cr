@@ -2,6 +2,17 @@ require "../random"
 
 module Alea
   class Random
+    # Generate a laplace-distributed random `Float64`
+    # with given center and scale.
+    # Raises ArgumentError if scale parameter is negative or zero.
+    def laplace(mean, scale = 1.0)
+      if scale <= 0.0
+        raise ArgumentError.new "Expected scale parameter to be greater than 0.0."
+      end
+
+      next_laplace mean, scale
+    end
+
     # Generate a standard laplace-distributed random `Float64`
     # centred in 0.0 and scaled by 1.0.
     def next_laplace : Float64

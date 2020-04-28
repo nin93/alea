@@ -3,6 +3,17 @@ require "./normal"
 
 module Alea
   class Random
+    # Generate a lognormal-distributed random `Float64` with given
+    # mean and standard deviation of the underlying normal distribution.
+    # Raises ArgumentError if sigma parameter is negative or zero.
+    def lognormal(mean = 0.0, sigma = 1.0)
+      if sigma <= 0.0
+        raise ArgumentError.new "Expected standard deviation to be greater than 0.0."
+      end
+
+      next_lognormal mean, sigma
+    end
+
     # Generate a lognormal-distributed random `Float64`
     # with underlying standard normal distribution.
     def next_lognormal : Float64
