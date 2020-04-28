@@ -3,6 +3,17 @@ require "./gamma"
 
 module Alea
   class Random
+    # Generate a beta-distributed random `Float64` in range [0, 1).
+    # Named arguments are mandatory to prevent ambiguity.
+    # Raises ArgumentError if parameters are negative or zero.
+    def beta(*, a, b)
+      if a <= 0.0 || b <= 0.0
+        raise ArgumentError.new "Expected shape parameters to be greater than 0.0."
+      end
+
+      next_beta a: a, b: b
+    end
+
     # This are written to allow any combination of
     # argument types and avoid tedious manual casting.
     {% for t1 in ["Int".id, "Float".id] %}
