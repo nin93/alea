@@ -556,7 +556,7 @@ describe Alea do
         ans = 0.0
 
         SpecNdata.times do
-          ran = SpecRng.next_laplace location: 3.0
+          ran = SpecRng.next_laplace mean: 3.0
           ans += ran
           ary << ran
         end
@@ -579,7 +579,7 @@ describe Alea do
         ans = 0.0
 
         SpecNdata.times do
-          ran = SpecRng.next_laplace location: 3.0, scale: 1.5
+          ran = SpecRng.next_laplace mean: 3.0, scale: 1.5
           ans += ran
           ary << ran
         end
