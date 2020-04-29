@@ -39,27 +39,38 @@ By default the PRNG is `Alea::XSR128`, loaded with 128-bits of state and carryin
 ```crystal
 require "alea"
 
-alea = Alea::Random.new
-alea.next_normal # => -0.36790519967553736
+random = Alea::Random.new
+random.normal # => -0.36790519967553736
 ```
 It also accepts an initial seed to reproduce the same seemingly random events across runs:
 ```crystal
 seed = 9377u64
-alea = Alea::Random.new(seed)
-alea.next_exponential # => 2.8445710982736148
+random = Alea::Random.new(seed)
+random.exponential # => 2.8445710982736148
 ```
 
 You can also implement your own custom PRNG by inheriting `Alea::XSR` and passing it to the constructor by its class name.
 Here is an example using the 256-bit state PRNG `Alea:XSR256`:
 ```crystal
-alea = Alea::Random.new(Alea::XSR256)
-alea.next_f # => 0.6533582874035311
-alea.prng   # => Alea::XSR256
+random = Alea::Random.new(Alea::XSR256)
+random.next_f # => 0.6533582874035311
+random.prng   # => Alea::XSR256
 
 # or seeded as well
 seed = 193u64
-alea = Alea::Random.new(seed, Alea::XSR256)
-alea.next_f # => 0.80750616724688
+random = Alea::Random.new(seed, Alea::XSR256)
+random.next_f # => 0.80750616724688
+```
+
+## Unsafe methods
+
+Plain sampling methods (such `#normal`, `#gamma`) performs checks over arguments passed to avoid bad data generation or inner exceptions.
+In order to avoid them (checks are slow) you must use their unsafe version by prepending `next_` to them:
+
+```crystal
+random = Alea::Random.new
+random.normal(mean: 0, sigma: 0)      # raises ArgumentError: sigma is 0 or negative.
+random.next_normal(mean: 0, sigma: 0) # this does not raise anything ever.
 ```
 
 ## Development state
