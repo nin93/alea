@@ -53,13 +53,13 @@ You can also implement your own custom PRNG by inheriting `Alea::XSR` and passin
 Here is an example using the 256-bit state PRNG `Alea:XSR256`:
 ```crystal
 random = Alea::Random.new(Alea::XSR256)
-random.next_f # => 0.6533582874035311
-random.prng   # => Alea::XSR256
+random.float # => 0.6533582874035311
+random.prng  # => Alea::XSR256
 
 # or seeded as well
 seed = 193u64
 random = Alea::Random.new(seed, Alea::XSR256)
-random.next_f # => 0.80750616724688
+random.float # => 0.80750616724688
 ```
 
 ## Unsafe methods
