@@ -82,7 +82,7 @@ describe Alea do
           mean = ans / SpecNdata
           stdev = stdev(ary, mean, SpecNdata)
           mean.should be_close(mean_r, tol * stdev_r)
-          stdev.should be_close(stdev_r, tol * stdev_r)
+          stdev.should be_close(stdev_r, 0.007 * stdev_r)
         end
 
         it "generates lognormal-distributed random values with underlying normal with fixed mean and stdev 1.0" do
@@ -105,7 +105,7 @@ describe Alea do
           mean = ans / SpecNdata
           stdev = stdev(ary, mean, SpecNdata)
           mean.should be_close(mean_r, tol * stdev_r)
-          stdev.should be_close(stdev_r, tol * stdev_r)
+          stdev.should be_close(stdev_r, 0.007 * stdev_r)
         end
 
         it "generates lognormal-distributed random values with underlying normal with fixed mean and fixed stdev" do
@@ -128,7 +128,7 @@ describe Alea do
           mean = ans / SpecNdata
           stdev = stdev(ary, mean, SpecNdata)
           mean.should be_close(mean_r, tol * stdev_r)
-          stdev.should be_close(stdev_r, tol * stdev_r)
+          stdev.should be_close(stdev_r, 0.007 * stdev_r)
         end
 
         it "generates lognormal-distributed random values with underlying normal with negative fixed mean and fixed stdev" do
@@ -151,7 +151,7 @@ describe Alea do
           mean = ans / SpecNdata
           stdev = stdev(ary, mean, SpecNdata)
           mean.should be_close(mean_r, tol * stdev_r)
-          stdev.should be_close(stdev_r, tol * stdev_r)
+          stdev.should be_close(stdev_r, 0.007 * stdev_r)
         end
       end
     end
