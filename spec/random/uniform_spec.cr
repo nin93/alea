@@ -244,5 +244,41 @@ describe Alea do
         end
       end
     end
+
+    describe Alea::CDF do
+      describe "#uniform" do
+        it "raises ArgumentError if min is equal to max" do
+          expect_raises ArgumentError do
+            Alea::CDF.uniform(0.0, min: 0.0, max: 0.0)
+          end
+        end
+
+        it "raises ArgumentError if range is badly ordered" do
+          expect_raises ArgumentError do
+            Alea::CDF.uniform(0.0, min: 0.0, max: -1.0)
+          end
+        end
+
+        it "returns the cdf of -1.0 in U(0, 100)" do
+          Alea::CDF.uniform(-1.0, min: 0.0, max: 100.0).should eq(0.0)
+        end
+
+        it "returns the cdf of 0.0 in U(0, 100)" do
+          Alea::CDF.uniform(0.0, min: 0.0, max: 100.0).should eq(0.0)
+        end
+
+        it "returns the cdf of 2.0 in U(0, 100)" do
+          Alea::CDF.uniform(50.0, min: 0.0, max: 100.0).should eq(0.5)
+        end
+
+        it "returns the cdf of 100.0 in U(0, 100)" do
+          Alea::CDF.uniform(100.0, min: 0.0, max: 100.0).should eq(1.0)
+        end
+
+        it "returns the cdf of 101.0 in U(0, 100)" do
+          Alea::CDF.uniform(101.0, min: 0.0, max: 100.0).should eq(1.0)
+        end
+      end
+    end
   end
 end
