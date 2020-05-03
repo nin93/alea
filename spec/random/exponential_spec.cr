@@ -99,5 +99,45 @@ describe Alea do
         end
       end
     end
+
+    describe Alea::CDF do
+      describe "#exponential" do
+        it "raises ArgumentError if scale is 0" do
+          expect_raises ArgumentError do
+            Alea::CDF.exponential(0.0, scale: 0.0)
+          end
+        end
+
+        it "raises ArgumentError if scale is negative" do
+          expect_raises ArgumentError do
+            Alea::CDF.exponential(0.0, scale: -1.0)
+          end
+        end
+
+        it "returns the cdf of -1.0 in Exp(1.0)" do
+          Alea::CDF.exponential(-1.0).should eq(0.0)
+        end
+
+        it "returns the cdf of 0.0 in Exp(1.0)" do
+          Alea::CDF.exponential(0.0).should eq(0.0)
+        end
+
+        it "returns the cdf of 1.0 in Exp(1.0)" do
+          Alea::CDF.exponential(1.0).should eq(0.6321205588285577)
+        end
+
+        it "returns the cdf of 2.0 in Exp(1.0)" do
+          Alea::CDF.exponential(2.0).should eq(0.8646647167633873)
+        end
+
+        it "returns the cdf of 1.0 in Exp(0.5)" do
+          Alea::CDF.exponential(1.0, scale: 0.5).should eq(0.8646647167633873)
+        end
+
+        it "returns the cdf of 2.0 in Exp(0.5)" do
+          Alea::CDF.exponential(2.0, scale: 0.5).should eq(0.9816843611112658)
+        end
+      end
+    end
   end
 end
