@@ -155,5 +155,45 @@ describe Alea do
         end
       end
     end
+
+    describe Alea::CDF do
+      describe "#lognormal" do
+        it "raises ArgumentError if stdev is equal to 0.0" do
+          expect_raises ArgumentError do
+            Alea::CDF.lognormal(0.0, sigma: 0.0)
+          end
+        end
+
+        it "raises ArgumentError if stdev is less than 0.0" do
+          expect_raises ArgumentError do
+            Alea::CDF.lognormal(0.0, sigma: -1.0)
+          end
+        end
+
+        it "returns the cdf of 0.0 in LogN(0, 1)" do
+          Alea::CDF.lognormal(0.0).should eq(0.0)
+        end
+
+        it "returns the cdf of 1.0 in LogN(0, 1)" do
+          Alea::CDF.lognormal(1.0).should eq(0.5)
+        end
+
+        it "returns the cdf of -1.0 in LogN(0, 1)" do
+          Alea::CDF.lognormal(-1.0).should eq(0.0)
+        end
+
+        it "returns the cdf of 2.0 in LogN(2, 1)" do
+          Alea::CDF.lognormal(2.0, mean: 2.0).should eq(0.09563135117897992)
+        end
+
+        it "returns the cdf of 2.0 in LogN(0, 0.5)" do
+          Alea::CDF.lognormal(2.0, sigma: 0.5).should eq(0.9171714809983015)
+        end
+
+        it "returns the cdf of 2.0 in LogN(1, 0.5)" do
+          Alea::CDF.lognormal(2.0, mean: 1.0, sigma: 0.5).should eq(0.26970493073490953)
+        end
+      end
+    end
   end
 end
