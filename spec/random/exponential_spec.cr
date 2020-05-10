@@ -1,8 +1,8 @@
 require "../spec_helper"
 
 describe Alea do
-  describe Alea::Random do
-    context "Exponential" do
+  context "Exponential" do
+    describe Alea::Random do
       describe "#exponential" do
         it "accepts any sized Int as argument(s)" do
           {% for bits in %i[8 16 32 64 128] %}
@@ -96,6 +96,46 @@ describe Alea do
           stdev = stdev(ary, mean, SpecNdata)
           mean.should be_close(mean_r, tol * stdev_r)
           stdev.should be_close(stdev_r, tol * stdev_r)
+        end
+      end
+    end
+
+    describe Alea::CDF do
+      describe "#exponential" do
+        it "raises ArgumentError if scale is 0" do
+          expect_raises ArgumentError do
+            Alea::CDF.exponential(0.0, scale: 0.0)
+          end
+        end
+
+        it "raises ArgumentError if scale is negative" do
+          expect_raises ArgumentError do
+            Alea::CDF.exponential(0.0, scale: -1.0)
+          end
+        end
+
+        it "returns the cdf of -1.0 in Exp(1.0)" do
+          Alea::CDF.exponential(-1.0).should eq(0.0)
+        end
+
+        it "returns the cdf of 0.0 in Exp(1.0)" do
+          Alea::CDF.exponential(0.0).should eq(0.0)
+        end
+
+        it "returns the cdf of 1.0 in Exp(1.0)" do
+          Alea::CDF.exponential(1.0).should eq(0.6321205588285577)
+        end
+
+        it "returns the cdf of 2.0 in Exp(1.0)" do
+          Alea::CDF.exponential(2.0).should eq(0.8646647167633873)
+        end
+
+        it "returns the cdf of 1.0 in Exp(0.5)" do
+          Alea::CDF.exponential(1.0, scale: 0.5).should eq(0.8646647167633873)
+        end
+
+        it "returns the cdf of 2.0 in Exp(0.5)" do
+          Alea::CDF.exponential(2.0, scale: 0.5).should eq(0.9816843611112658)
         end
       end
     end

@@ -1,8 +1,8 @@
 require "../spec_helper"
 
 describe Alea do
-  describe Alea::Random do
-    context "Laplace" do
+  context "Laplace" do
+    describe Alea::Random do
       describe "#laplace" do
         it "accepts any sized Int as argument(s)" do
           {% for bits in %i[8 16 32 64 128] %}
@@ -129,6 +129,50 @@ describe Alea do
           stdev = stdev(ary, mean, SpecNdata)
           mean.should be_close(mean_r, tol * stdev_r)
           stdev.should be_close(stdev_r, tol * stdev_r)
+        end
+      end
+    end
+
+    describe Alea::CDF do
+      describe "#laplace" do
+        it "raises ArgumentError if scale is equal to 0.0" do
+          expect_raises ArgumentError do
+            Alea::CDF.laplace(0.0, scale: 0.0)
+          end
+        end
+
+        it "raises ArgumentError if scale is less than 0.0" do
+          expect_raises ArgumentError do
+            Alea::CDF.laplace(0.0, scale: -1.0)
+          end
+        end
+
+        it "returns the cdf of 0.0 in Laplace(0, 1)" do
+          Alea::CDF.laplace(0.0).should eq(0.5)
+        end
+
+        it "returns the cdf of 2.0 in Laplace(2, 1)" do
+          Alea::CDF.laplace(2.0, mean: 2.0).should eq(0.5)
+        end
+
+        it "returns the cdf of 2.0 in Laplace(0, 0.5)" do
+          Alea::CDF.laplace(2.0, scale: 0.5).should eq(0.9908421805556329)
+        end
+
+        it "returns the cdf of 2.0 in Laplace(1, 0.5)" do
+          Alea::CDF.laplace(2.0, mean: 1.0, scale: 0.5).should eq(0.9323323583816936)
+        end
+
+        it "returns the cdf of -2.0 in Laplace(-2, 1)" do
+          Alea::CDF.laplace(-2.0, mean: -2.0).should eq(0.5)
+        end
+
+        it "returns the cdf of -2.0 in Laplace(0, 0.5)" do
+          Alea::CDF.laplace(-2.0, scale: 0.5).should eq(0.00915781944436709)
+        end
+
+        it "returns the cdf of -2.0 in Laplace(1, 0.5)" do
+          Alea::CDF.laplace(-2.0, mean: 1.0, scale: 0.5).should eq(0.0012393760883331792)
         end
       end
     end

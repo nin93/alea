@@ -1,8 +1,8 @@
 require "../spec_helper"
 
 describe Alea do
-  describe Alea::Random do
-    context "Normal" do
+  context "Normal" do
+    describe Alea::Random do
       describe "#normal" do
         it "accepts any sized Int as argument(s)" do
           {% for bits in %i[8 16 32 64 128] %}
@@ -140,6 +140,50 @@ describe Alea do
           stdev = stdev(ary, mean, SpecNdata)
           mean.should be_close(mean_r, tol * stdev_r)
           stdev.should be_close(stdev_r, tol * stdev_r)
+        end
+      end
+    end
+
+    describe Alea::CDF do
+      describe "#normal" do
+        it "raises ArgumentError if stdev is equal to 0.0" do
+          expect_raises ArgumentError do
+            Alea::CDF.normal(0.0, sigma: 0.0)
+          end
+        end
+
+        it "raises ArgumentError if stdev is less than 0.0" do
+          expect_raises ArgumentError do
+            Alea::CDF.normal(0.0, sigma: -1.0)
+          end
+        end
+
+        it "returns the cdf of 0.0 in N(0, 1)" do
+          Alea::CDF.normal(0.0).should eq(0.5)
+        end
+
+        it "returns the cdf of 2.0 in N(2, 1)" do
+          Alea::CDF.normal(2.0, mean: 2.0).should eq(0.5)
+        end
+
+        it "returns the cdf of 2.0 in N(0, 0.5)" do
+          Alea::CDF.normal(2.0, sigma: 0.5).should eq(0.9999683287581669)
+        end
+
+        it "returns the cdf of 2.0 in N(1, 0.5)" do
+          Alea::CDF.normal(2.0, mean: 1.0, sigma: 0.5).should eq(0.9772498680518208)
+        end
+
+        it "returns the cdf of -2.0 in N(-2, 1)" do
+          Alea::CDF.normal(-2.0, mean: -2.0).should eq(0.5)
+        end
+
+        it "returns the cdf of -2.0 in N(0, 0.5)" do
+          Alea::CDF.normal(-2.0, sigma: 0.5).should eq(3.167124183311998e-5)
+        end
+
+        it "returns the cdf of -2.0 in N(1, 0.5)" do
+          Alea::CDF.normal(-2.0, mean: 1.0, sigma: 0.5).should eq(9.865876449133282e-10)
         end
       end
     end
