@@ -1,11 +1,21 @@
 # Alea changelog
 
+## [0.2.3]
+### Added
+  - `Alea::CDF` module for Cumulative Distribution Function support.
+  - Supported distributions:
+    - Exponential
+    - Laplace
+    - Lognormal
+    - Normal
+    - Uniform
+
 ## [0.2.2]
 ### Added
-- **Uniform distribution** support.
-- New methods that take an upper limit or a range as optional arguments:
-  - `Alea::Random#uint : UInt64`
-  - `Alea::Random#float : Float64`
+  - **Uniform distribution** support.
+  - New methods that take an upper limit or a range as optional arguments:
+    - `Alea::Random#uint : UInt64`
+    - `Alea::Random#float : Float64`
 
 ## [0.2.1]
 ### Added
