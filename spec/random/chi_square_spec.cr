@@ -1,8 +1,8 @@
 require "../spec_helper"
 
 describe Alea do
-  describe Alea::Random do
-    context "ChiSquare" do
+  context "ChiSquare" do
+    describe Alea::Random do
       describe "#chi_square" do
         it "accepts any sized Int as argument(s)" do
           {% for bits in %i[8 16 32 64 128] %}

@@ -1,8 +1,8 @@
 require "../spec_helper"
 
 describe Alea do
-  describe Alea::Random do
-    context "Uniform" do
+  context "Uniform" do
+    describe Alea::Random do
       describe "#uint" do
         it "accepts any sized Int as argument(s)" do
           {% for bits in %i[8 16 32 64 128] %}
@@ -241,6 +241,42 @@ describe Alea do
           stdev = stdev(ary, mean, SpecNdata)
           mean.should be_close(mean_r, tol * stdev_r)
           stdev.should be_close(stdev_r, tol * stdev_r)
+        end
+      end
+    end
+
+    describe Alea::CDF do
+      describe "#uniform" do
+        it "raises ArgumentError if min is equal to max" do
+          expect_raises ArgumentError do
+            Alea::CDF.uniform(0.0, min: 0.0, max: 0.0)
+          end
+        end
+
+        it "raises ArgumentError if range is badly ordered" do
+          expect_raises ArgumentError do
+            Alea::CDF.uniform(0.0, min: 0.0, max: -1.0)
+          end
+        end
+
+        it "returns the cdf of -1.0 in U(0, 100)" do
+          Alea::CDF.uniform(-1.0, min: 0.0, max: 100.0).should eq(0.0)
+        end
+
+        it "returns the cdf of 0.0 in U(0, 100)" do
+          Alea::CDF.uniform(0.0, min: 0.0, max: 100.0).should eq(0.0)
+        end
+
+        it "returns the cdf of 2.0 in U(0, 100)" do
+          Alea::CDF.uniform(50.0, min: 0.0, max: 100.0).should eq(0.5)
+        end
+
+        it "returns the cdf of 100.0 in U(0, 100)" do
+          Alea::CDF.uniform(100.0, min: 0.0, max: 100.0).should eq(1.0)
+        end
+
+        it "returns the cdf of 101.0 in U(0, 100)" do
+          Alea::CDF.uniform(101.0, min: 0.0, max: 100.0).should eq(1.0)
         end
       end
     end
