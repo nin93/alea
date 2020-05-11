@@ -53,7 +53,7 @@ random = Alea::Random.new(seed)
 random.exponential # => 2.8445710982736148
 ```
 
-You can also implement your own custom PRNG by inheriting `Alea::XSR` and passing it to the constructor by its *class name*. Here is an example using the 256-bit state PRNG `Alea:XSR256`:
+You can also implement your own custom PRNG by inheriting `Alea::PRNG` and passing it to the constructor by its *class name*. Here is an example using the 256-bit state PRNG `Alea:XSR256`:
 ```crystal
 random = Alea::Random.new(Alea::XSR256)
 random.float # => 0.6533582874035311
