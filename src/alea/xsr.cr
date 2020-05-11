@@ -1,38 +1,7 @@
 require "random/secure"
+require "./prng"
 
 module Alea
-  # `XSR` is a replacement for the default `Random::PCG32` stdlib prng that implements
-  # the **xoshiro** algotithms for generating pseudo-random `UInt`s in 64-bits.
-  # Performance is comparable, but quality of generated `Float`s is much better.
-  abstract class XSR
-    # Must return an uniformly-distributed `UInt64`.
-    abstract def next_u : UInt64
-
-    # Must return an uniformly-distributed `Float64` in [0, 1).
-    abstract def next_f : Float64
-
-    # Must perform a jump.
-    abstract def jump : self
-
-    # :nodoc:
-    # http://prng.di.unimi.it/splitmix64.c
-    # This is used as a state initializer.
-    protected def init_state(state, storage, seed)
-      storage.times do |i|
-        state.value[i] = (seed &+ (i + 1) &* 0x9e3779b97f4a7c15)
-        state.value[i] = (state.value[i] ^ (state.value[i] >> 30)) &* 0xbf58476d1ce4e5b9
-        state.value[i] = (state.value[i] ^ (state.value[i] >> 27)) &* 0x94d049bb133111eb
-        state.value[i] = state.value[i] ^ (state.value[i] >> 31)
-      end
-    end
-
-    # :nodoc:
-    @[AlwaysInline]
-    protected def rotate(x, k)
-      (x << k) | (x >> (64 - k))
-    end
-  end
-
   # `Alea::XSR128` is the default pseudo-random number generator, with a state of 128 bits, and therefore
   # a period of 2^64 -1. It is as fast as `Random::PCG32`, but yielding a 64-bit unsigned integer.
   # If more state is needed, check `Alea::XSR256`.
@@ -41,7 +10,7 @@ module Alea
   #  - period:     2^128 -1
   #  - state type: UInt64
   # ```
-  class XSR128 < XSR
+  class XSR128 < Alea::PRNG
     STATE_STORAGE = 2
 
     # The state of this PRNG.
@@ -101,7 +70,7 @@ module Alea
   #  - period:     2^256 -1
   #  - state type: UInt64
   # ```
-  class XSR256 < XSR
+  class XSR256 < Alea::PRNG
     STATE_STORAGE = 4
 
     JUMP = StaticArray[

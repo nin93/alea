@@ -19,7 +19,7 @@ module Alea
   # random.prng # => Alea::XSR256
   # ```
   #
-  # You can build your own custom PRNG by inheriting `Alea::XSR` and implementing `#next_u`,
+  # You can build your own custom PRNG by inheriting `Alea::PRNG` and implementing `#next_u`,
   # `#next_f` and `#jump`, as they are needed by every other call (except for `#jump`);
   # then create a new instance of `Alea::Random` passing you class by its name like above.
   #
@@ -28,15 +28,15 @@ module Alea
     DEFAULT = Alea::XSR128
 
     # The PRNG in use by this class.
-    getter prng : Alea::XSR
+    getter prng : Alea::PRNG
 
     # Initializes the PRNG with initial state.
-    def initialize(initstate : UInt64, prng : Alea::XSR.class = DEFAULT)
+    def initialize(initstate : UInt64, prng : Alea::PRNG.class = DEFAULT)
       @prng = prng.new initstate
     end
 
     # Initializes the PRNG with initial state readed from system resorces.
-    def initialize(prng : Alea::XSR.class = DEFAULT)
+    def initialize(prng : Alea::PRNG.class = DEFAULT)
       @prng = prng.new
     end
 
