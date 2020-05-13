@@ -87,6 +87,7 @@ Current sampling methods are implemented for the following distributions:
   - Laplace
   - Lognormal
   - Normal
+  - Poisson
   - Uniform
 
 ## Cumulative Distribution Functions
