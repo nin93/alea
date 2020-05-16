@@ -1,7 +1,5 @@
-require "../random"
-
 module Alea
-  class Random
+  struct Random
     # Returns the next generated `UInt64`. See `#next_u`.
     def uint : UInt64
       @prng.next_u
@@ -64,19 +62,6 @@ module Alea
         end
       end
       @prng.next_f * span + range.begin
-    end
-  end
-
-  module CDF
-    # Returns the probability of X being less or equal to x
-    # with given scale of the distribution.
-    def uniform(x : Float, min : Float, max : Float) : Float64
-      unless min < max
-        raise ArgumentError.new "Invalid range for uniform: #{min}...#{max}"
-      end
-      x <= min && return 0.0
-      x >= max && return 1.0
-      (x - min) / (max - min)
     end
   end
 end

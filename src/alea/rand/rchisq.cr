@@ -1,8 +1,7 @@
-require "../random"
-require "./gamma"
+require "./rgamma"
 
 module Alea
-  class Random
+  struct Random
     # Generate a chi^2-distributed random `Float64` with given degrees of freedom.
     # Raises ArgumentError if parameter is negative or zero.
     def chi_square(freedom)

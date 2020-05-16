@@ -1,8 +1,7 @@
-require "../random"
-require "./gamma"
+require "./rgamma"
 
 module Alea
-  class Random
+  struct Random
     # Generate a beta-distributed random `Float64` in range [0, 1).
     # Named arguments are mandatory to prevent ambiguity.
     # Raises ArgumentError if parameters are negative or zero.

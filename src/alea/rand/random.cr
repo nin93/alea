@@ -1,4 +1,4 @@
-require "./distributions/*"
+require "./*"
 
 module Alea
   # `Alea::Random` provides the interface for distribution sampling, using the
@@ -24,10 +24,10 @@ module Alea
   # then create a new instance of `Alea::Random` passing you class by its name like above.
   #
   # The following implementations are taken from **numpy**.
-  class Random
+  struct Random
     DEFAULT = Alea::XSR128
 
-    # The PRNG in use by this class.
+    # The PRNG in use by this struct.
     getter prng : Alea::PRNG
 
     # Initializes the PRNG with initial state.
