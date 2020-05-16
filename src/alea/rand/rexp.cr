@@ -1,8 +1,7 @@
-require "../random"
-require "./ziggurat"
+require "../internal/izigg"
 
 module Alea
-  class Random
+  struct Random
     # Generate a exp-distributed random `Float64` with given scale.
     # Scale parameter is lambda^-1.
     # Raises ArgumentError if parameter is negative or zero.
@@ -20,13 +19,13 @@ module Alea
       while true
         r = @prng.next_u >> 12
         idx = r & 0xff
-        x = r * Ziggurat::Exp::W[idx]
+        x = r * Internal::Exp::W[idx]
         # this returns 98.9% of the time on 1st try
-        r < Ziggurat::Exp::K[idx] && return x
-        idx == 0 && return Ziggurat::Exp::R - Math.log(@prng.next_f)
+        r < Internal::Exp::K[idx] && return x
+        idx == 0 && return Internal::Exp::R - Math.log(@prng.next_f)
         # return from the triangular area
-        (Ziggurat::Exp::F[idx - 1] - Ziggurat::Exp::F[idx]) * @prng.next_f + \
-          Ziggurat::Exp::F[idx] < Math.exp(-x) && return x
+        (Internal::Exp::F[idx - 1] - Internal::Exp::F[idx]) * @prng.next_f + \
+          Internal::Exp::F[idx] < Math.exp(-x) && return x
       end
     end
 
@@ -39,17 +38,5 @@ module Alea
         next_exponential * scale
       end
     {% end %}
-  end
-
-  module CDF
-    # Returns the probability of X being less or equal to x
-    # with given scale of the distribution. Scale parameter is lambda^-1.
-    def exponential(x : Float, scale : Float = 1.0) : Float64
-      unless scale > 0.0
-        raise ArgumentError.new "Expected scale to be positive."
-      end
-      x <= 0.0 && return 0.0
-      1.0 - Math.exp(-x / scale)
-    end
   end
 end
