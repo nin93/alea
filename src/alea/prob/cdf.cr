@@ -4,6 +4,5 @@ module Alea
   # less or equal to x. It is the inverse of the *Percent Point Function* (PPF), the one used by most of
   # the implementations inside this library to perform sampling.
   module CDF
-    extend self
   end
 end
