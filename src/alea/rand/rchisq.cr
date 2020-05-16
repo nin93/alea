@@ -1,5 +1,4 @@
-require "../random"
-require "./gamma"
+require "./rgamma"
 
 module Alea
   struct Random
