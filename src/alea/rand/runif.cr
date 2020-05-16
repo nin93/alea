@@ -1,5 +1,3 @@
-require "../random"
-
 module Alea
   struct Random
     # Returns the next generated `UInt64`. See `#next_u`.
