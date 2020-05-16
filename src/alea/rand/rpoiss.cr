@@ -1,4 +1,4 @@
-require "../random"
+require "../internal/ipoiss"
 
 module Alea
   struct Random
@@ -14,7 +14,7 @@ module Alea
 
     # Generate a standard poisson-distributed random `Int64` with lambda 1.0.
     def next_poisson : Int64
-      poisson_mult 1.0
+      Alea::Internal.poisson_mult 1.0, @prng
     end
 
     # This are written to allow any combination of
@@ -23,9 +23,9 @@ module Alea
       # Generate a poisson-distributed random `Int64`
       # with given lambda parameter.
       def next_poisson(lam : {{t1}}) : Int64
-        (lam >= 10.0) && return poisson_ptrs lam
+        (lam >= 10.0) && return Alea::Internal.poisson_ptrs lam, @prng
         (lam == 0.0) && return 0i64
-        poisson_mult lam
+        Alea::Internal.poisson_mult lam, @prng
       end
     {% end %}
   end
