@@ -2,7 +2,7 @@ require "../random"
 require "./normal"
 
 module Alea
-  class Random
+  struct Random
     # Generate a lognormal-distributed random `Float64` with given
     # mean and standard deviation of the underlying normal distribution.
     # Raises ArgumentError if sigma parameter is negative or zero.

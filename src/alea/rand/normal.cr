@@ -2,7 +2,7 @@ require "../random"
 require "./ziggurat"
 
 module Alea
-  class Random
+  struct Random
     # Generate a normal-distributed random `Float64`
     # with given mean and standard deviation.
     # Raises ArgumentError if sigma parameter is negative or zero.

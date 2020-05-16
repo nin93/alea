@@ -1,7 +1,7 @@
 require "../random"
 
 module Alea
-  class Random
+  struct Random
     # Generate a poisson-distributed random `Int64` with given lambda parameter.
     # Raises ArgumentError if lambda parameter is negative or zero.
     def poisson(lam = 1.0)
