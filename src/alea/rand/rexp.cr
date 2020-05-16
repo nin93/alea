@@ -1,5 +1,4 @@
-require "../random"
-require "./ziggurat"
+require "../internal/izigg"
 
 module Alea
   struct Random
@@ -20,13 +19,13 @@ module Alea
       while true
         r = @prng.next_u >> 12
         idx = r & 0xff
-        x = r * Ziggurat::Exp::W[idx]
+        x = r * Internal::Exp::W[idx]
         # this returns 98.9% of the time on 1st try
-        r < Ziggurat::Exp::K[idx] && return x
-        idx == 0 && return Ziggurat::Exp::R - Math.log(@prng.next_f)
+        r < Internal::Exp::K[idx] && return x
+        idx == 0 && return Internal::Exp::R - Math.log(@prng.next_f)
         # return from the triangular area
-        (Ziggurat::Exp::F[idx - 1] - Ziggurat::Exp::F[idx]) * @prng.next_f + \
-          Ziggurat::Exp::F[idx] < Math.exp(-x) && return x
+        (Internal::Exp::F[idx - 1] - Internal::Exp::F[idx]) * @prng.next_f + \
+          Internal::Exp::F[idx] < Math.exp(-x) && return x
       end
     end
 
