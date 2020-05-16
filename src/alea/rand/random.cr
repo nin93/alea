@@ -1,4 +1,4 @@
-require "./distributions/*"
+require "./*"
 
 module Alea
   # `Alea::Random` provides the interface for distribution sampling, using the
