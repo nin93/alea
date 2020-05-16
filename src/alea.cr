@@ -1,4 +1,6 @@
+require "./alea/rand/rgen/*"
 require "./alea/rand/*"
+require "./alea/prob/*"
 require "./alea/*"
 
 # `Alea` is a library for generating pseudo-random samples from most known probability distributions,
