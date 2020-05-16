@@ -1,6 +1,5 @@
-require "../random"
-require "./normal"
-require "./exponential"
+require "./rnorm"
+require "./rexp"
 
 module Alea
   struct Random
