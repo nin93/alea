@@ -1,5 +1,3 @@
-require "../random"
-
 module Alea
   struct Random
     # Generate a laplace-distributed random `Float64`
