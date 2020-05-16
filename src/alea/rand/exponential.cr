@@ -2,7 +2,7 @@ require "../random"
 require "./ziggurat"
 
 module Alea
-  class Random
+  struct Random
     # Generate a exp-distributed random `Float64` with given scale.
     # Scale parameter is lambda^-1.
     # Raises ArgumentError if parameter is negative or zero.

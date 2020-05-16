@@ -1,7 +1,7 @@
 require "../random"
 
 module Alea
-  class Random
+  struct Random
     # Returns the next generated `UInt64`. See `#next_u`.
     def uint : UInt64
       @prng.next_u

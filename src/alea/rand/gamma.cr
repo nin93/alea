@@ -3,7 +3,7 @@ require "./normal"
 require "./exponential"
 
 module Alea
-  class Random
+  struct Random
     # Generate a gamma-distributed random `Float64`
     # with given shape and scale.
     # Raises ArgumentError if parameters are negative or zero.

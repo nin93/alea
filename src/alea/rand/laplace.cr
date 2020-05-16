@@ -1,7 +1,7 @@
 require "../random"
 
 module Alea
-  class Random
+  struct Random
     # Generate a laplace-distributed random `Float64`
     # with given center and scale.
     # Raises ArgumentError if scale parameter is negative or zero.
