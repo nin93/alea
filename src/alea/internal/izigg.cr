@@ -1,4 +1,4 @@
-module Alea
+module Alea::Internal
   # The ziggurat tables for generating normal and exponential
   # distributed variables with better statistical properties
   #
@@ -8,7 +8,7 @@ module Alea
   # https://github.com/JuliaLang/julia/contributors
   module Ziggurat
     # Tables for normal variates
-    abstract struct Normal
+    struct Normal
       K = StaticArray[
         0x0007799ec012f7b2_u64, 0x0000000000000000_u64, 0x0006045f4c7de363_u64, 0x0006d1aa7d5ec0a5_u64,
         0x000728fb3f60f777_u64, 0x0007592af4e9fbc0_u64, 0x000777a5c0bf655d_u64, 0x00078ca3857d2256_u64,
@@ -261,7 +261,7 @@ module Alea
     end
 
     # Tables for exponential variates
-    abstract struct Exp
+    struct Exp
       K = StaticArray[
         0x000e290a13924be3_u64, 0x0000000000000000_u64, 0x0009beadebce18bf_u64, 0x000c377ac71f9e08_u64,
         0x000d4ddb99075857_u64, 0x000de893fb8ca23e_u64, 0x000e4a8e87c4328d_u64, 0x000e8dff16ae1cb9_u64,
@@ -510,4 +510,6 @@ module Alea
       R = 7.6971174701310497140446280481
     end
   end
+
+  include Ziggurat
 end
