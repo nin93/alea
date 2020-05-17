@@ -18,7 +18,7 @@ module Alea::Internal
       ((us >= 0.07) && (v <= vr)) && return k
       ((k < 0) || ((us < 0.013) && (v > us))) && next
       log = Math.log(v) + Math.log(inv) - Math.log(a / (us * us) + b)
-      gam = -lam + k * llam - Internal.loggamma(k + 1i64)
+      gam = -lam + k * llam - Math.lgamma(k + 1i64)
       (log <= gam) && return k
     end
   end
