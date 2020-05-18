@@ -76,5 +76,51 @@ describe Alea do
         end
       end
     end
+
+    describe Alea::CDF do
+      describe "#chi_square" do
+        it "raises ArgumentError if freedom is equal to 0.0" do
+          expect_raises ArgumentError do
+            Alea::CDF.chi_square(0.0, freedom: 0.0)
+          end
+        end
+
+        it "raises ArgumentError if freedom is less than 0.0" do
+          expect_raises ArgumentError do
+            Alea::CDF.chi_square(0.0, freedom: -1.0)
+          end
+        end
+
+        it "returns the cdf of -1.0 in X2(1)" do
+          Alea::CDF.chi_square(-1.0).should eq(0.0)
+        end
+
+        it "returns the cdf of 0.0 in X2(1)" do
+          Alea::CDF.chi_square(0.0).should eq(0.0)
+        end
+
+        it "returns the cdf of 2.0 in X2(1)" do
+          # From WolframAlpha
+          wf = 0.842700792949714869341
+          Alea::CDF.chi_square(2.0).should eq(wf)
+        end
+
+        # TODO: enable this when precision issues on
+        # Incomplete Regularized Gamma Functions are solved
+        pending "returns the cdf of 2.0 in X2(10)" do
+          # From WolframAlpha
+          wf = 0.003659846827347123454
+          Alea::CDF.chi_square(2.0, freedom: 10.0).should eq(wf)
+        end
+
+        # TODO: enable this when precision issues on
+        # Incomplete Regularized Gamma Functions are solved
+        pending "returns the cdf of 214.0 in X2(100)" do
+          # From WolframAlpha
+          wf = 0.999999999972060354684
+          Alea::CDF.chi_square(214.0, freedom: 100.0).should eq(wf)
+        end
+      end
+    end
   end
 end
