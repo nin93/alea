@@ -1,4 +1,5 @@
 require "../internal/izigg"
+require "../internal/ierr"
 
 module Alea
   struct Random
@@ -6,10 +7,9 @@ module Alea
     # with given mean and standard deviation.
     # Raises ArgumentError if sigma parameter is negative or zero.
     def normal(mean = 0.0, sigma = 1.0)
-      if sigma <= 0.0
-        raise ArgumentError.new "Expected standard deviation to be greater than 0.0."
-      end
-
+      Alea.sanity_check(mean, :mean, :normal)
+      Alea.sanity_check(sigma, :sigma, :normal)
+      Alea.param_check(sigma, :<=, 0.0, :sigma, :normal)
       next_normal mean, sigma
     end
 

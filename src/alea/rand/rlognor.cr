@@ -1,3 +1,4 @@
+require "../internal/ierr"
 require "./rnorm"
 
 module Alea
@@ -6,10 +7,9 @@ module Alea
     # mean and standard deviation of the underlying normal distribution.
     # Raises ArgumentError if sigma parameter is negative or zero.
     def lognormal(mean = 0.0, sigma = 1.0)
-      if sigma <= 0.0
-        raise ArgumentError.new "Expected standard deviation to be greater than 0.0."
-      end
-
+      Alea.sanity_check(mean, :mean, :lognormal)
+      Alea.sanity_check(sigma, :sigma, :lognormal)
+      Alea.param_check(sigma, :<=, 0.0, :sigma, :lognormal)
       next_lognormal mean, sigma
     end
 

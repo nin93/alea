@@ -6,10 +6,10 @@ module Alea
     # Named arguments are mandatory to prevent ambiguity.
     # Raises ArgumentError if parameters are negative or zero.
     def beta(*, a, b)
-      if a <= 0.0 || b <= 0.0
-        raise ArgumentError.new "Expected shape parameters to be greater than 0.0."
-      end
-
+      Alea.sanity_check(a, :a, :beta)
+      Alea.sanity_check(b, :b, :beta)
+      Alea.param_check(a, :<=, 0.0, :a, :beta)
+      Alea.param_check(b, :<=, 0.0, :b, :beta)
       next_beta a: a, b: b
     end
 

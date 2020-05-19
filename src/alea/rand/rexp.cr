@@ -1,4 +1,5 @@
 require "../internal/izigg"
+require "../internal/ierr"
 
 module Alea
   struct Random
@@ -6,10 +7,8 @@ module Alea
     # Scale parameter is lambda^-1.
     # Raises ArgumentError if parameter is negative or zero.
     def exponential(scale = 1.0)
-      if scale <= 0.0
-        raise ArgumentError.new "Expected scale parameter to be greater than 0.0."
-      end
-
+      Alea.sanity_check(scale, :scale, :exponential)
+      Alea.param_check(scale, :<=, 0.0, :scale, :exponential)
       next_exponential scale
     end
 
