@@ -3,9 +3,16 @@ require "../internal/ierr"
 
 module Alea
   struct Random
-    # Generate a normal-distributed random `Float64`
-    # with given mean and standard deviation.
-    # Raises ArgumentError if sigma parameter is negative or zero.
+    # Generate a *normal-distributed*, pseudo-random `Float64`.
+    #
+    # Parameters:
+    # - **mean**: centrality parameter, or mean of the distribution
+    # - **sigma**: scale parameter, or standard deviation of the distribution
+    #
+    # Raises:
+    # - `Alea::NaNError` if any of the arguments is NaN
+    # - `Alea::InfinityError` if any of the arguments is Infinity
+    # - `Alea::UndefinedError` if **sigma** is negative or zero
     def normal(mean = 0.0, sigma = 1.0)
       Alea.sanity_check(mean, :mean, :normal)
       Alea.sanity_check(sigma, :sigma, :normal)
@@ -13,8 +20,9 @@ module Alea
       next_normal mean, sigma
     end
 
-    # Generate a normal-distributed random `Float64`
-    # with mean 0.0 and standard deviation 1.0.
+    # :nodoc:
+    # Unwrapped version of `normal`.
+    # Generate a *normal-distributed*, pseudo-random `Float64`.
     def next_normal : Float64
       while true
         r = @prng.next_u >> 12
@@ -40,8 +48,9 @@ module Alea
     # This are written to allow any combination of
     # argument types and avoid tedious manual casting.
     {% for t1 in ["Int".id, "Float".id] %}
-      # Generate a normal-distributed random `Float64`
-      # with given mean and standard deviation 1.0.
+      # :nodoc:
+      # Unwrapped version of `normal`.
+      # Generate a *normal-distributed*, pseudo-random `Float64`.
       def next_normal(mean : {{t1}}) : Float64
         next_normal + mean
       end
@@ -51,8 +60,9 @@ module Alea
     # argument types and avoid tedious manual casting.
     {% for t1 in ["Int".id, "Float".id] %}
       {% for t2 in ["Int".id, "Float".id] %}
-        # Generate a normal-distributed random `Float64`
-        # with given mean and standard deviation.
+        # :nodoc:
+        # Unwrapped version of `normal`.
+        # Generate a *normal-distributed*, pseudo-random `Float64`.
         def next_normal(mean : {{t1}}, sigma : {{t2}}) : Float64
           next_normal * sigma + mean
         end
