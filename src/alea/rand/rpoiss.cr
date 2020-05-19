@@ -5,10 +5,8 @@ module Alea
     # Generate a poisson-distributed random `Int64` with given lambda parameter.
     # Raises ArgumentError if lambda parameter is negative or zero.
     def poisson(lam = 1.0)
-      unless lam > 0.0
-        raise ArgumentError.new "Expected lambda to be greater than 0.0"
-      end
-
+      Alea.sanity_check(lam, :lam, :poisson)
+      Alea.param_check(lam, :<=, 0.0, :lam, :poisson)
       next_poisson lam
     end
 
