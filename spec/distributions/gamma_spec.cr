@@ -26,26 +26,50 @@ describe Alea do
           SpecRng.gamma 1.0_f64, 1.0_f64
         end
 
-        it "raises ArgumentError if shape is 0.0" do
-          expect_raises(ArgumentError) do
+        it "raises Alea::NaNError if shape is NaN" do
+          expect_raises(Alea::NaNError) do
+            SpecRng.gamma shape: 0.0 / 0.0
+          end
+        end
+
+        it "raises Alea::InfinityError if shape is Infinity" do
+          expect_raises(Alea::InfinityError) do
+            SpecRng.gamma shape: 1.0 / 0.0
+          end
+        end
+
+        it "raises Alea::NaNError if scale NaN" do
+          expect_raises(Alea::NaNError) do
+            SpecRng.gamma 1.0, scale: 0.0 / 0.0
+          end
+        end
+
+        it "raises Alea::InfinityError if scale Infinity" do
+          expect_raises(Alea::InfinityError) do
+            SpecRng.gamma 1.0, scale: 1.0 / 0.0
+          end
+        end
+
+        it "raises Alea::UndefinedError if shape is 0.0" do
+          expect_raises(Alea::UndefinedError) do
             SpecRng.gamma shape: 0.0
           end
         end
 
-        it "raises ArgumentError if shape is negative" do
-          expect_raises(ArgumentError) do
+        it "raises Alea::UndefinedError if shape is negative" do
+          expect_raises(Alea::UndefinedError) do
             SpecRng.gamma shape: -1.0
           end
         end
 
-        it "raises ArgumentError if scale is 0.0" do
-          expect_raises(ArgumentError) do
+        it "raises Alea::UndefinedError if scale is 0.0" do
+          expect_raises(Alea::UndefinedError) do
             SpecRng.gamma 1.0, scale: 0.0
           end
         end
 
-        it "raises ArgumentError if scale is negative" do
-          expect_raises(ArgumentError) do
+        it "raises Alea::UndefinedError if scale is negative" do
+          expect_raises(Alea::UndefinedError) do
             SpecRng.gamma 1.0, scale: -1.0
           end
         end

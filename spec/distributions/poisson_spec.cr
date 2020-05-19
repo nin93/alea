@@ -15,14 +15,20 @@ describe Alea do
           SpecRng.poisson 1.0_f64
         end
 
-        it "raises ArgumentError if lambda is 0.0" do
-          expect_raises(ArgumentError) do
+        it "raises Alea::InfinityError if lambda is Infinity" do
+          expect_raises(Alea::InfinityError) do
+            SpecRng.poisson lam: 1.0 / 0.0
+          end
+        end
+
+        it "raises Alea::UndefinedError if lambda is 0.0" do
+          expect_raises(Alea::UndefinedError) do
             SpecRng.poisson lam: 0.0
           end
         end
 
-        it "raises ArgumentError if lambda is negative" do
-          expect_raises(ArgumentError) do
+        it "raises Alea::UndefinedError if lambda is negative" do
+          expect_raises(Alea::UndefinedError) do
             SpecRng.poisson lam: -1.0
           end
         end
@@ -38,6 +44,10 @@ describe Alea do
         it "accepts any sized Float as argument(s)" do
           SpecRng.next_poisson 1.0_f32
           SpecRng.next_poisson 1.0_f64
+        end
+
+        it "returns 0.0 if lambda is 0.0" do
+          SpecRng.next_poisson(lam: 0.0).should eq(0.0)
         end
 
         it "generates poisson-distributed random values with lambda 1.0" do

@@ -1,13 +1,14 @@
+require "../internal/ierr"
+
 module Alea
   struct Random
     # Generate a laplace-distributed random `Float64`
     # with given center and scale.
     # Raises ArgumentError if scale parameter is negative or zero.
     def laplace(mean = 0.0, scale = 1.0)
-      if scale <= 0.0
-        raise ArgumentError.new "Expected scale parameter to be greater than 0.0."
-      end
-
+      Alea.sanity_check(mean, :mean, :laplace)
+      Alea.sanity_check(scale, :scale, :laplace)
+      Alea.param_check(scale, :<=, 0.0, :scale, :laplace)
       next_laplace mean, scale
     end
 

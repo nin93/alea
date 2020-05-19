@@ -1,3 +1,4 @@
+require "../internal/ierr"
 require "./rnorm"
 require "./rexp"
 
@@ -7,10 +8,10 @@ module Alea
     # with given shape and scale.
     # Raises ArgumentError if parameters are negative or zero.
     def gamma(shape, scale = 1.0)
-      if shape <= 0.0 || scale <= 0.0
-        raise ArgumentError.new "Expected shape and scale parameters to be greater than 0.0."
-      end
-
+      Alea.sanity_check(shape, :shape, :gamma)
+      Alea.sanity_check(scale, :scale, :gamma)
+      Alea.param_check(shape, :<=, 0.0, :shape, :gamma)
+      Alea.param_check(scale, :<=, 0.0, :scale, :gamma)
       next_gamma shape, scale
     end
 

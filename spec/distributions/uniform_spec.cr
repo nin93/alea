@@ -18,32 +18,32 @@ describe Alea do
           {% end %}
         end
 
-        it "raises ArgumentError if max is 0" do
-          expect_raises(ArgumentError) do
+        it "raises Alea::UndefinedError if max is 0" do
+          expect_raises(Alea::UndefinedError) do
             SpecRng.uint max: 0
           end
         end
 
-        it "raises ArgumentError if max is negative" do
-          expect_raises(ArgumentError) do
+        it "raises Alea::UndefinedError if max is negative" do
+          expect_raises(Alea::UndefinedError) do
             SpecRng.uint max: -1
           end
         end
 
-        it "raises ArgumentError if range is negative" do
-          expect_raises(ArgumentError) do
+        it "raises Alea::UndefinedError if range is negative" do
+          expect_raises(Alea::UndefinedError) do
             SpecRng.uint (-1..0)
           end
         end
 
-        it "raises ArgumentError if range is badly ordered" do
-          expect_raises(ArgumentError) do
+        it "raises Alea::UndefinedError if range is badly ordered" do
+          expect_raises(Alea::UndefinedError) do
             SpecRng.uint (1..0)
           end
         end
 
-        it "raises ArgumentError if range is badly choosen" do
-          expect_raises(ArgumentError) do
+        it "raises Alea::UndefinedError if range is badly choosen" do
+          expect_raises(Alea::UndefinedError) do
             SpecRng.uint (1...1)
           end
         end
@@ -138,26 +138,62 @@ describe Alea do
           {% end %}
         end
 
-        it "raises ArgumentError if max is 0" do
-          expect_raises(ArgumentError) do
+        it "raises Alea::NaNError if max is NaN" do
+          expect_raises(Alea::NaNError) do
+            SpecRng.float max: 0.0 / 0.0
+          end
+        end
+
+        it "raises Alea::InfinityError if max is Infinity" do
+          expect_raises(Alea::InfinityError) do
+            SpecRng.float max: 1.0 / 0.0
+          end
+        end
+
+        it "raises Alea::UndefinedError if max is 0" do
+          expect_raises(Alea::UndefinedError) do
             SpecRng.float max: 0.0
           end
         end
 
-        it "raises ArgumentError if max is negative" do
-          expect_raises(ArgumentError) do
+        it "raises Alea::UndefinedError if max is negative" do
+          expect_raises(Alea::UndefinedError) do
             SpecRng.float max: -1.0
           end
         end
 
-        it "raises ArgumentError if range is badly ordered" do
-          expect_raises(ArgumentError) do
+        it "raises Alea::NaNError if left bound is NaN" do
+          expect_raises(Alea::NaNError) do
+            SpecRng.float ((0.0 / 0.0)..0.0)
+          end
+        end
+
+        it "raises Alea::InfinityError if left bound is Infinity" do
+          expect_raises(Alea::InfinityError) do
+            SpecRng.float ((1.0 / 0.0)..0.0)
+          end
+        end
+
+        it "raises Alea::NaNError if right bound is NaN" do
+          expect_raises(Alea::NaNError) do
+            SpecRng.float (0.0..(0.0 / 0.0))
+          end
+        end
+
+        it "raises Alea::InfinityError if right bound is Infinity" do
+          expect_raises(Alea::InfinityError) do
+            SpecRng.float (0.0..(1.0 / 0.0))
+          end
+        end
+
+        it "raises Alea::UndefinedError if range is badly ordered" do
+          expect_raises(Alea::UndefinedError) do
             SpecRng.float (1.0..0.0)
           end
         end
 
-        it "raises ArgumentError if range is badly choosen" do
-          expect_raises(ArgumentError) do
+        it "raises Alea::UndefinedError if range is badly choosen" do
+          expect_raises(Alea::UndefinedError) do
             SpecRng.float (1.0...1.0)
           end
         end
@@ -247,14 +283,50 @@ describe Alea do
 
     describe Alea::CDF do
       describe "#uniform" do
-        it "raises ArgumentError if min is equal to max" do
-          expect_raises ArgumentError do
+        it "raises Alea::NaNError if x is NaN" do
+          expect_raises(Alea::NaNError) do
+            Alea::CDF.uniform(0.0 / 0.0, min: 0.0, max: 1.0)
+          end
+        end
+
+        it "raises Alea::InfinityError if x is Infinity" do
+          expect_raises(Alea::InfinityError) do
+            Alea::CDF.uniform(1.0 / 0.0, min: 0.0, max: 1.0)
+          end
+        end
+
+        it "raises Alea::NaNError if min is NaN" do
+          expect_raises(Alea::NaNError) do
+            Alea::CDF.uniform(0.0, min: 0.0 / 0.0, max: 0.0)
+          end
+        end
+
+        it "raises Alea::InfinityError if min is Infinity" do
+          expect_raises(Alea::InfinityError) do
+            Alea::CDF.uniform(0.0, min: 1.0 / 0.0, max: 0.0)
+          end
+        end
+
+        it "raises Alea::NaNError if max is NaN" do
+          expect_raises(Alea::NaNError) do
+            Alea::CDF.uniform(0.0, min: 0.0, max: 0.0 / 0.0)
+          end
+        end
+
+        it "raises Alea::InfinityError if max is Infinity" do
+          expect_raises(Alea::InfinityError) do
+            Alea::CDF.uniform(0.0, min: 0.0, max: 1.0 / 0.0)
+          end
+        end
+
+        it "raises Alea::UndefinedError if min is equal to max" do
+          expect_raises Alea::UndefinedError do
             Alea::CDF.uniform(0.0, min: 0.0, max: 0.0)
           end
         end
 
-        it "raises ArgumentError if range is badly ordered" do
-          expect_raises ArgumentError do
+        it "raises Alea::UndefinedError if range is badly ordered" do
+          expect_raises Alea::UndefinedError do
             Alea::CDF.uniform(0.0, min: 0.0, max: -1.0)
           end
         end
