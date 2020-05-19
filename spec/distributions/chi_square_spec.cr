@@ -21,14 +21,26 @@ describe Alea do
           SpecRng.chi_square 1.0_f64
         end
 
-        it "raises ArgumentError if degrees of freedom are 0.0" do
-          expect_raises(ArgumentError) do
+        it "raises Alea::NaNError if degrees of freedom are NaN" do
+          expect_raises(Alea::NaNError) do
+            SpecRng.chi_square freedom: 0.0 / 0.0
+          end
+        end
+
+        it "raises Alea::InfinityError if degrees of freedom are Infinity" do
+          expect_raises(Alea::InfinityError) do
+            SpecRng.chi_square freedom: 1.0 / 0.0
+          end
+        end
+
+        it "raises Alea::UndefinedError if degrees of freedom are 0.0" do
+          expect_raises(Alea::UndefinedError) do
             SpecRng.chi_square freedom: 0.0
           end
         end
 
-        it "raises ArgumentError if degrees of freedom are negative" do
-          expect_raises(ArgumentError) do
+        it "raises Alea::UndefinedError if degrees of freedom are negative" do
+          expect_raises(Alea::UndefinedError) do
             SpecRng.chi_square freedom: -1.0
           end
         end
@@ -79,14 +91,14 @@ describe Alea do
 
     describe Alea::CDF do
       describe "#chi_square" do
-        it "raises ArgumentError if freedom is equal to 0.0" do
-          expect_raises ArgumentError do
+        it "raises Alea::UndefinedError if freedom is equal to 0.0" do
+          expect_raises Alea::UndefinedError do
             Alea::CDF.chi_square(0.0, freedom: 0.0)
           end
         end
 
-        it "raises ArgumentError if freedom is less than 0.0" do
-          expect_raises ArgumentError do
+        it "raises Alea::UndefinedError if freedom is less than 0.0" do
+          expect_raises Alea::UndefinedError do
             Alea::CDF.chi_square(0.0, freedom: -1.0)
           end
         end

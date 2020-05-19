@@ -26,14 +26,38 @@ describe Alea do
           SpecRng.laplace 1.0_f64, 1.0_f64
         end
 
-        it "raises ArgumentError if scale is 0.0" do
-          expect_raises(ArgumentError) do
+        it "raises Alea::NaNError if mean is NaN" do
+          expect_raises(Alea::NaNError) do
+            SpecRng.laplace mean: 0.0 / 0.0
+          end
+        end
+
+        it "raises Alea::InfinityError if mean is Infinity" do
+          expect_raises(Alea::InfinityError) do
+            SpecRng.laplace mean: 1.0 / 0.0
+          end
+        end
+
+        it "raises Alea::NaNError if scale NaN" do
+          expect_raises(Alea::NaNError) do
+            SpecRng.laplace 1.0, scale: 0.0 / 0.0
+          end
+        end
+
+        it "raises Alea::InfinityError if scale Infinity" do
+          expect_raises(Alea::InfinityError) do
+            SpecRng.laplace 1.0, scale: 1.0 / 0.0
+          end
+        end
+
+        it "raises Alea::UndefinedError if scale is 0.0" do
+          expect_raises(Alea::UndefinedError) do
             SpecRng.laplace 1.0, scale: 0.0
           end
         end
 
-        it "raises ArgumentError if scale is negative" do
-          expect_raises(ArgumentError) do
+        it "raises Alea::UndefinedError if scale is negative" do
+          expect_raises(Alea::UndefinedError) do
             SpecRng.laplace 1.0, scale: -1.0
           end
         end
@@ -135,14 +159,50 @@ describe Alea do
 
     describe Alea::CDF do
       describe "#laplace" do
-        it "raises ArgumentError if scale is equal to 0.0" do
-          expect_raises ArgumentError do
+        it "raises Alea::NaNError if x is NaN" do
+          expect_raises(Alea::NaNError) do
+            Alea::CDF.laplace(0.0 / 0.0)
+          end
+        end
+
+        it "raises Alea::InfinityError if x is Infinity" do
+          expect_raises(Alea::InfinityError) do
+            Alea::CDF.laplace(1.0 / 0.0)
+          end
+        end
+
+        it "raises Alea::NaNError if mean is NaN" do
+          expect_raises(Alea::NaNError) do
+            Alea::CDF.laplace(1.0, mean: 0.0 / 0.0)
+          end
+        end
+
+        it "raises Alea::InfinityError if mean is Infinity" do
+          expect_raises(Alea::InfinityError) do
+            Alea::CDF.laplace(1.0, mean: 1.0 / 0.0)
+          end
+        end
+
+        it "raises Alea::NaNError if scale is NaN" do
+          expect_raises(Alea::NaNError) do
+            Alea::CDF.laplace(1.0, scale: 0.0 / 0.0)
+          end
+        end
+
+        it "raises Alea::InfinityError if scale is Infinity" do
+          expect_raises(Alea::InfinityError) do
+            Alea::CDF.laplace(1.0, scale: 1.0 / 0.0)
+          end
+        end
+
+        it "raises Alea::UndefinedError if scale is equal to 0.0" do
+          expect_raises Alea::UndefinedError do
             Alea::CDF.laplace(0.0, scale: 0.0)
           end
         end
 
-        it "raises ArgumentError if scale is less than 0.0" do
-          expect_raises ArgumentError do
+        it "raises Alea::UndefinedError if scale is less than 0.0" do
+          expect_raises Alea::UndefinedError do
             Alea::CDF.laplace(0.0, scale: -1.0)
           end
         end

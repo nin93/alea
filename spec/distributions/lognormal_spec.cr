@@ -26,14 +26,38 @@ describe Alea do
           SpecRng.lognormal 1.0_f64, 1.0_f64
         end
 
-        it "raises ArgumentError if sigma is 0.0" do
-          expect_raises(ArgumentError) do
+        it "raises Alea::NaNError if mean is NaN" do
+          expect_raises(Alea::NaNError) do
+            SpecRng.lognormal mean: 0.0 / 0.0
+          end
+        end
+
+        it "raises Alea::InfinityError if mean is Infinity" do
+          expect_raises(Alea::InfinityError) do
+            SpecRng.lognormal mean: 1.0 / 0.0
+          end
+        end
+
+        it "raises Alea::NaNError if sigma NaN" do
+          expect_raises(Alea::NaNError) do
+            SpecRng.lognormal 1.0, sigma: 0.0 / 0.0
+          end
+        end
+
+        it "raises Alea::InfinityError if sigma Infinity" do
+          expect_raises(Alea::InfinityError) do
+            SpecRng.lognormal 1.0, sigma: 1.0 / 0.0
+          end
+        end
+
+        it "raises Alea::UndefinedError if sigma is 0.0" do
+          expect_raises(Alea::UndefinedError) do
             SpecRng.lognormal sigma: 0.0
           end
         end
 
-        it "raises ArgumentError if sigma is negative" do
-          expect_raises(ArgumentError) do
+        it "raises Alea::UndefinedError if sigma is negative" do
+          expect_raises(Alea::UndefinedError) do
             SpecRng.lognormal sigma: -1.0
           end
         end
@@ -158,14 +182,50 @@ describe Alea do
 
     describe Alea::CDF do
       describe "#lognormal" do
-        it "raises ArgumentError if stdev is equal to 0.0" do
-          expect_raises ArgumentError do
+        it "raises Alea::NaNError if x is NaN" do
+          expect_raises(Alea::NaNError) do
+            Alea::CDF.lognormal(0.0 / 0.0)
+          end
+        end
+
+        it "raises Alea::InfinityError if x is Infinity" do
+          expect_raises(Alea::InfinityError) do
+            Alea::CDF.lognormal(1.0 / 0.0)
+          end
+        end
+
+        it "raises Alea::NaNError if mean is NaN" do
+          expect_raises(Alea::NaNError) do
+            Alea::CDF.lognormal(0.0, mean: 0.0 / 0.0)
+          end
+        end
+
+        it "raises Alea::InfinityError if mean is Infinity" do
+          expect_raises(Alea::InfinityError) do
+            Alea::CDF.lognormal(0.0, mean: 1.0 / 0.0)
+          end
+        end
+
+        it "raises Alea::NaNError if stdev is NaN" do
+          expect_raises(Alea::NaNError) do
+            Alea::CDF.lognormal(0.0, sigma: 0.0 / 0.0)
+          end
+        end
+
+        it "raises Alea::InfinityError if stdev is Infinity" do
+          expect_raises(Alea::InfinityError) do
+            Alea::CDF.lognormal(0.0, sigma: 1.0 / 0.0)
+          end
+        end
+
+        it "raises Alea::UndefinedError if stdev is equal to 0.0" do
+          expect_raises Alea::UndefinedError do
             Alea::CDF.lognormal(0.0, sigma: 0.0)
           end
         end
 
-        it "raises ArgumentError if stdev is less than 0.0" do
-          expect_raises ArgumentError do
+        it "raises Alea::UndefinedError if stdev is less than 0.0" do
+          expect_raises Alea::UndefinedError do
             Alea::CDF.lognormal(0.0, sigma: -1.0)
           end
         end

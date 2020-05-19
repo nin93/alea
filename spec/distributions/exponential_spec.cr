@@ -21,14 +21,26 @@ describe Alea do
           SpecRng.exponential 1.0_f64
         end
 
-        it "raises ArgumentError if scale is 0.0" do
-          expect_raises(ArgumentError) do
+        it "raises Alea::NaNError if a is NaN" do
+          expect_raises(Alea::NaNError) do
+            SpecRng.exponential scale: 0.0 / 0.0
+          end
+        end
+
+        it "raises Alea::InfinityError if a is Infinity" do
+          expect_raises(Alea::InfinityError) do
+            SpecRng.exponential scale: 1.0 / 0.0
+          end
+        end
+
+        it "raises Alea::UndefinedError if scale is 0.0" do
+          expect_raises(Alea::UndefinedError) do
             SpecRng.exponential scale: 0.0
           end
         end
 
-        it "raises ArgumentError if scale is negative" do
-          expect_raises(ArgumentError) do
+        it "raises Alea::UndefinedError if scale is negative" do
+          expect_raises(Alea::UndefinedError) do
             SpecRng.exponential scale: -1.0
           end
         end
@@ -102,14 +114,38 @@ describe Alea do
 
     describe Alea::CDF do
       describe "#exponential" do
-        it "raises ArgumentError if scale is 0" do
-          expect_raises ArgumentError do
+        it "raises Alea::NaNError if x is NaN" do
+          expect_raises(Alea::NaNError) do
+            Alea::CDF.exponential(0.0 / 0.0)
+          end
+        end
+
+        it "raises Alea::InfinityError if x is Infinity" do
+          expect_raises(Alea::InfinityError) do
+            Alea::CDF.exponential(1.0 / 0.0)
+          end
+        end
+
+        it "raises Alea::NaNError if scale is NaN" do
+          expect_raises(Alea::NaNError) do
+            Alea::CDF.exponential(1.0, scale: 0.0 / 0.0)
+          end
+        end
+
+        it "raises Alea::InfinityError if scale is Infinity" do
+          expect_raises(Alea::InfinityError) do
+            Alea::CDF.exponential(1.0, scale: 1.0 / 0.0)
+          end
+        end
+
+        it "raises Alea::UndefinedError if scale is 0" do
+          expect_raises Alea::UndefinedError do
             Alea::CDF.exponential(0.0, scale: 0.0)
           end
         end
 
-        it "raises ArgumentError if scale is negative" do
-          expect_raises ArgumentError do
+        it "raises Alea::UndefinedError if scale is negative" do
+          expect_raises Alea::UndefinedError do
             Alea::CDF.exponential(0.0, scale: -1.0)
           end
         end
