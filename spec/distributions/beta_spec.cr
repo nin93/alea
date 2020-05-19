@@ -21,26 +21,50 @@ describe Alea do
           SpecRng.beta a: 1.0_f64, b: 1.0_f64
         end
 
-        it "raises ArgumentError if a is 0.0" do
-          expect_raises(ArgumentError) do
+        it "raises Alea::NaNError if a is NaN" do
+          expect_raises(Alea::NaNError) do
+            SpecRng.beta a: 0.0 / 0.0, b: 1.0
+          end
+        end
+
+        it "raises Alea::InfinityError if a is Infinity" do
+          expect_raises(Alea::InfinityError) do
+            SpecRng.beta a: 1.0 / 0.0, b: 1.0
+          end
+        end
+
+        it "raises Alea::NaNError if b is NaN" do
+          expect_raises(Alea::NaNError) do
+            SpecRng.beta a: 1.0, b: 0.0 / 0.0
+          end
+        end
+
+        it "raises Alea::InfinityError if b is Infinity" do
+          expect_raises(Alea::InfinityError) do
+            SpecRng.beta a: 1.0, b: 1.0 / 0.0
+          end
+        end
+
+        it "raises Alea::UndefinedError if a is 0.0" do
+          expect_raises(Alea::UndefinedError) do
             SpecRng.beta a: 0.0, b: 1.0
           end
         end
 
-        it "raises ArgumentError if a is negative" do
-          expect_raises(ArgumentError) do
+        it "raises Alea::UndefinedError if a is negative" do
+          expect_raises(Alea::UndefinedError) do
             SpecRng.beta a: -1.0, b: 1.0
           end
         end
 
-        it "raises ArgumentError if b is 0.0" do
-          expect_raises(ArgumentError) do
+        it "raises Alea::UndefinedError if b is 0.0" do
+          expect_raises(Alea::UndefinedError) do
             SpecRng.beta a: 1.0, b: 0.0
           end
         end
 
-        it "raises ArgumentError if b is negative" do
-          expect_raises(ArgumentError) do
+        it "raises Alea::UndefinedError if b is negative" do
+          expect_raises(Alea::UndefinedError) do
             SpecRng.beta a: 1.0, b: -1.0
           end
         end
