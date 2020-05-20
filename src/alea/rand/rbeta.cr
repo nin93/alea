@@ -2,9 +2,17 @@ require "./rgamma"
 
 module Alea
   struct Random
-    # Generate a beta-distributed random `Float64` in range [0, 1).
+    # Generate a *beta-distributed*, pseudo-random `Float64` in range [0, 1).
     # Named arguments are mandatory to prevent ambiguity.
-    # Raises ArgumentError if parameters are negative or zero.
+    #
+    # Parameters:
+    # - **a**: shape parameter of the distribution
+    # - **b**: shape parameter of the distribution
+    #
+    # Raises:
+    # - `Alea::NaNError` if any of the arguments is NaN
+    # - `Alea::InfinityError` if any of the arguments is Infinity
+    # - `Alea::UndefinedError` if **a** or **b** are negative or zero
     def beta(*, a, b)
       Alea.sanity_check(a, :a, :beta)
       Alea.sanity_check(b, :b, :beta)
@@ -17,7 +25,9 @@ module Alea
     # argument types and avoid tedious manual casting.
     {% for t1 in ["Int".id, "Float".id] %}
       {% for t2 in ["Int".id, "Float".id] %}
-        # Generate a beta-distributed random `Float64` in range [0, 1).
+        # :nodoc:
+        # Unwrapped version of `beta`.
+        # Generate a *beta-distributed*, pseudo-random `Float64` in range [0, 1).
         # Named arguments are mandatory to prevent ambiguity.
         def next_beta(*, a : {{t1}}, b : {{t2}}) : Float64
           if a <= 1.0 && b <= 1.0
