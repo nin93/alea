@@ -23,11 +23,9 @@ module Alea
     # Unwrapped version of `laplace`.
     # Generate a *laplace-distributed*, pseudo-random `Float64`.
     def next_laplace : Float64
-      while true
-        u = @prng.next_f
-        u >= 0.5 && return -Math.log(2.0 - u - u)
-        u > 0.0 && return Math.log(u + u)
-      end
+      u = @prng.next_f
+      u >= 0.5 && return -Math.log(2.0 - u - u)
+      Math.log(u + u)
     end
 
     # This are written to allow any combination of
@@ -37,11 +35,7 @@ module Alea
       # Unwrapped version of `laplace`.
       # Generate a *laplace-distributed*, pseudo-random `Float64`.
       def next_laplace(mean : {{t1}}) : Float64
-        while true
-          u = @prng.next_f
-          u >= 0.5 && return -(Math.log(2.0 - u - u) - mean)
-          u > 0.0 && return Math.log(u + u) + mean
-        end
+        next_laplace + mean
       end
     {% end %}
 
@@ -53,11 +47,7 @@ module Alea
         # Unwrapped version of `laplace`.
         # Generate a *laplace-distributed*, pseudo-random `Float64`.
         def next_laplace(mean : {{t1}}, scale : {{t2}}) : Float64
-          while true
-            u = @prng.next_f
-            u >= 0.5 && return -(Math.log(2.0 - u - u) * scale - mean)
-            u > 0.0 && return Math.log(u + u) * scale + mean
-          end
+          next_laplace * scale + mean
         end
       {% end %}
     {% end %}
