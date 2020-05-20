@@ -5,8 +5,13 @@ module Alea
       @prng.next_u
     end
 
-    # Generate a uniform-distributed `UInt64` in [0, max).
-    # Raises ArgumentError if parameter is negative or zero.
+    # Generate a *uniform-distributed*, pseudo-random `UInt64` in range [0, max).
+    #
+    # Parameters:
+    # - **max**: right bound parameter of range of the distribution
+    #
+    # Raises:
+    # - `Alea::UndefinedError` if **max** is negative or zero
     def uint(max : Int) : UInt64
       # No sanity check here: max is an Int
       Alea.param_check(max, :<=, 0, :max, :uint)
@@ -18,8 +23,17 @@ module Alea
       end
     end
 
-    # Generate a uniform-distributed `UInt64` in a given range.
-    # Raises ArgumentError if range parameter is not a subset of N+.
+    # Generate a *uniform-distributed*, pseudo-random `UInt64` in fixed range.
+    #
+    # Parameters:
+    # - **range**: range parameter, inclusive or exclusive, of the distribution
+    #
+    # See `Range` from the Crystal stdlib for a reference.
+    #
+    # Raises:
+    # - `Alea::UndefinedError` if:
+    #   - **range.end** is less than **range.begin**
+    #   - **range** is not end-inclusive but bounds are the same
     def uint(range : Range(Int, Int)) : UInt64
       unless 0 <= range.begin <= range.end
         raise Alea::UndefinedError.new "Invalid value for `uint': range = #{range}"
@@ -40,15 +54,34 @@ module Alea
       @prng.next_f
     end
 
-    # Generate a uniform-distributed `Float64` in [0.0, max).
-    # Raises ArgumentError if parameter is negative or zero.
+    # Generate a *uniform-distributed*, pseudo-random `Float64` in [0.0, max).
+    #
+    # Parameters:
+    # - **max**: right bound parameter of range of the distribution
+    #
+    # Raises:
+    # - `Alea::NaNError` if any of the arguments is NaN
+    # - `Alea::InfinityError` if any of the arguments is Infinity
+    # - `Alea::UndefinedError` if **max** is negative or zero
     def float(max : Float) : Float64
       Alea.sanity_check(max, :max, :float)
       Alea.param_check(max, :<=, 0.0, :max, :float)
       @prng.next_f * max
     end
 
-    # Generate a uniform-distributed `Float64` in a given range.
+    # Generate a *uniform-distributed*, pseudo-random `Float64` in fixed range.
+    #
+    # Parameters:
+    # - **range**: range parameter, inclusive or exclusive, of the distribution
+    #
+    # See `Range` from the Crystal stdlib for a reference.
+    #
+    # Raises:
+    # - `Alea::NaNError` if any of the arguments is NaN
+    # - `Alea::InfinityError` if any of the arguments is Infinity
+    # - `Alea::UndefinedError` if:
+    #   - **range.end** is less than **range.begin**
+    #   - **range** is not end-inclusive but bounds are the same
     def float(range : Range(Float, Float)) : Float64
       Alea.sanity_check(range.begin, :left_bound, :float)
       Alea.sanity_check(range.end, :right_bound, :float)
