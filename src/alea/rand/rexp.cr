@@ -3,17 +3,24 @@ require "../internal/ierr"
 
 module Alea
   struct Random
-    # Generate a exp-distributed random `Float64` with given scale.
-    # Scale parameter is lambda^-1.
-    # Raises ArgumentError if parameter is negative or zero.
+    # Generate a *exp-distributed*, pseudo-random `Float64`.
+    #
+    # Parameters:
+    # - **scale**: scale parameter of the distribution, also mentioned as *1/lambda*
+    #
+    # Raises:
+    # - `Alea::NaNError` if any of the arguments is NaN
+    # - `Alea::InfinityError` if any of the arguments is Infinity
+    # - `Alea::UndefinedError` if **scale** is negative or zero
     def exponential(scale = 1.0)
       Alea.sanity_check(scale, :scale, :exponential)
       Alea.param_check(scale, :<=, 0.0, :scale, :exponential)
       next_exponential scale
     end
 
-    # Generate a exp-distributed random `Float64` with scale 1.0.
-    # Scale parameter is lambda^-1.
+    # :nodoc:
+    # Unwrapped version of `exponential`.
+    # Generate a *exp-distributed*, pseudo-random `Float64`.
     def next_exponential : Float64
       while true
         r = @prng.next_u >> 12
@@ -31,8 +38,9 @@ module Alea
     # This are written to allow any combination of
     # argument types and avoid tedious manual casting.
     {% for t1 in ["Int".id, "Float".id] %}
-      # Generate a exp-distributed random `Float64` with given scale.
-      # Scale parameter is lambda^-1.
+      # :nodoc:
+      # Unwrapped version of `exponential`.
+      # Generate a *exp-distributed*, pseudo-random `Float64`.
       def next_exponential(scale : {{t1}}) : Float64
         next_exponential * scale
       end
