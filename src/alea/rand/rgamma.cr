@@ -4,9 +4,16 @@ require "./rexp"
 
 module Alea
   struct Random
-    # Generate a gamma-distributed random `Float64`
-    # with given shape and scale.
-    # Raises ArgumentError if parameters are negative or zero.
+    # Generate a *gamma-distributed*, pseudo-random `Float64`.
+    #
+    # Parameters:
+    # - **shape**: shape parameter of the distribution, sometimes mentioned as *k*
+    # - **scale**: scale parameter of the distribution, sometimes mentioned as *theta*
+    #
+    # Raises:
+    # - `Alea::NaNError` if any of the arguments is NaN
+    # - `Alea::InfinityError` if any of the arguments is Infinity
+    # - `Alea::UndefinedError` if **shape** or **scale** are negative or zero
     def gamma(shape, scale = 1.0)
       Alea.sanity_check(shape, :shape, :gamma)
       Alea.sanity_check(scale, :scale, :gamma)
@@ -18,7 +25,9 @@ module Alea
     # This are written to allow any combination of
     # argument types and avoid tedious manual casting.
     {% for t1 in ["Int".id, "Float".id] %}
-      # Generate a gamma-distributed random `Float64` with given shape.
+      # :nodoc:
+      # Unwrapped version of `gamma`.
+      # Generate a *gamma-distributed*, pseudo-random `Float64`.
       def next_gamma(shape : {{t1}}) : Float64
         shape == 1.0 && return next_exponential
         shape == 0.0 && return 0.0
@@ -57,8 +66,9 @@ module Alea
     # argument types and avoid tedious manual casting.
     {% for t1 in ["Int".id, "Float".id] %}
       {% for t2 in ["Int".id, "Float".id] %}
-        # Generate a gamma-distributed random `Float64`
-        # with given shape and scale.
+        # :nodoc:
+        # Unwrapped version of `gamma`.
+        # Generate a *gamma-distributed*, pseudo-random `Float64`.
         def next_gamma(shape : {{t1}}, scale : {{t2}}) : Float64
           next_gamma(shape) * scale
         end
