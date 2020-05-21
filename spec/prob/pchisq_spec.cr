@@ -6,37 +6,37 @@ describe Alea do
       describe "#chi_square" do
         it "raises Alea::NaNError if x is NaN" do
           expect_raises(Alea::NaNError) do
-            Alea::CDF.chi_square(0.0 / 0.0, freedom: 1.0)
+            Alea::CDF.chi_square(0.0 / 0.0, df: 1.0)
           end
         end
 
         it "raises Alea::InfinityError if x is Infinity" do
           expect_raises(Alea::InfinityError) do
-            Alea::CDF.chi_square(1.0 / 0.0, freedom: 1.0)
+            Alea::CDF.chi_square(1.0 / 0.0, df: 1.0)
           end
         end
 
         it "raises Alea::NaNError if degrees of freedom are NaN" do
           expect_raises(Alea::NaNError) do
-            Alea::CDF.chi_square(0.0, freedom: 0.0 / 0.0)
+            Alea::CDF.chi_square(0.0, df: 0.0 / 0.0)
           end
         end
 
         it "raises Alea::InfinityError if degrees of freedom are Infinity" do
           expect_raises(Alea::InfinityError) do
-            Alea::CDF.chi_square(0.0, freedom: 1.0 / 0.0)
+            Alea::CDF.chi_square(0.0, df: 1.0 / 0.0)
           end
         end
 
         it "raises Alea::UndefinedError if freedom is equal to 0.0" do
           expect_raises Alea::UndefinedError do
-            Alea::CDF.chi_square(0.0, freedom: 0.0)
+            Alea::CDF.chi_square(0.0, df: 0.0)
           end
         end
 
         it "raises Alea::UndefinedError if freedom is less than 0.0" do
           expect_raises Alea::UndefinedError do
-            Alea::CDF.chi_square(0.0, freedom: -1.0)
+            Alea::CDF.chi_square(0.0, df: -1.0)
           end
         end
 
@@ -62,7 +62,7 @@ describe Alea do
           tol = 1.0e-14
           # From WolframAlpha
           wf = 6.6117105610342475e-06
-          cv = Alea::CDF.chi_square(0.5, freedom: 10.0)
+          cv = Alea::CDF.chi_square(0.5, df: 10.0)
           cv.should be_close(wf, cv * tol)
         end
 
@@ -71,7 +71,7 @@ describe Alea do
           tol = 1.0e-14
           # From WolframAlpha
           wf = 0.00365984682734371234
-          cv = Alea::CDF.chi_square(2.0, freedom: 10.0)
+          cv = Alea::CDF.chi_square(2.0, df: 10.0)
           cv.should be_close(wf, cv * tol)
         end
 
@@ -80,7 +80,7 @@ describe Alea do
           tol = 1.0e-14
           # From WolframAlpha
           wf = 0.99999999972060354684
-          cv = Alea::CDF.chi_square(214.0, freedom: 100.0)
+          cv = Alea::CDF.chi_square(214.0, df: 100.0)
           cv.should be_close(wf, cv * tol)
         end
       end

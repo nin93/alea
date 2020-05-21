@@ -135,7 +135,7 @@ Arguments passed to `Alea::CDF` methods to shape the distributions are analogous
 ```crystal
 Alea::CDF.normal(0.0)                        # => 0.5
 Alea::CDF.normal(2.0, loc: 1.0, sigma: 0.5) # => 0.9772498680518208
-Alea::CDF.chi_square(5.279, freedom: 5.0)    # => 0.6172121213841358
+Alea::CDF.chi_square(5.279, df: 5.0)    # => 0.6172121213841358
 ```
 
 ### Supported Distributions

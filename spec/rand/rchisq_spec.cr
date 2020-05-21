@@ -23,25 +23,25 @@ describe Alea do
 
         it "raises Alea::NaNError if degrees of freedom are NaN" do
           expect_raises(Alea::NaNError) do
-            SpecRng.chi_square freedom: 0.0 / 0.0
+            SpecRng.chi_square df: 0.0 / 0.0
           end
         end
 
         it "raises Alea::InfinityError if degrees of freedom are Infinity" do
           expect_raises(Alea::InfinityError) do
-            SpecRng.chi_square freedom: 1.0 / 0.0
+            SpecRng.chi_square df: 1.0 / 0.0
           end
         end
 
         it "raises Alea::UndefinedError if degrees of freedom are 0.0" do
           expect_raises(Alea::UndefinedError) do
-            SpecRng.chi_square freedom: 0.0
+            SpecRng.chi_square df: 0.0
           end
         end
 
         it "raises Alea::UndefinedError if degrees of freedom are negative" do
           expect_raises(Alea::UndefinedError) do
-            SpecRng.chi_square freedom: -1.0
+            SpecRng.chi_square df: -1.0
           end
         end
       end
@@ -69,7 +69,7 @@ describe Alea do
           ans = 0.0
 
           SpecNdata.times do
-            ran = SpecRng.next_chi_square freedom: 3.0
+            ran = SpecRng.next_chi_square df: 3.0
             ans += ran
             ary << ran
           end
