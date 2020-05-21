@@ -133,15 +133,15 @@ Given *X* ~ *D* and a fixed quantile *x*, CDFs are defined as the functions that
 Arguments passed to `Alea::CDF` methods to shape the distributions are analogous to those used for sampling:
 
 ```crystal
-Alea::CDF.normal(0.0)                        # => 0.5
+Alea::CDF.normal(0.0)                       # => 0.5
 Alea::CDF.normal(2.0, loc: 1.0, sigma: 0.5) # => 0.9772498680518208
-Alea::CDF.chi_square(5.279, df: 5.0)    # => 0.6172121213841358
+Alea::CDF.chi_square(5.279, df: 5.0)        # => 0.6172121213841358
 ```
 
 ### Supported Distributions
 
 Current CDFs estimations are implemented for the following distributions:
-  - Chi-Squared
+  - Chi-Square
   - Exponential
   - Laplace
   - Log-Normal
