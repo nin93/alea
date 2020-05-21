@@ -83,8 +83,8 @@ module Alea
     #   - **range.end** is less than **range.begin**
     #   - **range** is not end-inclusive but bounds are the same
     def float(range : Range(Float, Float)) : Float64
-      Alea.sanity_check(range.begin, :left_bound, :float)
-      Alea.sanity_check(range.end, :right_bound, :float)
+      Alea.sanity_check(range.begin, :"range.begin", :float)
+      Alea.sanity_check(range.end, :"range.end", :float)
       unless range.begin <= range.end
         raise Alea::UndefinedError.new "Invalid value for `float': range = #{range}"
       end
