@@ -5,18 +5,18 @@ module Alea
     # Generate a *laplace-distributed*, pseudo-random `Float64`.
     #
     # Parameters:
-    # - **mean**: centrality parameter, or mean of the distribution
+    # - **loc**: centrality parameter, or mean of the distribution
     # - **scale**: scale parameter of the distribution
     #
     # Raises:
     # - `Alea::NaNError` if any of the arguments is NaN
     # - `Alea::InfinityError` if any of the arguments is Infinity
     # - `Alea::UndefinedError` if **scale** is negative or zero
-    def laplace(mean = 0.0, scale = 1.0)
-      Alea.sanity_check(mean, :mean, :laplace)
+    def laplace(loc = 0.0, scale = 1.0)
+      Alea.sanity_check(loc, :loc, :laplace)
       Alea.sanity_check(scale, :scale, :laplace)
       Alea.param_check(scale, :<=, 0.0, :scale, :laplace)
-      next_laplace mean, scale
+      next_laplace loc, scale
     end
 
     # :nodoc:
@@ -34,8 +34,8 @@ module Alea
       # :nodoc:
       # Unwrapped version of `laplace`.
       # Generate a *laplace-distributed*, pseudo-random `Float64`.
-      def next_laplace(mean : {{t1}}) : Float64
-        next_laplace + mean
+      def next_laplace(loc : {{t1}}) : Float64
+        next_laplace + loc
       end
     {% end %}
 
@@ -46,8 +46,8 @@ module Alea
         # :nodoc:
         # Unwrapped version of `laplace`.
         # Generate a *laplace-distributed*, pseudo-random `Float64`.
-        def next_laplace(mean : {{t1}}, scale : {{t2}}) : Float64
-          next_laplace * scale + mean
+        def next_laplace(loc : {{t1}}, scale : {{t2}}) : Float64
+          next_laplace * scale + loc
         end
       {% end %}
     {% end %}

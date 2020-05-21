@@ -16,15 +16,15 @@ describe Alea do
           end
         end
 
-        it "raises Alea::NaNError if mean is NaN" do
+        it "raises Alea::NaNError if loc is NaN" do
           expect_raises(Alea::NaNError) do
-            Alea::CDF.normal(0.0, mean: 0.0 / 0.0)
+            Alea::CDF.normal(0.0, loc: 0.0 / 0.0)
           end
         end
 
-        it "raises Alea::InfinityError if mean is Infinity" do
+        it "raises Alea::InfinityError if loc is Infinity" do
           expect_raises(Alea::InfinityError) do
-            Alea::CDF.normal(0.0, mean: 1.0 / 0.0)
+            Alea::CDF.normal(0.0, loc: 1.0 / 0.0)
           end
         end
 
@@ -57,7 +57,7 @@ describe Alea do
         end
 
         it "returns the cdf of 2.0 in N(2, 1)" do
-          Alea::CDF.normal(2.0, mean: 2.0).should eq(0.5)
+          Alea::CDF.normal(2.0, loc: 2.0).should eq(0.5)
         end
 
         it "returns the cdf of 2.0 in N(0, 0.5)" do
@@ -65,11 +65,11 @@ describe Alea do
         end
 
         it "returns the cdf of 2.0 in N(1, 0.5)" do
-          Alea::CDF.normal(2.0, mean: 1.0, sigma: 0.5).should eq(0.9772498680518208)
+          Alea::CDF.normal(2.0, loc: 1.0, sigma: 0.5).should eq(0.9772498680518208)
         end
 
         it "returns the cdf of -2.0 in N(-2, 1)" do
-          Alea::CDF.normal(-2.0, mean: -2.0).should eq(0.5)
+          Alea::CDF.normal(-2.0, loc: -2.0).should eq(0.5)
         end
 
         it "returns the cdf of -2.0 in N(0, 0.5)" do
@@ -77,7 +77,7 @@ describe Alea do
         end
 
         it "returns the cdf of -2.0 in N(1, 0.5)" do
-          Alea::CDF.normal(-2.0, mean: 1.0, sigma: 0.5).should eq(9.865876449133282e-10)
+          Alea::CDF.normal(-2.0, loc: 1.0, sigma: 0.5).should eq(9.865876449133282e-10)
         end
       end
     end

@@ -6,18 +6,18 @@ module Alea
     # Generate a *lognormal-distributed*, pseudo-random `Float64`.
     #
     # Parameters:
-    # - **mean**: centrality parameter, or mean of the underlying normal distribution
+    # - **loc**: centrality parameter, or mean of the underlying normal distribution
     # - **sigma**: scale parameter, or standard deviation of the underlying normal distribution
     #
     # Raises:
     # - `Alea::NaNError` if any of the arguments is NaN
     # - `Alea::InfinityError` if any of the arguments is Infinity
     # - `Alea::UndefinedError` if **sigma** is negative or zero
-    def lognormal(mean = 0.0, sigma = 1.0)
-      Alea.sanity_check(mean, :mean, :lognormal)
+    def lognormal(loc = 0.0, sigma = 1.0)
+      Alea.sanity_check(loc, :loc, :lognormal)
       Alea.sanity_check(sigma, :sigma, :lognormal)
       Alea.param_check(sigma, :<=, 0.0, :sigma, :lognormal)
-      next_lognormal mean, sigma
+      next_lognormal loc, sigma
     end
 
     # :nodoc:
@@ -33,8 +33,8 @@ module Alea
       # :nodoc:
       # Unwrapped version of `lognormal`.
       # Generate a *lognormal-distributed*, pseudo-random `Float64`.
-      def next_lognormal(mean : {{t1}}) : Float64
-        Math.exp(next_normal + mean)
+      def next_lognormal(loc : {{t1}}) : Float64
+        Math.exp(next_normal + loc)
       end
     {% end %}
 
@@ -45,8 +45,8 @@ module Alea
         # :nodoc:
         # Unwrapped version of `lognormal`.
         # Generate a *lognormal-distributed*, pseudo-random `Float64`.
-        def next_lognormal(mean : {{t1}}, sigma : {{t2}}) : Float64
-          Math.exp(next_normal * sigma + mean)
+        def next_lognormal(loc : {{t1}}, sigma : {{t2}}) : Float64
+          Math.exp(next_normal * sigma + loc)
         end
       {% end %}
     {% end %}

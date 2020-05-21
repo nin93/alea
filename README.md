@@ -106,8 +106,8 @@ In order to avoid them (checks might be slow) you must use their unsafe version 
 
 ```crystal
 random = Alea::Random.new
-random.normal(mean: 0, sigma: 0)      # raises Alea::UndefinedError: sigma is 0 or negative.
-random.next_normal(mean: 0, sigma: 0) # these might raise internal exceptions.
+random.normal(loc: 0, sigma: 0)      # raises Alea::UndefinedError: sigma is 0 or negative.
+random.next_normal(loc: 0, sigma: 0) # these might raise internal exceptions.
 ```
 
 Timings are definitely comparable, though. See the [benchmarks](https://github.com/nin93/alea/tree/master/benchmarks) for direct comparisons between those methods.
@@ -134,7 +134,7 @@ Arguments passed to `Alea::CDF` methods to shape the distributions are analogous
 
 ```crystal
 Alea::CDF.normal(0.0)                        # => 0.5
-Alea::CDF.normal(2.0, mean: 1.0, sigma: 0.5) # => 0.9772498680518208
+Alea::CDF.normal(2.0, loc: 1.0, sigma: 0.5) # => 0.9772498680518208
 Alea::CDF.chi_square(5.279, freedom: 5.0)    # => 0.6172121213841358
 ```
 

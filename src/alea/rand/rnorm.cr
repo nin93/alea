@@ -6,18 +6,18 @@ module Alea
     # Generate a *normal-distributed*, pseudo-random `Float64`.
     #
     # Parameters:
-    # - **mean**: centrality parameter, or mean of the distribution
+    # - **loc**: centrality parameter, or mean of the distribution
     # - **sigma**: scale parameter, or standard deviation of the distribution
     #
     # Raises:
     # - `Alea::NaNError` if any of the arguments is NaN
     # - `Alea::InfinityError` if any of the arguments is Infinity
     # - `Alea::UndefinedError` if **sigma** is negative or zero
-    def normal(mean = 0.0, sigma = 1.0)
-      Alea.sanity_check(mean, :mean, :normal)
+    def normal(loc = 0.0, sigma = 1.0)
+      Alea.sanity_check(loc, :loc, :normal)
       Alea.sanity_check(sigma, :sigma, :normal)
       Alea.param_check(sigma, :<=, 0.0, :sigma, :normal)
-      next_normal mean, sigma
+      next_normal loc, sigma
     end
 
     # :nodoc:
@@ -51,8 +51,8 @@ module Alea
       # :nodoc:
       # Unwrapped version of `normal`.
       # Generate a *normal-distributed*, pseudo-random `Float64`.
-      def next_normal(mean : {{t1}}) : Float64
-        next_normal + mean
+      def next_normal(loc : {{t1}}) : Float64
+        next_normal + loc
       end
     {% end %}
 
@@ -63,8 +63,8 @@ module Alea
         # :nodoc:
         # Unwrapped version of `normal`.
         # Generate a *normal-distributed*, pseudo-random `Float64`.
-        def next_normal(mean : {{t1}}, sigma : {{t2}}) : Float64
-          next_normal * sigma + mean
+        def next_normal(loc : {{t1}}, sigma : {{t2}}) : Float64
+          next_normal * sigma + loc
         end
       {% end %}
     {% end %}

@@ -26,15 +26,15 @@ describe Alea do
           SpecRng.laplace 1.0_f64, 1.0_f64
         end
 
-        it "raises Alea::NaNError if mean is NaN" do
+        it "raises Alea::NaNError if loc is NaN" do
           expect_raises(Alea::NaNError) do
-            SpecRng.laplace mean: 0.0 / 0.0
+            SpecRng.laplace loc: 0.0 / 0.0
           end
         end
 
-        it "raises Alea::InfinityError if mean is Infinity" do
+        it "raises Alea::InfinityError if loc is Infinity" do
           expect_raises(Alea::InfinityError) do
-            SpecRng.laplace mean: 1.0 / 0.0
+            SpecRng.laplace loc: 1.0 / 0.0
           end
         end
 
@@ -86,7 +86,7 @@ describe Alea do
           SpecRng.next_laplace 1.0_f64, 1.0_f64
         end
 
-        it "generates laplace-distributed random values with mean 0.0 and scale 1.0" do
+        it "generates laplace-distributed random values with loc 0.0 and scale 1.0" do
           ary = Array(Float64).new
           ans = 0.0
 
@@ -109,12 +109,12 @@ describe Alea do
           stdev.should be_close(stdev_r, tol * stdev_r)
         end
 
-        it "generates laplace-distributed random values with fixed mean and scale 1.0" do
+        it "generates laplace-distributed random values with fixed loc and scale 1.0" do
           ary = Array(Float64).new
           ans = 0.0
 
           SpecNdata.times do
-            ran = SpecRng.next_laplace mean: 3.0
+            ran = SpecRng.next_laplace loc: 3.0
             ans += ran
             ary << ran
           end
@@ -137,7 +137,7 @@ describe Alea do
           ans = 0.0
 
           SpecNdata.times do
-            ran = SpecRng.next_laplace mean: 3.0, scale: 1.5
+            ran = SpecRng.next_laplace loc: 3.0, scale: 1.5
             ans += ran
             ary << ran
           end

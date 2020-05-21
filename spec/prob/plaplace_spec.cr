@@ -16,15 +16,15 @@ describe Alea do
           end
         end
 
-        it "raises Alea::NaNError if mean is NaN" do
+        it "raises Alea::NaNError if loc is NaN" do
           expect_raises(Alea::NaNError) do
-            Alea::CDF.laplace(1.0, mean: 0.0 / 0.0)
+            Alea::CDF.laplace(1.0, loc: 0.0 / 0.0)
           end
         end
 
-        it "raises Alea::InfinityError if mean is Infinity" do
+        it "raises Alea::InfinityError if loc is Infinity" do
           expect_raises(Alea::InfinityError) do
-            Alea::CDF.laplace(1.0, mean: 1.0 / 0.0)
+            Alea::CDF.laplace(1.0, loc: 1.0 / 0.0)
           end
         end
 
@@ -57,7 +57,7 @@ describe Alea do
         end
 
         it "returns the cdf of 2.0 in Laplace(2, 1)" do
-          Alea::CDF.laplace(2.0, mean: 2.0).should eq(0.5)
+          Alea::CDF.laplace(2.0, loc: 2.0).should eq(0.5)
         end
 
         it "returns the cdf of 2.0 in Laplace(0, 0.5)" do
@@ -65,11 +65,11 @@ describe Alea do
         end
 
         it "returns the cdf of 2.0 in Laplace(1, 0.5)" do
-          Alea::CDF.laplace(2.0, mean: 1.0, scale: 0.5).should eq(0.9323323583816936)
+          Alea::CDF.laplace(2.0, loc: 1.0, scale: 0.5).should eq(0.9323323583816936)
         end
 
         it "returns the cdf of -2.0 in Laplace(-2, 1)" do
-          Alea::CDF.laplace(-2.0, mean: -2.0).should eq(0.5)
+          Alea::CDF.laplace(-2.0, loc: -2.0).should eq(0.5)
         end
 
         it "returns the cdf of -2.0 in Laplace(0, 0.5)" do
@@ -77,7 +77,7 @@ describe Alea do
         end
 
         it "returns the cdf of -2.0 in Laplace(1, 0.5)" do
-          Alea::CDF.laplace(-2.0, mean: 1.0, scale: 0.5).should eq(0.0012393760883331792)
+          Alea::CDF.laplace(-2.0, loc: 1.0, scale: 0.5).should eq(0.0012393760883331792)
         end
       end
     end

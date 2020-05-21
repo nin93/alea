@@ -26,15 +26,15 @@ describe Alea do
           SpecRng.lognormal 1.0_f64, 1.0_f64
         end
 
-        it "raises Alea::NaNError if mean is NaN" do
+        it "raises Alea::NaNError if loc is NaN" do
           expect_raises(Alea::NaNError) do
-            SpecRng.lognormal mean: 0.0 / 0.0
+            SpecRng.lognormal loc: 0.0 / 0.0
           end
         end
 
-        it "raises Alea::InfinityError if mean is Infinity" do
+        it "raises Alea::InfinityError if loc is Infinity" do
           expect_raises(Alea::InfinityError) do
-            SpecRng.lognormal mean: 1.0 / 0.0
+            SpecRng.lognormal loc: 1.0 / 0.0
           end
         end
 
@@ -86,7 +86,7 @@ describe Alea do
           SpecRng.next_lognormal 1.0_f64, 1.0_f64
         end
 
-        it "generates lognormal-distributed random values with underlying normal with mean 0.0 and stdev 1.0" do
+        it "generates lognormal-distributed random values with underlying normal with loc 0.0 and stdev 1.0" do
           ary = Array(Float64).new
           ans = 0.0
 
@@ -109,12 +109,12 @@ describe Alea do
           stdev.should be_close(stdev_r, 0.007 * stdev_r)
         end
 
-        it "generates lognormal-distributed random values with underlying normal with fixed mean and stdev 1.0" do
+        it "generates lognormal-distributed random values with underlying normal with fixed loc and stdev 1.0" do
           ary = Array(Float64).new
           ans = 0.0
 
           SpecNdata.times do
-            ran = SpecRng.next_lognormal mean: 3.0
+            ran = SpecRng.next_lognormal loc: 3.0
             ans += ran
             ary << ran
           end
@@ -132,12 +132,12 @@ describe Alea do
           stdev.should be_close(stdev_r, 0.007 * stdev_r)
         end
 
-        it "generates lognormal-distributed random values with underlying normal with fixed mean and fixed stdev" do
+        it "generates lognormal-distributed random values with underlying normal with fixed loc and fixed stdev" do
           ary = Array(Float64).new
           ans = 0.0
 
           SpecNdata.times do
-            ran = SpecRng.next_lognormal mean: 3.0, sigma: 0.5
+            ran = SpecRng.next_lognormal loc: 3.0, sigma: 0.5
             ans += ran
             ary << ran
           end
@@ -155,12 +155,12 @@ describe Alea do
           stdev.should be_close(stdev_r, 0.007 * stdev_r)
         end
 
-        it "generates lognormal-distributed random values with underlying normal with negative fixed mean and fixed stdev" do
+        it "generates lognormal-distributed random values with underlying normal with negative fixed loc and fixed stdev" do
           ary = Array(Float64).new
           ans = 0.0
 
           SpecNdata.times do
-            ran = SpecRng.next_lognormal mean: -3.0, sigma: 0.5
+            ran = SpecRng.next_lognormal loc: -3.0, sigma: 0.5
             ans += ran
             ary << ran
           end
