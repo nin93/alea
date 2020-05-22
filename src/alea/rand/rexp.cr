@@ -12,16 +12,16 @@ module Alea
     # - `Alea::NaNError` if any of the arguments is NaN
     # - `Alea::InfinityError` if any of the arguments is Infinity
     # - `Alea::UndefinedError` if **scale** is negative or zero
-    def exponential(scale = 1.0)
-      Alea.sanity_check(scale, :scale, :exponential)
-      Alea.param_check(scale, :<=, 0.0, :scale, :exponential)
-      next_exponential scale
+    def exp(scale = 1.0)
+      Alea.sanity_check(scale, :scale, :exp)
+      Alea.param_check(scale, :<=, 0.0, :scale, :exp)
+      next_exp scale
     end
 
     # :nodoc:
-    # Unwrapped version of `exponential`.
+    # Unwrapped version of `exp`.
     # Generate a *exp-distributed*, pseudo-random `Float64`.
-    def next_exponential : Float64
+    def next_exp : Float64
       while true
         r = @prng.next_u >> 12
         idx = r & 0xff
@@ -39,10 +39,10 @@ module Alea
     # argument types and avoid tedious manual casting.
     {% for t1 in ["Int".id, "Float".id] %}
       # :nodoc:
-      # Unwrapped version of `exponential`.
+      # Unwrapped version of `exp`.
       # Generate a *exp-distributed*, pseudo-random `Float64`.
-      def next_exponential(scale : {{t1}}) : Float64
-        next_exponential * scale
+      def next_exp(scale : {{t1}}) : Float64
+        next_exp * scale
       end
     {% end %}
   end

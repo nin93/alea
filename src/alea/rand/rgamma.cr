@@ -29,12 +29,12 @@ module Alea
       # Unwrapped version of `gamma`.
       # Generate a *gamma-distributed*, pseudo-random `Float64`.
       def next_gamma(shape : {{t1}}) : Float64
-        shape == 1.0 && return next_exponential
+        shape == 1.0 && return next_exp
         shape == 0.0 && return 0.0
         if shape < 1.0
           while true
             u = @prng.next_f
-            v = next_exponential
+            v = next_exp
             if u <= 1.0 - shape
               x = u ** (1.0 / shape)
               x <= v && return x
