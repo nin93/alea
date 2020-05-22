@@ -161,6 +161,7 @@ Alea::CDF.chisq(5.279, df: 5.0)             # => 0.6172121213841358
 Current CDFs estimations are implemented for the following distributions:
   - Chi-Square
   - Exponential
+  - Gamma
   - Laplace
   - Log-Normal
   - Normal
