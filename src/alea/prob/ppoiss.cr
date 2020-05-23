@@ -15,6 +15,6 @@ module Alea::CDF
     Alea.sanity_check(lam, :lam, :poisson)
     Alea.param_check(lam, :<=, 0.0, :lam, :poisson)
     k < 0 && return 0.0
-    Alea::Internal.incg_regular_upper(k + 1, lam)
+    Alea::Internal.inc_gamma_regular(k + 1, lam, :upper)
   end
 end
