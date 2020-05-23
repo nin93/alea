@@ -4,13 +4,14 @@ module Alea
   struct Random
     # Generate a *poisson-distributed*, pseudo-random `Int64`.
     #
-    # Parameters:
-    # - **lam**: separation parameter of the distribution, also mentioned as *lambda*
+    # **@parameters**:
+    # * `lam`: separation parameter of the distribution;
+    #   usually mentioned as **`λ`**.
     #
-    # Raises:
-    # - `Alea::NaNError` if any of the arguments is NaN
-    # - `Alea::InfinityError` if any of the arguments is Infinity
-    # - `Alea::UndefinedError` if **lam** is negative or zero
+    # **@exceptions**:
+    # * `Alea::NaNError` if any of the arguments is `NaN`.
+    # * `Alea::InfinityError` if any of the arguments is `Infinity`.
+    # * `Alea::UndefinedError` if `lam` is negative or zero.
     def poisson(lam = 1.0)
       Alea.sanity_check(lam, :lam, :poisson)
       Alea.param_check(lam, :<=, 0.0, :lam, :poisson)

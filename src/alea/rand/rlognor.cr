@@ -3,16 +3,18 @@ require "./rnorm"
 
 module Alea
   struct Random
-    # Generate a *lognormal-distributed*, pseudo-random `Float64`.
+    # Generate a *log-normal-distributed*, pseudo-random `Float64`.
     #
-    # Parameters:
-    # - **loc**: centrality parameter, or mean of the underlying normal distribution
-    # - **sigma**: scale parameter, or standard deviation of the underlying normal distribution
+    # **@parameters**:
+    # * `loc`: centrality parameter, or mean of the underlying normal distribution;
+    #   usually mentioned as **`μ`**.
+    # * `sigma`: scale parameter, or standard deviation of the underlying normal distribution;
+    #   usually mentioned as **`σ`**.
     #
-    # Raises:
-    # - `Alea::NaNError` if any of the arguments is NaN
-    # - `Alea::InfinityError` if any of the arguments is Infinity
-    # - `Alea::UndefinedError` if **sigma** is negative or zero
+    # **@exceptions**:
+    # * `Alea::NaNError` if any of the arguments is `NaN`.
+    # * `Alea::InfinityError` if any of the arguments is `Infinity`.
+    # * `Alea::UndefinedError` if `sigma` is negative or zero.
     def lognormal(loc = 0.0, sigma = 1.0)
       Alea.sanity_check(loc, :loc, :lognormal)
       Alea.sanity_check(sigma, :sigma, :lognormal)

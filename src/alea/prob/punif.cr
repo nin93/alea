@@ -1,6 +1,20 @@
 module Alea::CDF
-  # Returns the probability of X being less or equal to x
-  # with given scale of the distribution.
+  # Calculate the cumulative distribution function evaluated at `x`.
+  #
+  # **@parameters**:
+  # * `x`: real-valued quantile of which estimate the cdf.
+  # * `min`: left bound parameter of range of the distribution;
+  #   usually mentioned as **`a`**.
+  # * `max`: right bound parameter of range of the distribution;
+  #   usually mentioned as **`b`**.
+  #
+  # **@notes**:
+  # * *range* is `[min, max)`.
+  #
+  # **@exceptions**:
+  # * `Alea::NaNError` if any of the arguments bound is `NaN`.
+  # * `Alea::InfinityError` if any of the arguments bound is `Infinity`.
+  # * `Alea::UndefinedError` if `max` is less than `min`.
   def self.uniform(x : Float, min : Float, max : Float) : Float64
     Alea.sanity_check(x, :x, :uniform)
     Alea.sanity_check(min, :min, :uniform)

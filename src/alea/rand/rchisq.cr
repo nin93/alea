@@ -4,13 +4,14 @@ module Alea
   struct Random
     # Generate a *chi-square-distributed*, pseudo-random `Float64`.
     #
-    # Parameters:
-    # - **df**: degrees of freedom parameter of the distribution
+    # **@parameters**:
+    # * `df`: degrees of freedom of the distribution;
+    #   usually mentioned as **`k`**.
     #
-    # Raises:
-    # - `Alea::NaNError` if any of the arguments is NaN
-    # - `Alea::InfinityError` if any of the arguments is Infinity
-    # - `Alea::UndefinedError` if **df** is negative or zero
+    # **@exceptions**:
+    # * `Alea::NaNError` if any of the arguments is `NaN`.
+    # * `Alea::InfinityError` if any of the arguments is `Infinity`.
+    # * `Alea::UndefinedError` if `df` is negative or zero.
     def chisq(df)
       Alea.sanity_check(df, :df, :chisq)
       Alea.param_check(df, :<=, 0.0, :df, :chisq)

@@ -5,13 +5,14 @@ module Alea
   struct Random
     # Generate a *exp-distributed*, pseudo-random `Float64`.
     #
-    # Parameters:
-    # - **scale**: scale parameter of the distribution, also mentioned as *1/lambda*
+    # **@parameters**:
+    # * `scale`: scale parameter of the distribution;
+    #   usually mentioned as **`λ^-1`**.
     #
-    # Raises:
-    # - `Alea::NaNError` if any of the arguments is NaN
-    # - `Alea::InfinityError` if any of the arguments is Infinity
-    # - `Alea::UndefinedError` if **scale** is negative or zero
+    # **@exceptions**:
+    # * `Alea::NaNError` if any of the arguments is `NaN`.
+    # * `Alea::InfinityError` if any of the arguments is `Infinity`.
+    # * `Alea::UndefinedError` if `scale` is negative or zero.
     def exp(scale = 1.0)
       Alea.sanity_check(scale, :scale, :exp)
       Alea.param_check(scale, :<=, 0.0, :scale, :exp)

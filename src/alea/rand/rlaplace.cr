@@ -4,14 +4,16 @@ module Alea
   struct Random
     # Generate a *laplace-distributed*, pseudo-random `Float64`.
     #
-    # Parameters:
-    # - **loc**: centrality parameter, or mean of the distribution
-    # - **scale**: scale parameter of the distribution
+    # **@parameters**:
+    # * `loc`: centrality parameter, or mean of the distribution;
+    #   usually mentioned as **`μ`**.
+    # * `scale`: scale parameter of the distribution;
+    #   usually mentioned as **`b`**.
     #
-    # Raises:
-    # - `Alea::NaNError` if any of the arguments is NaN
-    # - `Alea::InfinityError` if any of the arguments is Infinity
-    # - `Alea::UndefinedError` if **scale** is negative or zero
+    # **@exceptions**:
+    # * `Alea::NaNError` if any of the arguments is `NaN`.
+    # * `Alea::InfinityError` if any of the arguments is `Infinity`.
+    # * `Alea::UndefinedError` if `scale` is negative or zero.
     def laplace(loc = 0.0, scale = 1.0)
       Alea.sanity_check(loc, :loc, :laplace)
       Alea.sanity_check(scale, :scale, :laplace)

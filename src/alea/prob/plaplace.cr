@@ -1,6 +1,17 @@
 module Alea::CDF
-  # Returns the probability of X being less or equal to x
-  # with given mean and scale of the distribution.
+  # Calculate the cumulative distribution function evaluated at `x`.
+  #
+  # **@parameters**:
+  # * `x`: real-valued quantile of which estimate the cdf.
+  # * `loc`: centrality parameter, or mean of the distribution;
+  #   usually mentioned as **`μ`**.
+  # * `scale`: scale parameter of the distribution;
+  #   usually mentioned as **`b`**.
+  #
+  # **@exceptions**:
+  # * `Alea::NaNError` if any of the arguments is `NaN`.
+  # * `Alea::InfinityError` if any of the arguments is `Infinity`.
+  # * `Alea::UndefinedError` if `scale` is negative or zero.
   def self.laplace(x : Float, loc : Float = 0.0, scale : Float = 1.0) : Float64
     Alea.sanity_check(x, :x, :laplace)
     Alea.sanity_check(loc, :loc, :laplace)

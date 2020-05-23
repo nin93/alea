@@ -2,17 +2,20 @@ require "./rgamma"
 
 module Alea
   struct Random
-    # Generate a *beta-distributed*, pseudo-random `Float64` in range [0, 1).
-    # Named arguments are mandatory to prevent ambiguity.
+    # Generate a *beta-distributed*, pseudo-random `Float64` in range `[0, 1)`.
     #
-    # Parameters:
-    # - **a**: shape parameter of the distribution
-    # - **b**: shape parameter of the distribution
+    # **@note**: named arguments are mandatory to prevent ambiguity.
     #
-    # Raises:
-    # - `Alea::NaNError` if any of the arguments is NaN
-    # - `Alea::InfinityError` if any of the arguments is Infinity
-    # - `Alea::UndefinedError` if **a** or **b** are negative or zero
+    # **@parameters**:
+    # * `a`: shape parameter of the distribution;
+    #   usually mentioned as **`α`**.
+    # * `b`: shape parameter of the distribution;
+    #   usually mentioned as **`β`**.
+    #
+    # **@exceptions**:
+    # * `Alea::NaNError` if any of the arguments is `NaN`.
+    # * `Alea::InfinityError` if any of the arguments is `Infinity`.
+    # * `Alea::UndefinedError` if any of `a` or `b` is negative or zero.
     def beta(*, a, b)
       Alea.sanity_check(a, :a, :beta)
       Alea.sanity_check(b, :b, :beta)

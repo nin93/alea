@@ -6,14 +6,16 @@ module Alea
   struct Random
     # Generate a *gamma-distributed*, pseudo-random `Float64`.
     #
-    # Parameters:
-    # - **shape**: shape parameter of the distribution, sometimes mentioned as *k*
-    # - **scale**: scale parameter of the distribution, sometimes mentioned as *theta*
+    # **@parameters**:
+    # * `shape`: shape parameter of the distribution;
+    #   usually mentioned as **`k`**.
+    # * `scale`: scale parameter of the distribution;
+    #   usually mentioned as **`θ`**.
     #
-    # Raises:
-    # - `Alea::NaNError` if any of the arguments is NaN
-    # - `Alea::InfinityError` if any of the arguments is Infinity
-    # - `Alea::UndefinedError` if **shape** or **scale** are negative or zero
+    # **@exceptions**:
+    # * `Alea::NaNError` if any of the arguments is `NaN`.
+    # * `Alea::InfinityError` if any of the arguments is `Infinity`.
+    # * `Alea::UndefinedError` if any of `shape` or `scale` is negative or zero.
     def gamma(shape, scale = 1.0)
       Alea.sanity_check(shape, :shape, :gamma)
       Alea.sanity_check(scale, :scale, :gamma)
