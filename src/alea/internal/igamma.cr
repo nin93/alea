@@ -148,7 +148,7 @@ module Alea::Internal
   #                         /      a * (a+1) * ... * (a+i)
   #                         -----
   #                          i=0
-  # ```text
+  # ```
   #
   # Once either a lower or an upper incomplete gamma function is evaluated,
   # the other value may be quickly obtained by applying the following
@@ -158,10 +158,13 @@ module Alea::Internal
   #   G(a,x) + g(a,x) = G(a)
   # ```
   #
-  # Parameters:
-  # - **a**: parameter of the incomplete gamma function
-  # - **x**: the lower/upper integration limit
-  # - **upper**: if set *true*, the upper inc. gamma function is returned, else the lower
+  # **@parameters**:
+  # * `a`: parameter of the Incomplete Gamma function.
+  # * `x`: the upper integration limit.
+  # * `upper`: if `true` returns the upper inc. gamma function, else the lower.
+  #
+  # **@exceptions**:
+  # * `Alea::NoConvergeError` if no convergence occurs within `SPECFUN_ITMAX` iterations.
   def self.inc_gamma(a, x, upper)
     if x > (a + 1.0)
       # Compute the upper incomplete gamma function
@@ -216,18 +219,30 @@ module Alea::Internal
 
   # Estimate the Incomplete Regular Upper Gamma function.
   #
-  # Parameters:
-  # - **a**: parameter of the Incomplete Gamma function
-  # - **x**: the lower integration limit
+  # **@parameters**:
+  # * `a`: parameter of the Incomplete Gamma function.
+  # * `x`: the upper integration limit.
+  #
+  # **@references**:
+  # * `Alea::Internal.inc_gamma`
+  #
+  # **@exceptions**:
+  # * `Alea::NoConvergeError` if no convergence occurs within `SPECFUN_ITMAX` iterations.
   def self.incg_regular_upper(a, x)
     self.inc_gamma(a, x, upper: true) / Math.gamma(a)
   end
 
-  # Estimate the Incomplete Regular Upper Gamma function.
+  # Estimate the Incomplete Regular Lower Gamma function.
   #
-  # Parameters:
-  # - **a**: parameter of the Incomplete Gamma function
-  # - **x**: the upper integration limit
+  # **@parameters**:
+  # * `a`: parameter of the Incomplete Gamma function.
+  # * `x`: the upper integration limit.
+  #
+  # **@references**:
+  # * `Alea::Internal.inc_gamma`
+  #
+  # **@exceptions**:
+  # * `Alea::NoConvergeError` if no convergence occurs within `SPECFUN_ITMAX` iterations.
   def self.incg_regular_lower(a, x)
     self.inc_gamma(a, x, upper: false) / Math.gamma(a)
   end
