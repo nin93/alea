@@ -165,6 +165,7 @@ Current CDFs estimations are implemented for the following distributions:
   - Laplace
   - Log-Normal
   - Normal
+  - Poisson
   - Uniform
 
 ## References
