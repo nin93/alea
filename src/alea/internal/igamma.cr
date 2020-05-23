@@ -161,23 +161,23 @@ module Alea::Internal
   # **@parameters**:
   # * `a`: parameter of the Incomplete Gamma function.
   # * `x`: the upper integration limit.
-  # * `upper`: if `true` returns the upper inc. gamma function, else the lower.
+  # * `uorl`: symbol to request the `:upper` or `:lower` inc. gamma function.
   #
   # **@exceptions**:
   # * `Alea::NoConvergeError` if no convergence occurs within `SPECFUN_ITMAX` iterations.
-  def self.inc_gamma(a, x, upper)
+  def self.inc_gamma(a, x, uorl)
     if x > (a + 1.0)
       # Compute the upper incomplete gamma function
       ginc = self.inc_gamma_upper(a, x)
 
-      if !upper
+      if uorl == :lower
         ginc = Math.gamma(a) - ginc
       end
     else
       # Compute the lower incomplete gamma function
       ginc = self.inc_gamma_lower(a, x)
 
-      if upper
+      if uorl == :upper
         ginc = Math.gamma(a) - ginc
       end
     end
@@ -215,6 +215,22 @@ module Alea::Internal
       raise Alea::NoConvergeError.new "Iteration out of bounds"
     end
     ginc
+  end
+
+  # Estimate the Incomplete Regularized Gamma function.
+  #
+  # **@parameters**:
+  # * `a`: parameter of the Incomplete Gamma function.
+  # * `x`: the upper integration limit.
+  # * `uorl`: symbol to request the `:upper` or `:lower` inc. reg. gamma function.
+  #
+  # **@references**:
+  # * `Alea::Internal.inc_gamma`
+  #
+  # **@exceptions**:
+  # * `Alea::NoConvergeError` if no convergence occurs within `SPECFUN_ITMAX` iterations.
+  def self.inc_gamma_regular(a, x, uorl)
+    self.inc_gamma(a, x, uorl) / Math.gamma(a)
   end
 
   # Estimate the Incomplete Regular Upper Gamma function.
