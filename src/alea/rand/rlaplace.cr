@@ -25,9 +25,12 @@ module Alea
     # Unwrapped version of `laplace`.
     # Generate a *laplace-distributed*, pseudo-random `Float64`.
     def next_laplace : Float64
-      u = @prng.next_f
-      u >= 0.5 && return -Math.log(2.0 - u - u)
-      Math.log(u + u)
+      while true
+        u = @prng.next_f
+        u >= 0.5 && return -Math.log(2.0 - u - u)
+        u > 0.0 && return Math.log(u + u)
+        # Reject u == 0.0
+      end
     end
 
     # This are written to allow any combination of
