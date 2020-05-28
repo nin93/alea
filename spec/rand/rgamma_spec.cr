@@ -4,140 +4,70 @@ describe Alea do
   context "Gamma" do
     describe Alea::Random do
       describe "#gamma" do
-        it "accepts any sized Int as argument(s)" do
-          {% for bits in %i[8 16 32 64 128] %}
-            SpecRng.gamma 1_i{{bits.id}}
-            SpecRng.gamma 1_i{{bits.id}}, 1_i{{bits.id}}
-          {% end %}
-        end
+        arg_test("accepts any sized Int/UInt/Float as argument(s)",
+          caller: SpecRng,
+          method: :gamma,
+          params: {shape: 1.0, scale: 1.0},
+          return_type: Float64,
+          types: [Int8, Int16, Int32, Int64, Int128,
+                  UInt8, UInt16, UInt32, UInt64, UInt128,
+                  Float32, Float64,
+          ]
+        )
 
-        it "accepts any sized UInt as argument(s)" do
-          {% for bits in %i[8 16 32 64 128] %}
-            SpecRng.gamma 1_u{{bits.id}}
-            SpecRng.gamma 1_u{{bits.id}}, 1_u{{bits.id}}
-          {% end %}
-        end
+        sanity_test(
+          caller: SpecRng,
+          method: :gamma,
+          params: {shape: 1.0, scale: 1.0},
+          params_to_check: [:shape, :scale],
+        )
 
-        it "accepts any sized Float as argument(s)" do
-          SpecRng.gamma 1.0_f32
-          SpecRng.gamma 1.0_f64
-
-          SpecRng.gamma 1.0_f32, 1.0_f32
-          SpecRng.gamma 1.0_f64, 1.0_f64
-        end
-
-        it "raises Alea::NaNError if shape is NaN" do
-          expect_raises(Alea::NaNError) do
-            SpecRng.gamma shape: 0.0 / 0.0
-          end
-        end
-
-        it "raises Alea::InfinityError if shape is Infinity" do
-          expect_raises(Alea::InfinityError) do
-            SpecRng.gamma shape: 1.0 / 0.0
-          end
-        end
-
-        it "raises Alea::NaNError if scale NaN" do
-          expect_raises(Alea::NaNError) do
-            SpecRng.gamma 1.0, scale: 0.0 / 0.0
-          end
-        end
-
-        it "raises Alea::InfinityError if scale Infinity" do
-          expect_raises(Alea::InfinityError) do
-            SpecRng.gamma 1.0, scale: 1.0 / 0.0
-          end
-        end
-
-        it "raises Alea::UndefinedError if shape is 0.0" do
-          expect_raises(Alea::UndefinedError) do
-            SpecRng.gamma shape: 0.0
-          end
-        end
-
-        it "raises Alea::UndefinedError if shape is negative" do
-          expect_raises(Alea::UndefinedError) do
-            SpecRng.gamma shape: -1.0
-          end
-        end
-
-        it "raises Alea::UndefinedError if scale is 0.0" do
-          expect_raises(Alea::UndefinedError) do
-            SpecRng.gamma 1.0, scale: 0.0
-          end
-        end
-
-        it "raises Alea::UndefinedError if scale is negative" do
-          expect_raises(Alea::UndefinedError) do
-            SpecRng.gamma 1.0, scale: -1.0
-          end
-        end
+        param_test(
+          caller: SpecRng,
+          method: :gamma,
+          params: {shape: 1.0, scale: 1.0},
+          params_to_check: [:shape, :scale],
+          check_negatives: true,
+          check_zeros: true,
+        )
       end
 
       describe "#next_gamma" do
-        it "accepts any sized Int as argument(s)" do
-          {% for bits in %i[8 16 32 64 128] %}
-            SpecRng.next_gamma 1_i{{bits.id}}
-          {% end %}
-        end
+        arg_test("accepts any sized Int/UInt/Float as argument(s)",
+          caller: SpecRng,
+          method: :next_gamma,
+          params: {shape: 0.1, scale: 0.1},
+          return_type: Float64,
+          types: [Int8, Int16, Int32, Int64, Int128,
+                  UInt8, UInt16, UInt32, UInt64, UInt128,
+                  Float32, Float64,
+          ]
+        )
 
-        it "accepts any sized UInt as argument(s)" do
-          {% for bits in %i[8 16 32 64 128] %}
-            SpecRng.next_gamma 1_u{{bits.id}}
-          {% end %}
-        end
+        # mean  is:   ks
+        # stdev is:   sqrt( ks^2 )
 
-        it "accepts any sized Float as argument(s)" do
-          SpecRng.next_gamma 1.0_f32
-          SpecRng.next_gamma 1.0_f64
-        end
+        dist_test("generates gamma-distributed random values with fixed shape 3.0 and scale 1.0 parameters",
+          caller: SpecRng,
+          method: :next_gamma,
+          params: {shape: 3.0, scale: 1.0},
+          sample_type: Float64,
+          real_mean: 3.0,
+          real_stdev: 1.7320508075688772,
+          mean_tol: 0.005,
+          stdev_tol: 0.005,
+        )
 
-        it "generates gamma-distributed random values with fixed shape and scale 1.0" do
-          ary = Array(Float64).new
-          ans = 0.0
-
-          SpecNdata.times do
-            ran = SpecRng.next_gamma shape: 3.0
-            ans += ran
-            ary << ran
-          end
-
-          # mean  is:   ks
-          # stdev is:   sqrt( ks^2 )
-
-          mean_r = 3.0
-          stdev_r = 1.7320508075688772
-          tol = 0.005
-
-          mean = ans / SpecNdata
-          stdev = stdev(ary, mean, SpecNdata)
-          mean.should be_close(mean_r, tol * stdev_r)
-          stdev.should be_close(stdev_r, tol * stdev_r)
-        end
-
-        it "generates gamma-distributed random values with fixed shape and fixed scale" do
-          ary = Array(Float64).new
-          ans = 0.0
-
-          SpecNdata.times do
-            ran = SpecRng.next_gamma shape: 3.0, scale: 1.5
-            ans += ran
-            ary << ran
-          end
-
-          # mean  is:   ks
-          # stdev is:   sqrt( ks^2 )
-
-          mean_r = 4.5
-          stdev_r = 2.598076211353316
-          tol = 0.005
-
-          mean = ans / SpecNdata
-          stdev = stdev(ary, mean, SpecNdata)
-          mean.should be_close(mean_r, tol * stdev_r)
-          stdev.should be_close(stdev_r, tol * stdev_r)
-        end
+        dist_test("generates gamma-distributed random values with fixed shape 3.0 and scale 1.5 parameters",
+          caller: SpecRng,
+          method: :next_gamma,
+          params: {shape: 3.0, scale: 1.5},
+          sample_type: Float64,
+          real_mean: 4.5,
+          real_stdev: 2.598076211353316,
+          mean_tol: 0.005,
+          stdev_tol: 0.005,
+        )
       end
     end
   end
