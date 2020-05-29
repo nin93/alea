@@ -4,143 +4,142 @@ describe Alea do
   context "Poisson" do
     describe Alea::Random do
       describe "#poisson" do
-        it "accepts any sized Int as argument(s)" do
-          {% for bits in %i[8 16 32 64 128] %}
-            SpecRng.poisson 1_i{{bits.id}}
-          {% end %}
-        end
+        arg_test("accepts any sized Int/UInt/Float as argument(s)",
+          caller: SpecRng,
+          method: :poisson,
+          params: {lam: 1.0},
+          return_type: Int64,
+          types: [Int8, Int16, Int32, Int64, Int128,
+                  UInt8, UInt16, UInt32, UInt64, UInt128,
+                  Float32, Float64,
+          ]
+        )
 
-        it "accepts any sized Float as argument(s)" do
-          SpecRng.poisson 1.0_f32
-          SpecRng.poisson 1.0_f64
-        end
+        sanity_test(
+          caller: SpecRng,
+          method: :poisson,
+          params: {lam: 1.0},
+          params_to_check: [:lam],
+        )
 
-        it "raises Alea::InfinityError if lambda is Infinity" do
-          expect_raises(Alea::InfinityError) do
-            SpecRng.poisson lam: 1.0 / 0.0
-          end
-        end
-
-        it "raises Alea::UndefinedError if lambda is 0.0" do
-          expect_raises(Alea::UndefinedError) do
-            SpecRng.poisson lam: 0.0
-          end
-        end
-
-        it "raises Alea::UndefinedError if lambda is negative" do
-          expect_raises(Alea::UndefinedError) do
-            SpecRng.poisson lam: -1.0
-          end
-        end
+        param_test(
+          caller: SpecRng,
+          method: :poisson,
+          params: {lam: 1.0},
+          params_to_check: [:lam],
+          check_negatives: true,
+          check_zeros: true,
+        )
       end
 
       describe "#next_poisson" do
-        it "accepts any sized Int as argument(s)" do
-          {% for bits in %i[8 16 32 64 128] %}
-            SpecRng.next_poisson 1_i{{bits.id}}
-          {% end %}
-        end
+        arg_test("accepts any sized Int/UInt/Float as argument(s)",
+          caller: SpecRng,
+          method: :next_poisson,
+          params: {lam: 1.0},
+          return_type: Int64,
+          types: [Int8, Int16, Int32, Int64, Int128,
+                  UInt8, UInt16, UInt32, UInt64, UInt128,
+                  Float32, Float64,
+          ]
+        )
 
-        it "accepts any sized Float as argument(s)" do
-          SpecRng.next_poisson 1.0_f32
-          SpecRng.next_poisson 1.0_f64
-        end
+        # mean  is:   l
+        # stdev is:   sqrt( l )
 
         it "returns 0.0 if lambda is 0.0" do
           SpecRng.next_poisson(lam: 0.0).should eq(0.0)
         end
 
-        it "generates poisson-distributed random values with lambda 1.0" do
-          ary = Array(Int64).new
-          ans = 0.0
+        dist_test("generates poisson-distributed random values with fixed lam 0.1 parameter",
+          caller: SpecRng,
+          method: :next_poisson,
+          params: {lam: 0.1},
+          sample_type: Int64,
+          real_mean: 0.1,
+          real_stdev: 0.31622776601683794,
+          mean_tol: 0.005,
+          stdev_tol: 0.005,
+        )
 
-          SpecNdata.times do
-            ran = SpecRng.next_poisson
-            ans += ran
-            ary << ran
-          end
+        dist_test("generates poisson-distributed random values with fixed lam 0.01 parameter",
+          pending: true,
+          caller: SpecRng,
+          method: :next_poisson,
+          params: {lam: 0.01},
+          sample_type: Int64,
+          real_mean: 0.01,
+          real_stdev: 0.1,
+          mean_tol: 0.005,
+          stdev_tol: 0.01,
+        )
 
-          # mean  is:   l
-          # stdev is:   sqrt( l )
+        dist_test("generates poisson-distributed random values with fixed lam 0.0001 parameter",
+          pending: true,
+          caller: SpecRng,
+          method: :next_poisson,
+          params: {lam: 0.0001},
+          sample_type: Int64,
+          real_mean: 0.0001,
+          real_stdev: 0.01,
+          mean_tol: 0.005,
+          stdev_tol: 0.01,
+        )
 
-          mean_r = 1.0
-          stdev_r = 1.0
-          tol = 0.005
+        dist_test("generates poisson-distributed random values with fixed lam 0.0000001 parameter",
+          pending: true,
+          caller: SpecRng,
+          method: :next_poisson,
+          params: {lam: 0.0000001},
+          sample_type: Int64,
+          real_mean: 0.0000001,
+          real_stdev: 0.00031622776601683794,
+          mean_tol: 0.005,
+          stdev_tol: 0.01,
+        )
 
-          mean = ans / SpecNdata
-          stdev = stdev(ary, mean, SpecNdata)
-          mean.should be_close(mean_r, tol * stdev_r)
-          stdev.should be_close(stdev_r, tol * stdev_r)
-        end
+        dist_test("generates poisson-distributed random values with fixed lam 1.0 parameter",
+          caller: SpecRng,
+          method: :next_poisson,
+          sample_type: Int64,
+          real_mean: 1.0,
+          real_stdev: 1.0,
+          mean_tol: 0.005,
+          stdev_tol: 0.005,
+        )
 
-        it "generates poisson-distributed random values with fixed lambda below 7.0" do
-          ary = Array(Int64).new
-          ans = 0.0
+        dist_test("generates poisson-distributed random values with fixed lam 3.0 parameter",
+          caller: SpecRng,
+          method: :next_poisson,
+          params: {lam: 3.0},
+          sample_type: Int64,
+          real_mean: 3.0,
+          real_stdev: 1.7320508075688772,
+          mean_tol: 0.005,
+          stdev_tol: 0.005,
+        )
 
-          SpecNdata.times do
-            ran = SpecRng.next_poisson lam: 3.0
-            ans += ran
-            ary << ran
-          end
+        dist_test("generates poisson-distributed random values with fixed lam 10.0 parameter",
+          caller: SpecRng,
+          method: :next_poisson,
+          params: {lam: 10.0},
+          sample_type: Int64,
+          real_mean: 10.0,
+          real_stdev: 3.1622776601683795,
+          mean_tol: 0.005,
+          stdev_tol: 0.005,
+        )
 
-          # mean  is:   l
-          # stdev is:   sqrt( l )
-
-          mean_r = 3.0
-          stdev_r = 1.7320508075688772
-          tol = 0.005
-
-          mean = ans / SpecNdata
-          stdev = stdev(ary, mean, SpecNdata)
-          mean.should be_close(mean_r, tol * stdev_r)
-          stdev.should be_close(stdev_r, tol * stdev_r)
-        end
-
-        it "generates poisson-distributed random values with fixed lambda = 10.0" do
-          ary = Array(Int64).new
-          ans = 0.0
-
-          SpecNdata.times do
-            ran = SpecRng.next_poisson lam: 10.0
-            ans += ran
-            ary << ran
-          end
-
-          # mean  is:   l
-          # stdev is:   sqrt( l )
-
-          mean_r = 10.0
-          stdev_r = 3.1622776601683795
-          tol = 0.005
-
-          mean = ans / SpecNdata
-          stdev = stdev(ary, mean, SpecNdata)
-          mean.should be_close(mean_r, tol * stdev_r)
-          stdev.should be_close(stdev_r, tol * stdev_r)
-        end
-
-        it "generates poisson-distributed random values with fixed lambda above 10.0" do
-          ary = Array(Int64).new
-          ans = 0.0
-
-          SpecNdata.times do
-            ran = SpecRng.next_poisson lam: 937793773973.0
-            ans += ran
-            ary << ran
-          end
-
-          # mean  is:   l
-          # stdev is:   sqrt( l )
-
-          mean_r = 937793773973.0
-          stdev_r = 968397.5288965787
-          tol = 0.005
-
-          mean = ans / SpecNdata
-          stdev = stdev(ary, mean, SpecNdata)
-          mean.should be_close(mean_r, tol * stdev_r)
-          stdev.should be_close(stdev_r, tol * stdev_r)
-        end
+        dist_test("generates poisson-distributed random values with fixed lam 10_000.0 parameter",
+          caller: SpecRng,
+          method: :next_poisson,
+          params: {lam: 10_000.0},
+          sample_type: Int64,
+          real_mean: 10_000.0,
+          real_stdev: 100.0,
+          mean_tol: 0.005,
+          stdev_tol: 0.005,
+        )
       end
     end
   end

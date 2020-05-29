@@ -10,7 +10,7 @@ module Alea::CDF
   # * `Alea::NaNError` if any of the arguments is `NaN`.
   # * `Alea::InfinityError` if any of the arguments is `Infinity`.
   # * `Alea::UndefinedError` if `df` is negative or zero.
-  def self.chisq(x : Float, df : Float = 1.0) : Float64
+  def self.chisq(x : Float, df : Float) : Float64
     Alea.sanity_check(x, :x, :chisq)
     Alea.sanity_check(df, :df, :chisq)
     Alea.param_check(df, :<=, 0.0, :df, :chisq)

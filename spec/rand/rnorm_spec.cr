@@ -4,167 +4,200 @@ describe Alea do
   context "Normal" do
     describe Alea::Random do
       describe "#normal" do
-        it "accepts any sized Int as argument(s)" do
-          {% for bits in %i[8 16 32 64 128] %}
-            SpecRng.normal 1_i{{bits.id}}
-            SpecRng.normal 1_i{{bits.id}}, 1_i{{bits.id}}
-          {% end %}
-        end
+        arg_test("accepts any sized Int/UInt/Float as argument(s)",
+          caller: SpecRng,
+          method: :normal,
+          params: {loc: 1.0, sigma: 1.0},
+          return_type: Float64,
+          types: [Int8, Int16, Int32, Int64, Int128,
+                  UInt8, UInt16, UInt32, UInt64, UInt128,
+                  Float32, Float64,
+          ]
+        )
 
-        it "accepts any sized UInt as argument(s)" do
-          {% for bits in %i[8 16 32 64 128] %}
-            SpecRng.normal 1_u{{bits.id}}
-            SpecRng.normal 1_u{{bits.id}}, 1_u{{bits.id}}
-          {% end %}
-        end
+        sanity_test(
+          caller: SpecRng,
+          method: :normal,
+          params: {loc: 1.0, sigma: 1.0},
+          params_to_check: [:loc, :sigma],
+        )
 
-        it "accepts any sized Float as argument(s)" do
-          SpecRng.normal 1.0_f32
-          SpecRng.normal 1.0_f64
-
-          SpecRng.normal 1.0_f32, 1.0_f32
-          SpecRng.normal 1.0_f64, 1.0_f64
-        end
-
-        it "raises Alea::NaNError if loc is NaN" do
-          expect_raises(Alea::NaNError) do
-            SpecRng.normal loc: 0.0 / 0.0
-          end
-        end
-
-        it "raises Alea::InfinityError if loc is Infinity" do
-          expect_raises(Alea::InfinityError) do
-            SpecRng.normal loc: 1.0 / 0.0
-          end
-        end
-
-        it "raises Alea::NaNError if sigma NaN" do
-          expect_raises(Alea::NaNError) do
-            SpecRng.normal 1.0, sigma: 0.0 / 0.0
-          end
-        end
-
-        it "raises Alea::InfinityError if sigma Infinity" do
-          expect_raises(Alea::InfinityError) do
-            SpecRng.normal 1.0, sigma: 1.0 / 0.0
-          end
-        end
-
-        it "raises Alea::UndefinedError if sigma is 0.0" do
-          expect_raises(Alea::UndefinedError) do
-            SpecRng.normal sigma: 0.0
-          end
-        end
-
-        it "raises Alea::UndefinedError if sigma is negative" do
-          expect_raises(Alea::UndefinedError) do
-            SpecRng.normal sigma: -1.0
-          end
-        end
+        param_test(
+          caller: SpecRng,
+          method: :normal,
+          params: {loc: 1.0, sigma: 1.0},
+          params_to_check: [:sigma],
+          check_negatives: true,
+          check_zeros: true,
+        )
       end
 
       describe "#next_normal" do
-        it "accepts any sized Int as argument(s)" do
-          {% for bits in %i[8 16 32 64 128] %}
-            SpecRng.next_normal 1_i{{bits.id}}
-            SpecRng.next_normal 1_i{{bits.id}}, 1_i{{bits.id}}
-          {% end %}
-        end
+        arg_test("accepts any sized Int/UInt/Float as argument(s)",
+          caller: SpecRng,
+          method: :next_normal,
+          params: {loc: 1.0, sigma: 1.0},
+          return_type: Float64,
+          types: [Int8, Int16, Int32, Int64, Int128,
+                  UInt8, UInt16, UInt32, UInt64, UInt128,
+                  Float32, Float64,
+          ]
+        )
 
-        it "accepts any sized UInt as argument(s)" do
-          {% for bits in %i[8 16 32 64 128] %}
-            SpecRng.next_normal 1_u{{bits.id}}
-            SpecRng.next_normal 1_u{{bits.id}}, 1_u{{bits.id}}
-          {% end %}
-        end
+        # mean  is:   m
+        # stdev is:   s
 
-        it "accepts any sized Float as argument(s)" do
-          SpecRng.next_normal 1.0_f32
-          SpecRng.next_normal 1.0_f64
+        dist_test("generates normal-distributed random values with fixed loc 0.0 and sigma 0.1 parameters",
+          caller: SpecRng,
+          method: :next_normal,
+          params: {loc: 0.0, sigma: 0.1},
+          sample_type: Float64,
+          real_mean: 0.0,
+          real_stdev: 0.1,
+          mean_tol: 0.005,
+          stdev_tol: 0.005,
+        )
 
-          SpecRng.next_normal 1.0_f32, 1.0_f32
-          SpecRng.next_normal 1.0_f64, 1.0_f64
-        end
+        dist_test("generates normal-distributed random values with fixed loc 0.0 and sigma 0.01 parameters",
+          caller: SpecRng,
+          method: :next_normal,
+          params: {loc: 0.0, sigma: 0.01},
+          sample_type: Float64,
+          real_mean: 0.0,
+          real_stdev: 0.01,
+          mean_tol: 0.005,
+          stdev_tol: 0.005,
+        )
 
-        it "generates normal-distributed random values with loc 0.0 and stdev 1.0" do
-          ary = Array(Float64).new
-          ans = 0.0
+        dist_test("generates normal-distributed random values with fixed loc 0.0 and sigma 0.00001 parameters",
+          caller: SpecRng,
+          method: :next_normal,
+          params: {loc: 0.0, sigma: 0.00001},
+          sample_type: Float64,
+          real_mean: 0.0,
+          real_stdev: 0.00001,
+          mean_tol: 0.005,
+          stdev_tol: 0.005,
+        )
 
-          SpecNdata.times do
-            ran = SpecRng.next_normal
-            ans += ran
-            ary << ran
-          end
+        dist_test("generates normal-distributed random values with fixed loc 0.0 and sigma 0.00000000001 parameters",
+          caller: SpecRng,
+          method: :next_normal,
+          params: {loc: 0.0, sigma: 0.00000000001},
+          sample_type: Float64,
+          real_mean: 0.0,
+          real_stdev: 0.00000000001,
+          mean_tol: 0.005,
+          stdev_tol: 0.005,
+        )
 
-          mean_r = 0.0
-          stdev_r = 1.0
-          tol = 0.005
+        dist_test("generates normal-distributed random values with fixed loc 0.0 and sigma 1.0 parameters",
+          caller: SpecRng,
+          method: :next_normal,
+          sample_type: Float64,
+          real_mean: 0.0,
+          real_stdev: 1.0,
+          mean_tol: 0.005,
+          stdev_tol: 0.005,
+        )
 
-          mean = ans / SpecNdata
-          stdev = stdev(ary, mean, SpecNdata)
-          mean.should be_close(mean_r, tol * stdev_r)
-          stdev.should be_close(stdev_r, tol * stdev_r)
-        end
+        dist_test("generates normal-distributed random values with fixed loc 0.0 and sigma 3.0 parameters",
+          caller: SpecRng,
+          method: :next_normal,
+          params: {loc: 0.0, sigma: 3.0},
+          sample_type: Float64,
+          real_mean: 0.0,
+          real_stdev: 3.0,
+          mean_tol: 0.005,
+          stdev_tol: 0.005,
+        )
 
-        it "generates normal-distributed random values with fixed loc and stdev 1.0" do
-          ary = Array(Float64).new
-          ans = 0.0
+        dist_test("generates normal-distributed random values with fixed loc 0.0 and sigma 10.0 parameters",
+          caller: SpecRng,
+          method: :next_normal,
+          params: {loc: 0.0, sigma: 10.0},
+          sample_type: Float64,
+          real_mean: 0.0,
+          real_stdev: 10.0,
+          mean_tol: 0.005,
+          stdev_tol: 0.005,
+        )
 
-          SpecNdata.times do
-            ran = SpecRng.next_normal loc: 93.0
-            ans += ran
-            ary << ran
-          end
+        dist_test("generates normal-distributed random values with fixed loc 0.0 and sigma 100.0 parameters",
+          caller: SpecRng,
+          method: :next_normal,
+          params: {loc: 0.0, sigma: 100.0},
+          sample_type: Float64,
+          real_mean: 0.0,
+          real_stdev: 100.0,
+          mean_tol: 0.005,
+          stdev_tol: 0.005,
+        )
 
-          mean_r = 93.0
-          stdev_r = 1.0
-          tol = 0.005
+        dist_test("generates normal-distributed random values with fixed loc 0.0 and sigma 1_000.0 parameters",
+          caller: SpecRng,
+          method: :next_normal,
+          params: {loc: 0.0, sigma: 1_000.0},
+          sample_type: Float64,
+          real_mean: 0.0,
+          real_stdev: 1_000.0,
+          mean_tol: 0.005,
+          stdev_tol: 0.005,
+        )
 
-          mean = ans / SpecNdata
-          stdev = stdev(ary, mean, SpecNdata)
-          mean.should be_close(mean_r, tol * stdev_r)
-          stdev.should be_close(stdev_r, tol * stdev_r)
-        end
+        dist_test("generates normal-distributed random values with fixed loc 0.0 and sigma 10_000.0 parameters",
+          caller: SpecRng,
+          method: :next_normal,
+          params: {loc: 0.0, sigma: 10_000.0},
+          sample_type: Float64,
+          real_mean: 0.0,
+          real_stdev: 10_000.0,
+          mean_tol: 0.005,
+          stdev_tol: 0.005,
+        )
 
-        it "generates normal-distributed random values with fixed loc and fixed stdev" do
-          ary = Array(Float64).new
-          ans = 0.0
+        dist_test("generates normal-distributed random values with fixed loc 0.0 and sigma 1.0 parameters",
+          caller: SpecRng,
+          method: :next_normal,
+          sample_type: Float64,
+          real_mean: 0.0,
+          real_stdev: 1.0,
+          mean_tol: 0.005,
+          stdev_tol: 0.005,
+        )
 
-          SpecNdata.times do
-            ran = SpecRng.next_normal loc: 93.0, sigma: 9.3
-            ans += ran
-            ary << ran
-          end
+        dist_test("generates normal-distributed random values with fixed loc 3.0 and sigma 1.0 parameters",
+          caller: SpecRng,
+          method: :next_normal,
+          params: {loc: 3.0},
+          sample_type: Float64,
+          real_mean: 3.0,
+          real_stdev: 1.0,
+          mean_tol: 0.005,
+          stdev_tol: 0.005,
+        )
 
-          mean_r = 93.0
-          stdev_r = 9.3
-          tol = 0.005
+        dist_test("generates normal-distributed random values with fixed loc 93.0 and sigma 0.5 parameters",
+          caller: SpecRng,
+          method: :next_normal,
+          params: {loc: 93.0, sigma: 0.5},
+          sample_type: Float64,
+          real_mean: 93.0,
+          real_stdev: 0.5,
+          mean_tol: 0.005,
+          stdev_tol: 0.005,
+        )
 
-          mean = ans / SpecNdata
-          stdev = stdev(ary, mean, SpecNdata)
-          mean.should be_close(mean_r, tol * stdev_r)
-          stdev.should be_close(stdev_r, tol * stdev_r)
-        end
-
-        it "generates normal-distributed random values with negative fixed loc and fixed stdev" do
-          ary = Array(Float64).new
-          ans = 0.0
-
-          SpecNdata.times do
-            ran = SpecRng.next_normal loc: -93.0, sigma: 9.3
-            ans += ran
-            ary << ran
-          end
-
-          mean_r = -93.0
-          stdev_r = 9.3
-          tol = 0.005
-
-          mean = ans / SpecNdata
-          stdev = stdev(ary, mean, SpecNdata)
-          mean.should be_close(mean_r, tol * stdev_r)
-          stdev.should be_close(stdev_r, tol * stdev_r)
-        end
+        dist_test("generates normal-distributed random values with fixed loc -93.0 and sigma 0.5 parameters",
+          caller: SpecRng,
+          method: :next_normal,
+          params: {loc: -93.0, sigma: 0.5},
+          sample_type: Float64,
+          real_mean: -93.0,
+          real_stdev: 0.5,
+          mean_tol: 0.005,
+          stdev_tol: 0.005,
+        )
       end
     end
   end

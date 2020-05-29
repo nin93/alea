@@ -4,41 +4,33 @@ describe Alea do
   context "Exponential" do
     describe Alea::CDF do
       describe "#exp" do
-        it "raises Alea::NaNError if x is NaN" do
-          expect_raises(Alea::NaNError) do
-            Alea::CDF.exp(0.0 / 0.0)
-          end
-        end
+        arg_test("accepts any sized Int/UInt/Float as argument(s)",
+          pending: true,
+          caller: Alea::CDF,
+          method: :exp,
+          params: {x: 1.0, scale: 1.0},
+          return_type: Float64,
+          types: [Int8, Int16, Int32, Int64, Int128,
+                  UInt8, UInt16, UInt32, UInt64, UInt128,
+                  Float32, Float64,
+          ]
+        )
 
-        it "raises Alea::InfinityError if x is Infinity" do
-          expect_raises(Alea::InfinityError) do
-            Alea::CDF.exp(1.0 / 0.0)
-          end
-        end
+        sanity_test(
+          caller: Alea::CDF,
+          method: :exp,
+          params: {x: 1.0, scale: 1.0},
+          params_to_check: [:x, :scale],
+        )
 
-        it "raises Alea::NaNError if scale is NaN" do
-          expect_raises(Alea::NaNError) do
-            Alea::CDF.exp(1.0, scale: 0.0 / 0.0)
-          end
-        end
-
-        it "raises Alea::InfinityError if scale is Infinity" do
-          expect_raises(Alea::InfinityError) do
-            Alea::CDF.exp(1.0, scale: 1.0 / 0.0)
-          end
-        end
-
-        it "raises Alea::UndefinedError if scale is 0" do
-          expect_raises Alea::UndefinedError do
-            Alea::CDF.exp(0.0, scale: 0.0)
-          end
-        end
-
-        it "raises Alea::UndefinedError if scale is negative" do
-          expect_raises Alea::UndefinedError do
-            Alea::CDF.exp(0.0, scale: -1.0)
-          end
-        end
+        param_test(
+          caller: Alea::CDF,
+          method: :exp,
+          params: {x: 1.0, scale: 1.0},
+          params_to_check: [:scale],
+          check_negatives: true,
+          check_zeros: true,
+        )
 
         it "returns the cdf of -1.0 in Exp(1.0)" do
           Alea::CDF.exp(-1.0).should eq(0.0)

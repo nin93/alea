@@ -4,29 +4,33 @@ describe Alea do
   context "Poisson" do
     describe Alea::CDF do
       describe "#poisson" do
-        it "raises Alea::NaNError if degrees of freedom are NaN" do
-          expect_raises(Alea::NaNError) do
-            Alea::CDF.poisson(0, lam: 0.0 / 0.0)
-          end
-        end
+        arg_test("accepts any sized Int/UInt/Float as argument(s)",
+          pending: true,
+          caller: Alea::CDF,
+          method: :poisson,
+          params: {k: 1, lam: 1.0},
+          return_type: Float64,
+          types: [Int8, Int16, Int32, Int64, Int128,
+                  UInt8, UInt16, UInt32, UInt64, UInt128,
+                  Float32, Float64,
+          ]
+        )
 
-        it "raises Alea::InfinityError if degrees of freedom are Infinity" do
-          expect_raises(Alea::InfinityError) do
-            Alea::CDF.poisson(0, lam: 1.0 / 0.0)
-          end
-        end
+        sanity_test(
+          caller: Alea::CDF,
+          method: :poisson,
+          params: {k: 1, lam: 1.0},
+          params_to_check: [:lam],
+        )
 
-        it "raises Alea::UndefinedError if freedom is equal to 0.0" do
-          expect_raises Alea::UndefinedError do
-            Alea::CDF.poisson(0, lam: 0.0)
-          end
-        end
-
-        it "raises Alea::UndefinedError if freedom is less than 0.0" do
-          expect_raises Alea::UndefinedError do
-            Alea::CDF.poisson(0, lam: -1.0)
-          end
-        end
+        param_test(
+          caller: Alea::CDF,
+          method: :poisson,
+          params: {k: 1, lam: 1.0},
+          params_to_check: [:lam],
+          check_negatives: true,
+          check_zeros: true,
+        )
 
         it "returns the cdf of -1.0 in Poiss(1)" do
           Alea::CDF.poisson(-1).should eq(0.0)

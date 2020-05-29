@@ -4,30 +4,30 @@ describe Alea do
   context "Uniform" do
     describe Alea::Random do
       describe "#uint" do
-        it "accepts any sized Int as argument(s)" do
-          {% for bits in %i[8 16 32 64 128] %}
-            SpecRng.uint 1_i{{bits.id}}
-            SpecRng.uint 1_i{{bits.id}}..1_i{{bits.id}}
-          {% end %}
-        end
+        arg_test("accepts any sized Int/UInt as argument(s)",
+          caller: SpecRng,
+          method: :uint,
+          params: {max: 1},
+          return_type: UInt64,
+          types: [Int8, Int16, Int32, Int64, Int128,
+                  UInt8, UInt16, UInt32, UInt64, UInt128,
+          ]
+        )
 
-        it "accepts any sized UInt as argument(s)" do
+        param_test(
+          caller: SpecRng,
+          method: :uint,
+          params: {max: 1},
+          params_to_check: [:max],
+          check_negatives: true,
+          check_zeros: true,
+        )
+
+        it "accepts any sized Range as argument" do
           {% for bits in %i[8 16 32 64 128] %}
-            SpecRng.uint 1_u{{bits.id}}
+            SpecRng.uint 1_i{{bits.id}}..1_i{{bits.id}}
             SpecRng.uint 1_u{{bits.id}}..1_u{{bits.id}}
           {% end %}
-        end
-
-        it "raises Alea::UndefinedError if max is 0" do
-          expect_raises(Alea::UndefinedError) do
-            SpecRng.uint max: 0
-          end
-        end
-
-        it "raises Alea::UndefinedError if max is negative" do
-          expect_raises(Alea::UndefinedError) do
-            SpecRng.uint max: -1
-          end
         end
 
         it "raises Alea::UndefinedError if range is negative" do
@@ -60,106 +60,78 @@ describe Alea do
           SpecRng.uint(0..0).should eq(0)
         end
 
-        it "returns uniformly-distributed random values with fixed limit" do
-          ary = Array(UInt64).new
-          ans = 0.0
+        # mean  is:   a / 2
+        # stdev is:   a / sqrt( 12 )
 
-          SpecNdata.times do
-            ran = SpecRng.uint 9377
-            ans += ran
-            ary << ran
-          end
+        dist_test("generates uniform-distributed random values with fixed max 9377 parameter",
+          caller: SpecRng,
+          method: :uint,
+          params: {max: 9377},
+          sample_type: UInt64,
+          real_mean: 4688.5,
+          real_stdev: 2706.9067370955604,
+          mean_tol: 0.005,
+          stdev_tol: 0.005,
+        )
 
-          # mean  is:   a / 2
-          # stdev is:   a / sqrt( 12 )
+        dist_test("generates uniform-distributed random values with fixed range 10..93 parameter",
+          caller: SpecRng,
+          method: :uint,
+          params: {range: 10..93},
+          sample_type: UInt64,
+          real_mean: 51.5,
+          real_stdev: 24.248711305964285,
+          mean_tol: 0.005,
+          stdev_tol: 0.005,
+        )
 
-          mean_r = 4688.5
-          stdev_r = 2706.9067370955604
-          tol = 0.005
-
-          mean = ans / SpecNdata
-          stdev = stdev(ary, mean, SpecNdata)
-          mean.should be_close(mean_r, tol * stdev_r)
-          stdev.should be_close(stdev_r, tol * stdev_r)
-        end
-
-        it "returns uniformly-distributed random values with fixed range inclusive" do
-          ary = Array(UInt64).new
-          ans = 0.0
-
-          SpecNdata.times do
-            ran = SpecRng.uint 10..93
-            ans += ran
-            ary << ran
-          end
-
-          # mean  is:   (b + a) / 2
-          # stdev is:   (b - a) / sqrt( 12 )
-
-          mean_r = 51.5
-          stdev_r = 24.248711305964285
-          tol = 0.005
-
-          mean = ans / SpecNdata
-          stdev = stdev(ary, mean, SpecNdata)
-          mean.should be_close(mean_r, tol * stdev_r)
-          stdev.should be_close(stdev_r, tol * stdev_r)
-        end
-
-        it "returns uniformly-distributed random values with fixed range exclusive" do
-          ary = Array(UInt64).new
-          ans = 0.0
-
-          SpecNdata.times do
-            ran = SpecRng.uint 10...93
-            ans += ran
-            ary << ran
-          end
-
-          # mean  is:   (b + a) / 2
-          # stdev is:   (b - a) / sqrt( 12 )
-
-          mean_r = 51.0
-          stdev_r = 23.96003617136947
-          tol = 0.005
-
-          mean = ans / SpecNdata
-          stdev = stdev(ary, mean, SpecNdata)
-          mean.should be_close(mean_r, tol * stdev_r)
-          stdev.should be_close(stdev_r, tol * stdev_r)
-        end
+        dist_test("generates uniform-distributed random values with fixed range 10...93 parameter",
+          caller: SpecRng,
+          method: :uint,
+          params: {range: 10...93},
+          sample_type: UInt64,
+          real_mean: 51.0,
+          real_stdev: 23.96003617136947,
+          mean_tol: 0.005,
+          stdev_tol: 0.005,
+        )
       end
 
       describe "#float" do
-        it "accepts any sized Float as argument(s)" do
+        arg_test("accepts any sized Float as argument(s)",
+          caller: SpecRng,
+          method: :float,
+          params: {max: 1.0},
+          return_type: Float64,
+          types: [Float32, Float64]
+        )
+
+        sanity_test(
+          caller: SpecRng,
+          method: :float,
+          params: {max: 1.0},
+          params_to_check: [:max],
+        )
+
+        param_test(
+          caller: SpecRng,
+          method: :float,
+          params: {max: 1.0},
+          params_to_check: [:max],
+          check_negatives: true,
+          check_zeros: true,
+        )
+
+        it "accepts any sized Range as argument" do
+          # TODO: uncomment when `float` accepts Int arguments
+          # {% for bits in %i[8 16 32 64 128] %}
+          #   SpecRng.float 1_i{{bits.id}}..1_i{{bits.id}}
+          #   SpecRng.float 1_u{{bits.id}}..1_u{{bits.id}}
+          # {% end %}
+
           {% for bits in %i[32 64] %}
-            SpecRng.float 1.0_f{{bits.id}}
             SpecRng.float 1.0_f{{bits.id}}..1.0_f{{bits.id}}
           {% end %}
-        end
-
-        it "raises Alea::NaNError if max is NaN" do
-          expect_raises(Alea::NaNError) do
-            SpecRng.float max: 0.0 / 0.0
-          end
-        end
-
-        it "raises Alea::InfinityError if max is Infinity" do
-          expect_raises(Alea::InfinityError) do
-            SpecRng.float max: 1.0 / 0.0
-          end
-        end
-
-        it "raises Alea::UndefinedError if max is 0" do
-          expect_raises(Alea::UndefinedError) do
-            SpecRng.float max: 0.0
-          end
-        end
-
-        it "raises Alea::UndefinedError if max is negative" do
-          expect_raises(Alea::UndefinedError) do
-            SpecRng.float max: -1.0
-          end
         end
 
         it "raises Alea::NaNError if left bound is NaN" do
@@ -210,74 +182,41 @@ describe Alea do
           SpecRng.float(0.0..0.0).should eq(0.0)
         end
 
-        it "returns uniformly-distributed random values with fixed limit" do
-          ary = Array(Float64).new
-          ans = 0.0
+        # mean  is:   (b + a) / 2
+        # stdev is:   (b - a) / sqrt( 12 )
 
-          SpecNdata.times do
-            ran = SpecRng.float 9377.0
-            ans += ran
-            ary << ran
-          end
+        dist_test("generates uniform-distributed random values with fixed max 9377.0 parameter",
+          caller: SpecRng,
+          method: :float,
+          params: {max: 9377.0},
+          sample_type: Float64,
+          real_mean: 4688.5,
+          real_stdev: 2706.9067370955604,
+          mean_tol: 0.005,
+          stdev_tol: 0.005,
+        )
 
-          # mean  is:   a / 2
-          # stdev is:   a / sqrt( 12 )
+        dist_test("generates uniform-distributed random values with fixed range 10...93 parameter",
+          caller: SpecRng,
+          method: :float,
+          params: {range: 10.0...93.0},
+          sample_type: Float64,
+          real_mean: 51.5,
+          real_stdev: 23.96003617136947,
+          mean_tol: 0.005,
+          stdev_tol: 0.005,
+        )
 
-          mean_r = 4688.5
-          stdev_r = 2706.9067370955604
-          tol = 0.005
-
-          mean = ans / SpecNdata
-          stdev = stdev(ary, mean, SpecNdata)
-          mean.should be_close(mean_r, tol * stdev_r)
-          stdev.should be_close(stdev_r, tol * stdev_r)
-        end
-
-        it "returns uniformly-distributed random values with fixed range inclusive" do
-          ary = Array(Float64).new
-          ans = 0.0
-
-          SpecNdata.times do
-            ran = SpecRng.float -10_000.0..93.0
-            ans += ran
-            ary << ran
-          end
-
-          # mean  is:   (b + a) / 2
-          # stdev is:   (b - a) / sqrt( 12 )
-
-          mean_r = -4953.0
-          stdev_r = 2913.8868086000416
-          tol = 0.005
-
-          mean = ans / SpecNdata
-          stdev = stdev(ary, mean, SpecNdata)
-          mean.should be_close(mean_r, tol * stdev_r)
-          stdev.should be_close(stdev_r, tol * stdev_r)
-        end
-
-        it "returns uniformly-distributed random values with fixed range exclusive" do
-          ary = Array(Float64).new
-          ans = 0.0
-
-          SpecNdata.times do
-            ran = SpecRng.float 10.0...93.0
-            ans += ran
-            ary << ran
-          end
-
-          # mean  is:   (b + a) / 2
-          # stdev is:   (b - a) / sqrt( 12 )
-
-          mean_r = 51.5
-          stdev_r = 23.96003617136947
-          tol = 0.005
-
-          mean = ans / SpecNdata
-          stdev = stdev(ary, mean, SpecNdata)
-          mean.should be_close(mean_r, tol * stdev_r)
-          stdev.should be_close(stdev_r, tol * stdev_r)
-        end
+        dist_test("generates uniform-distributed random values with fixed range -10_000..93 parameter",
+          caller: SpecRng,
+          method: :float,
+          params: {range: -10_000.0..93.0},
+          sample_type: Float64,
+          real_mean: -4953.0,
+          real_stdev: 2913.8868086000416,
+          mean_tol: 0.005,
+          stdev_tol: 0.005,
+        )
       end
     end
   end

@@ -4,48 +4,40 @@ describe Alea do
   context "ChiSquare" do
     describe Alea::CDF do
       describe "#chisq" do
-        it "raises Alea::NaNError if x is NaN" do
-          expect_raises(Alea::NaNError) do
-            Alea::CDF.chisq(0.0 / 0.0, df: 1.0)
-          end
-        end
+        arg_test("accepts any sized Int/UInt/Float as argument(s)",
+          pending: true,
+          caller: Alea::CDF,
+          method: :chisq,
+          params: {x: 1.0, df: 1.0},
+          return_type: Float64,
+          types: [Int8, Int16, Int32, Int64, Int128,
+                  UInt8, UInt16, UInt32, UInt64, UInt128,
+                  Float32, Float64,
+          ]
+        )
 
-        it "raises Alea::InfinityError if x is Infinity" do
-          expect_raises(Alea::InfinityError) do
-            Alea::CDF.chisq(1.0 / 0.0, df: 1.0)
-          end
-        end
+        sanity_test(
+          caller: Alea::CDF,
+          method: :chisq,
+          params: {x: 1.0, df: 1.0},
+          params_to_check: [:x, :df],
+        )
 
-        it "raises Alea::NaNError if degrees of freedom are NaN" do
-          expect_raises(Alea::NaNError) do
-            Alea::CDF.chisq(0.0, df: 0.0 / 0.0)
-          end
-        end
-
-        it "raises Alea::InfinityError if degrees of freedom are Infinity" do
-          expect_raises(Alea::InfinityError) do
-            Alea::CDF.chisq(0.0, df: 1.0 / 0.0)
-          end
-        end
-
-        it "raises Alea::UndefinedError if freedom is equal to 0.0" do
-          expect_raises Alea::UndefinedError do
-            Alea::CDF.chisq(0.0, df: 0.0)
-          end
-        end
-
-        it "raises Alea::UndefinedError if freedom is less than 0.0" do
-          expect_raises Alea::UndefinedError do
-            Alea::CDF.chisq(0.0, df: -1.0)
-          end
-        end
+        param_test(
+          caller: Alea::CDF,
+          method: :chisq,
+          params: {x: 1.0, df: 1.0},
+          params_to_check: [:df],
+          check_negatives: true,
+          check_zeros: true,
+        )
 
         it "returns the cdf of -1.0 in X2(1)" do
-          Alea::CDF.chisq(-1.0).should eq(0.0)
+          Alea::CDF.chisq(-1.0, df: 1.0).should eq(0.0)
         end
 
         it "returns the cdf of 0.0 in X2(1)" do
-          Alea::CDF.chisq(0.0).should eq(0.0)
+          Alea::CDF.chisq(0.0, df: 1.0).should eq(0.0)
         end
 
         it "returns the cdf of 2.0 in X2(1)" do
@@ -53,7 +45,7 @@ describe Alea do
           tol = 1.0e-14
           # From WolframAlpha
           wf = 0.842700792949714869341
-          cv = Alea::CDF.chisq(2.0)
+          cv = Alea::CDF.chisq(2.0, df: 1.0)
           cv.should be_close(wf, cv * tol)
         end
 
