@@ -51,6 +51,53 @@ describe Alea do
           SpecRng.next_poisson(lam: 0.0).should eq(0.0)
         end
 
+        dist_test("generates poisson-distributed random values with fixed lam 0.1 parameter",
+          caller: SpecRng,
+          method: :next_poisson,
+          params: {lam: 0.1},
+          sample_type: Int64,
+          real_mean: 0.1,
+          real_stdev: 0.31622776601683794,
+          mean_tol: 0.005,
+          stdev_tol: 0.005,
+        )
+
+        dist_test("generates poisson-distributed random values with fixed lam 0.01 parameter",
+          pending: true,
+          caller: SpecRng,
+          method: :next_poisson,
+          params: {lam: 0.01},
+          sample_type: Int64,
+          real_mean: 0.01,
+          real_stdev: 0.1,
+          mean_tol: 0.005,
+          stdev_tol: 0.01,
+        )
+
+        dist_test("generates poisson-distributed random values with fixed lam 0.0001 parameter",
+          pending: true,
+          caller: SpecRng,
+          method: :next_poisson,
+          params: {lam: 0.0001},
+          sample_type: Int64,
+          real_mean: 0.0001,
+          real_stdev: 0.01,
+          mean_tol: 0.005,
+          stdev_tol: 0.01,
+        )
+
+        dist_test("generates poisson-distributed random values with fixed lam 0.0000001 parameter",
+          pending: true,
+          caller: SpecRng,
+          method: :next_poisson,
+          params: {lam: 0.0000001},
+          sample_type: Int64,
+          real_mean: 0.0000001,
+          real_stdev: 0.00031622776601683794,
+          mean_tol: 0.005,
+          stdev_tol: 0.01,
+        )
+
         dist_test("generates poisson-distributed random values with fixed lam 1.0 parameter",
           caller: SpecRng,
           method: :next_poisson,
