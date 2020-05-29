@@ -1,0 +1,1212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Crystal Docs 0.33.0">
+
+<link href="../css/style.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../js/doc.js"></script>
+
+<svg class="hidden">
+  <symbol id="octicon-link" viewBox="0 0 16 16">
+    <path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path>
+  </symbol>
+</svg>
+
+  <meta id="repository-name" content="github.com/nin93/alea">
+  <title>Alea::Random - github.com/nin93/alea</title>
+  <script type="text/javascript">
+    CrystalDoc.base_path = "../";
+  </script>
+</head>
+<body>
+
+<div class="sidebar">
+  <div class="sidebar-header">
+    <div class="search-box">
+      <input type="search" class="search-input" placeholder="Search..." spellcheck="false" aria-label="Search">
+    </div>
+
+    <div class="repository-links">
+      <a href="../index.html">README</a>
+    </div>
+  </div>
+
+  <div class="search-results" class="hidden">
+    <ul class="search-list"></ul>
+  </div>
+
+  <div class="types-list">
+    <ul>
+  
+  <li class="parent open current" data-id="github.com/nin93/alea/Alea" data-name="alea">
+      <a href="../Alea.html">Alea</a>
+      
+        <ul>
+  
+  <li class=" " data-id="github.com/nin93/alea/Alea/CDF" data-name="alea::cdf">
+      <a href="../Alea/CDF.html">CDF</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/nin93/alea/Alea/InfinityError" data-name="alea::infinityerror">
+      <a href="../Alea/InfinityError.html">InfinityError</a>
+      
+    </li>
+  
+  <li class="parent " data-id="github.com/nin93/alea/Alea/Internal" data-name="alea::internal">
+      <a href="../Alea/Internal.html">Internal</a>
+      
+        <ul>
+  
+  <li class="parent " data-id="github.com/nin93/alea/Alea/Internal/GaussLegendre" data-name="alea::internal::gausslegendre">
+      <a href="../Alea/Internal/GaussLegendre.html">GaussLegendre</a>
+      
+        <ul>
+  
+  <li class=" " data-id="github.com/nin93/alea/Alea/Internal/GaussLegendre/Quad50" data-name="alea::internal::gausslegendre::quad50">
+      <a href="../Alea/Internal/GaussLegendre/Quad50.html">Quad50</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="github.com/nin93/alea/Alea/Internal/Ziggurat" data-name="alea::internal::ziggurat">
+      <a href="../Alea/Internal/Ziggurat.html">Ziggurat</a>
+      
+        <ul>
+  
+  <li class=" " data-id="github.com/nin93/alea/Alea/Internal/Ziggurat/Exp" data-name="alea::internal::ziggurat::exp">
+      <a href="../Alea/Internal/Ziggurat/Exp.html">Exp</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/nin93/alea/Alea/Internal/Ziggurat/Normal" data-name="alea::internal::ziggurat::normal">
+      <a href="../Alea/Internal/Ziggurat/Normal.html">Normal</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="github.com/nin93/alea/Alea/NaNError" data-name="alea::nanerror">
+      <a href="../Alea/NaNError.html">NaNError</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/nin93/alea/Alea/NoConvergeError" data-name="alea::noconvergeerror">
+      <a href="../Alea/NoConvergeError.html">NoConvergeError</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/nin93/alea/Alea/PRNG" data-name="alea::prng">
+      <a href="../Alea/PRNG.html">PRNG</a>
+      
+    </li>
+  
+  <li class=" current" data-id="github.com/nin93/alea/Alea/Random" data-name="alea::random">
+      <a href="../Alea/Random.html">Random</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/nin93/alea/Alea/UndefinedError" data-name="alea::undefinederror">
+      <a href="../Alea/UndefinedError.html">UndefinedError</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/nin93/alea/Alea/XSR128" data-name="alea::xsr128">
+      <a href="../Alea/XSR128.html">XSR128</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/nin93/alea/Alea/XSR256" data-name="alea::xsr256">
+      <a href="../Alea/XSR256.html">XSR256</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+
+  </div>
+</div>
+
+
+<div class="main-content">
+<h1 class="type-name">
+
+  <span class="kind">struct</span> Alea::Random
+
+</h1>
+
+
+  <ul class="superclass-hierarchy"><li class="superclass"><a href="../Alea/Random.html">Alea::Random</a></li><li class="superclass">Struct</li><li class="superclass">Value</li><li class="superclass">Object</li></ul>
+
+
+
+
+  <h2>
+    <a id="overview" class="anchor" href="#overview">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Overview
+  </h2>
+
+  <p><code><a href="../Alea/Random.html">Alea::Random</a></code> provides the interface for distribution sampling, using the
+<strong>xoshiro</strong> pseudo random number generators written by Sebastiano Vigna and David Blackman.</p>
+
+<pre><code>seed <span class="o">=</span> <span class="n">9377</span>
+random <span class="o">=</span> <span class="t">Alea</span><span class="t">::</span><span class="t">Random</span>.<span class="k">new</span>(seed)
+random <span class="c"># =&gt; Alea::Random</span></code></pre>
+
+<p>The default generator is <code><a href="../Alea/XSR128.html">Alea::XSR128</a></code>, faster than <code><a href="../Alea/XSR256.html">Alea::XSR256</a></code>, but less capable state.
+To use the 256-bits version call the constructor like this:</p>
+
+<pre><code>seed <span class="o">=</span> <span class="n">12345</span>
+random <span class="o">=</span> <span class="t">Alea</span><span class="t">::</span><span class="t">Random</span>.<span class="k">new</span>(seed, <span class="t">Alea</span><span class="t">::</span><span class="t">XSR256</span>)
+random.prng <span class="c"># =&gt; Alea::XSR256</span></code></pre>
+
+<p>You can build your own custom PRNG by inheriting <code><a href="../Alea/PRNG.html">Alea::PRNG</a></code> and implementing <code><a href="../Alea/Random.html#next_u:UInt64-instance-method">#next_u</a></code>,
+<code><a href="../Alea/Random.html#next_f:Float64-instance-method">#next_f</a></code> and <code><a href="../Alea/Random.html#jump:self-instance-method">#jump</a></code>, as they are needed by every other call (except for <code><a href="../Alea/Random.html#jump:self-instance-method">#jump</a></code>);
+then create a new instance of <code><a href="../Alea/Random.html">Alea::Random</a></code> passing you class by its name like above.</p>
+
+<p>The following implementations are taken from <strong>numpy</strong>.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <h2>
+    <a id="defined-in" class="anchor" href="#defined-in">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Defined in:
+  </h2>
+  
+    
+      <a href="https://github.com/nin93/alea/blob/de6af4e2a2a295379b259c493e2f4488c27e1bfe/src/alea/rand/rnorm.cr#L5" target="_blank">
+        alea/rand/rnorm.cr
+      </a>
+    
+    <br/>
+  
+    
+      <a href="https://github.com/nin93/alea/blob/de6af4e2a2a295379b259c493e2f4488c27e1bfe/src/alea/rand/rexp.cr#L5" target="_blank">
+        alea/rand/rexp.cr
+      </a>
+    
+    <br/>
+  
+    
+      <a href="https://github.com/nin93/alea/blob/de6af4e2a2a295379b259c493e2f4488c27e1bfe/src/alea/rand/rgamma.cr#L6" target="_blank">
+        alea/rand/rgamma.cr
+      </a>
+    
+    <br/>
+  
+    
+      <a href="https://github.com/nin93/alea/blob/de6af4e2a2a295379b259c493e2f4488c27e1bfe/src/alea/rand/rbeta.cr#L4" target="_blank">
+        alea/rand/rbeta.cr
+      </a>
+    
+    <br/>
+  
+    
+      <a href="https://github.com/nin93/alea/blob/de6af4e2a2a295379b259c493e2f4488c27e1bfe/src/alea/rand/rchisq.cr#L4" target="_blank">
+        alea/rand/rchisq.cr
+      </a>
+    
+    <br/>
+  
+    
+      <a href="https://github.com/nin93/alea/blob/de6af4e2a2a295379b259c493e2f4488c27e1bfe/src/alea/rand/rinvexp.cr#L4" target="_blank">
+        alea/rand/rinvexp.cr
+      </a>
+    
+    <br/>
+  
+    
+      <a href="https://github.com/nin93/alea/blob/de6af4e2a2a295379b259c493e2f4488c27e1bfe/src/alea/rand/rlaplace.cr#L4" target="_blank">
+        alea/rand/rlaplace.cr
+      </a>
+    
+    <br/>
+  
+    
+      <a href="https://github.com/nin93/alea/blob/de6af4e2a2a295379b259c493e2f4488c27e1bfe/src/alea/rand/rlognor.cr#L5" target="_blank">
+        alea/rand/rlognor.cr
+      </a>
+    
+    <br/>
+  
+    
+      <a href="https://github.com/nin93/alea/blob/de6af4e2a2a295379b259c493e2f4488c27e1bfe/src/alea/rand/rpoiss.cr#L4" target="_blank">
+        alea/rand/rpoiss.cr
+      </a>
+    
+    <br/>
+  
+    
+      <a href="https://github.com/nin93/alea/blob/de6af4e2a2a295379b259c493e2f4488c27e1bfe/src/alea/rand/runif.cr#L2" target="_blank">
+        alea/rand/runif.cr
+      </a>
+    
+    <br/>
+  
+    
+      <a href="https://github.com/nin93/alea/blob/de6af4e2a2a295379b259c493e2f4488c27e1bfe/src/alea/rand/rwald.cr#L5" target="_blank">
+        alea/rand/rwald.cr
+      </a>
+    
+    <br/>
+  
+    
+      <a href="https://github.com/nin93/alea/blob/de6af4e2a2a295379b259c493e2f4488c27e1bfe/src/alea/rand/random.cr#L27" target="_blank">
+        alea/rand/random.cr
+      </a>
+    
+    <br/>
+  
+
+
+
+  
+    <h2>
+      <a id="constant-summary" class="anchor" href="#constant-summary">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+      Constant Summary
+    </h2>
+  
+  <dl>
+    
+      <dt class="entry-const" id="DEFAULT">
+        <strong>DEFAULT</strong> = <code><span class="t">Alea</span><span class="t">::</span><span class="t">XSR128</span></code>
+      </dt>
+      
+    
+  </dl>
+
+
+
+  <h2>
+    <a id="constructors" class="anchor" href="#constructors">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Constructors
+  </h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#new(initstate:UInt64,prng:Alea::PRNG.class=DEFAULT)-class-method" class="signature"><strong>.new</strong>(initstate : UInt64, prng : <span class="t">Alea</span><span class="t">::</span><span class="t">PRNG</span>.<span class="k">class</span> = <span class="t">DEFAULT</span>)</a>
+        
+          <div class="summary"><p>Initializes the PRNG with initial state.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#new(prng:Alea::PRNG.class=DEFAULT)-class-method" class="signature"><strong>.new</strong>(prng : <span class="t">Alea</span><span class="t">::</span><span class="t">PRNG</span>.<span class="k">class</span> = <span class="t">DEFAULT</span>)</a>
+        
+          <div class="summary"><p>Initializes the PRNG with initial state readed from system resorces.</p></div>
+        
+      </li>
+    
+  </ul>
+
+
+
+
+
+  <h2>
+    <a id="instance-method-summary" class="anchor" href="#instance-method-summary">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Instance Method Summary
+  </h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#beta(*,a,b)-instance-method" class="signature"><strong>#beta</strong>(*, a, b)</a>
+        
+          <div class="summary"><p>Generate a <em>beta-distributed</em>, pseudo-random <code>Float64</code> in range <code>[0, 1)</code>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#chisq(df)-instance-method" class="signature"><strong>#chisq</strong>(df)</a>
+        
+          <div class="summary"><p>Generate a <em>chi-square-distributed</em>, pseudo-random <code>Float64</code>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#exp(scale=1.0)-instance-method" class="signature"><strong>#exp</strong>(scale = <span class="n">1.0</span>)</a>
+        
+          <div class="summary"><p>Generate a <em>exp-distributed</em>, pseudo-random <code>Float64</code>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#float:Float64-instance-method" class="signature"><strong>#float</strong> : Float64</a>
+        
+          <div class="summary"><p>Generate a <em>uniform-distributed</em>, pseudo-random <code>Float64</code> in range <code>[0.0, 1.0)</code>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#float(range:Range(Float,Float)):Float64-instance-method" class="signature"><strong>#float</strong>(range : Range(Float, Float)) : Float64</a>
+        
+          <div class="summary"><p>Generate a <em>uniform-distributed</em>, pseudo-random <code>Float64</code> in fixed range.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#float(max:Float):Float64-instance-method" class="signature"><strong>#float</strong>(max : Float) : Float64</a>
+        
+          <div class="summary"><p>Generate a <em>uniform-distributed</em>, pseudo-random <code>Float64</code> in range <code>[0.0, max)</code>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#gamma(shape,scale=1.0)-instance-method" class="signature"><strong>#gamma</strong>(shape, scale = <span class="n">1.0</span>)</a>
+        
+          <div class="summary"><p>Generate a <em>gamma-distributed</em>, pseudo-random <code>Float64</code>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#invexp(scale=1.0)-instance-method" class="signature"><strong>#invexp</strong>(scale = <span class="n">1.0</span>)</a>
+        
+          <div class="summary"><p>Generate a <em>inverse-exp-distributed</em>, pseudo-random <code>Float64</code>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#jump:self-instance-method" class="signature"><strong>#jump</strong> : <span class="k">self</span></a>
+        
+          <div class="summary"><p>This equals to 2^(STATE_STORAGE * 32) calls to <code><a href="../Alea/Random.html#next_u:UInt64-instance-method">#next_u</a></code> or <code><a href="../Alea/Random.html#next_f:Float64-instance-method">#next_f</a></code>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#laplace(loc=0.0,scale=1.0)-instance-method" class="signature"><strong>#laplace</strong>(loc = <span class="n">0.0</span>, scale = <span class="n">1.0</span>)</a>
+        
+          <div class="summary"><p>Generate a <em>laplace-distributed</em>, pseudo-random <code>Float64</code>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#lognormal(loc=0.0,sigma=1.0)-instance-method" class="signature"><strong>#lognormal</strong>(loc = <span class="n">0.0</span>, sigma = <span class="n">1.0</span>)</a>
+        
+          <div class="summary"><p>Generate a <em>log-normal-distributed</em>, pseudo-random <code>Float64</code>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#next_f:Float64-instance-method" class="signature"><strong>#next_f</strong> : Float64</a>
+        
+          <div class="summary"><p>Returns the next generated <code>Float64</code>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#next_u:UInt64-instance-method" class="signature"><strong>#next_u</strong> : UInt64</a>
+        
+          <div class="summary"><p>Returns the next generated <code>UInt64</code>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#normal(loc=0.0,sigma=1.0)-instance-method" class="signature"><strong>#normal</strong>(loc = <span class="n">0.0</span>, sigma = <span class="n">1.0</span>)</a>
+        
+          <div class="summary"><p>Generate a <em>normal-distributed</em>, pseudo-random <code>Float64</code>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#poisson(lam=1.0)-instance-method" class="signature"><strong>#poisson</strong>(lam = <span class="n">1.0</span>)</a>
+        
+          <div class="summary"><p>Generate a <em>poisson-distributed</em>, pseudo-random <code>Int64</code>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#prng:Alea::PRNG-instance-method" class="signature"><strong>#prng</strong> : Alea::PRNG</a>
+        
+          <div class="summary"><p>The PRNG in use by this struct.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#uint:UInt64-instance-method" class="signature"><strong>#uint</strong> : UInt64</a>
+        
+          <div class="summary"><p>Generate a <em>uniform-distributed</em>, pseudo-random <code>UInt64</code>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#uint(max:Int):UInt64-instance-method" class="signature"><strong>#uint</strong>(max : Int) : UInt64</a>
+        
+          <div class="summary"><p>Generate a <em>uniform-distributed</em>, pseudo-random <code>UInt64</code> in range <code>[0, max)</code>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#uint(range:Range(Int,Int)):UInt64-instance-method" class="signature"><strong>#uint</strong>(range : Range(Int, Int)) : UInt64</a>
+        
+          <div class="summary"><p>Generate a <em>uniform-distributed</em>, pseudo-random <code>UInt64</code> in fixed range.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#wald(loc,shape=1.0)-instance-method" class="signature"><strong>#wald</strong>(loc, shape = <span class="n">1.0</span>)</a>
+        
+          <div class="summary"><p>Generate a <em>wald-distributed</em>, pseudo-random <code>Float64</code>.</p></div>
+        
+      </li>
+    
+  </ul>
+
+
+
+
+
+<div class="methods-inherited">
+  
+    
+
+
+    
+
+
+    
+
+
+  
+    
+
+
+    
+
+
+    
+
+
+  
+    
+
+
+    
+
+
+    
+
+
+  
+</div>
+
+
+  <h2>
+    <a id="constructor-detail" class="anchor" href="#constructor-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Constructor Detail
+  </h2>
+  
+    <div class="entry-detail" id="new(initstate:UInt64,prng:Alea::PRNG.class=DEFAULT)-class-method">
+      <div class="signature">
+        
+        def self.<strong>new</strong>(initstate : UInt64, prng : <span class="t">Alea</span><span class="t">::</span><span class="t">PRNG</span>.<span class="k">class</span> = <span class="t">DEFAULT</span>)
+
+        <a class="method-permalink" href="#new(initstate:UInt64,prng:Alea::PRNG.class=DEFAULT)-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Initializes the PRNG with initial state.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/nin93/alea/blob/de6af4e2a2a295379b259c493e2f4488c27e1bfe/src/alea/rand/random.cr#L34" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="new(prng:Alea::PRNG.class=DEFAULT)-class-method">
+      <div class="signature">
+        
+        def self.<strong>new</strong>(prng : <span class="t">Alea</span><span class="t">::</span><span class="t">PRNG</span>.<span class="k">class</span> = <span class="t">DEFAULT</span>)
+
+        <a class="method-permalink" href="#new(prng:Alea::PRNG.class=DEFAULT)-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Initializes the PRNG with initial state readed from system resorces.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/nin93/alea/blob/de6af4e2a2a295379b259c493e2f4488c27e1bfe/src/alea/rand/random.cr#L39" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+
+
+
+
+
+  <h2>
+    <a id="instance-method-detail" class="anchor" href="#instance-method-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Instance Method Detail
+  </h2>
+  
+    <div class="entry-detail" id="beta(*,a,b)-instance-method">
+      <div class="signature">
+        
+        def <strong>beta</strong>(*, a, b)
+
+        <a class="method-permalink" href="#beta(*,a,b)-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Generate a <em>beta-distributed</em>, pseudo-random <code>Float64</code> in range <code>[0, 1)</code>.</p>
+
+<p><strong>@note</strong>: named arguments are mandatory to prevent ambiguity.</p>
+
+<p><strong>@parameters</strong>:</p>
+
+<ul><li><code>a</code>: shape parameter of the distribution;
+  usually mentioned as <strong><code>α</code></strong>.</li><li><code>b</code>: shape parameter of the distribution;
+  usually mentioned as <strong><code>β</code></strong>.</li></ul>
+
+<p><strong>@exceptions</strong>:</p>
+
+<ul><li><code><a href="../Alea/NaNError.html">Alea::NaNError</a></code> if any of the arguments is <code>NaN</code>.</li><li><code><a href="../Alea/InfinityError.html">Alea::InfinityError</a></code> if any of the arguments is <code>Infinity</code>.</li><li><code><a href="../Alea/UndefinedError.html">Alea::UndefinedError</a></code> if any of <code>a</code> or <code>b</code> is negative or zero.</li></ul>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/nin93/alea/blob/de6af4e2a2a295379b259c493e2f4488c27e1bfe/src/alea/rand/rbeta.cr#L19" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="chisq(df)-instance-method">
+      <div class="signature">
+        
+        def <strong>chisq</strong>(df)
+
+        <a class="method-permalink" href="#chisq(df)-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Generate a <em>chi-square-distributed</em>, pseudo-random <code>Float64</code>.</p>
+
+<p><strong>@parameters</strong>:</p>
+
+<ul><li><code>df</code>: degrees of freedom of the distribution;
+  usually mentioned as <strong><code>k</code></strong>.</li></ul>
+
+<p><strong>@exceptions</strong>:</p>
+
+<ul><li><code><a href="../Alea/NaNError.html">Alea::NaNError</a></code> if any of the arguments is <code>NaN</code>.</li><li><code><a href="../Alea/InfinityError.html">Alea::InfinityError</a></code> if any of the arguments is <code>Infinity</code>.</li><li><code><a href="../Alea/UndefinedError.html">Alea::UndefinedError</a></code> if <code>df</code> is negative or zero.</li></ul>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/nin93/alea/blob/de6af4e2a2a295379b259c493e2f4488c27e1bfe/src/alea/rand/rchisq.cr#L15" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="exp(scale=1.0)-instance-method">
+      <div class="signature">
+        
+        def <strong>exp</strong>(scale = <span class="n">1.0</span>)
+
+        <a class="method-permalink" href="#exp(scale=1.0)-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Generate a <em>exp-distributed</em>, pseudo-random <code>Float64</code>.</p>
+
+<p><strong>@parameters</strong>:</p>
+
+<ul><li><code>scale</code>: scale parameter of the distribution;
+  usually mentioned as <strong><code>λ^-1</code></strong>.</li></ul>
+
+<p><strong>@exceptions</strong>:</p>
+
+<ul><li><code><a href="../Alea/NaNError.html">Alea::NaNError</a></code> if any of the arguments is <code>NaN</code>.</li><li><code><a href="../Alea/InfinityError.html">Alea::InfinityError</a></code> if any of the arguments is <code>Infinity</code>.</li><li><code><a href="../Alea/UndefinedError.html">Alea::UndefinedError</a></code> if <code>scale</code> is negative or zero.</li></ul>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/nin93/alea/blob/de6af4e2a2a295379b259c493e2f4488c27e1bfe/src/alea/rand/rexp.cr#L16" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="float:Float64-instance-method">
+      <div class="signature">
+        
+        def <strong>float</strong> : Float64
+
+        <a class="method-permalink" href="#float:Float64-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Generate a <em>uniform-distributed</em>, pseudo-random <code>Float64</code> in range <code>[0.0, 1.0)</code>.</p>
+
+<p><strong>@references</strong>: <code><a href="../Alea/Random.html#next_f:Float64-instance-method">#next_f</a></code>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/nin93/alea/blob/de6af4e2a2a295379b259c493e2f4488c27e1bfe/src/alea/rand/runif.cr#L77" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="float(range:Range(Float,Float)):Float64-instance-method">
+      <div class="signature">
+        
+        def <strong>float</strong>(range : Range(Float, Float)) : Float64
+
+        <a class="method-permalink" href="#float(range:Range(Float,Float)):Float64-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Generate a <em>uniform-distributed</em>, pseudo-random <code>Float64</code> in fixed range.</p>
+
+<p><strong>@parameters</strong>:</p>
+
+<ul><li><code>range</code>: range parameter, inclusive or exclusive, of the distribution:</li><li><code>range.begin</code>: left bound parameter of range of the distribution;
+  usually mentioned as <strong><code>a</code></strong>.</li><li><code>range.end</code>: right bound parameter of range of the distribution;
+  usually mentioned as <strong><code>b</code></strong>.</li></ul>
+
+<p><strong>@notes</strong>:</p>
+
+<ul><li><em>inclusive</em> means <code>[range.begin, range.end]</code>.</li><li><em>exclusive</em> means <code>[range.begin, range.end)</code>.</li><li>see <code>Range</code> from Crystal stdlib.</li></ul>
+
+<p><strong>@examples</strong>:</p>
+
+<pre><code>range_in <span class="o">=</span> <span class="n">10.0</span>..<span class="n">9377.0</span>
+range_in <span class="c"># Range(Float64, Float64), end-inclusive</span>
+
+range_ex <span class="o">=</span> <span class="n">10.0</span>...<span class="n">9377.0</span>
+range_ex <span class="c"># Range(Float64, Float64), end-exclusive</span>
+
+random <span class="o">=</span> <span class="t">Alea</span><span class="t">::</span><span class="t">Random</span>.<span class="k">new</span>
+random.float(range_in) <span class="c"># =&gt; 9113.861259040154</span>
+random.float(range_ex) <span class="c"># =&gt; 7701.2778313581175</span></code></pre>
+
+<p><strong>@exceptions</strong>:</p>
+
+<ul><li><code><a href="../Alea/NaNError.html">Alea::NaNError</a></code> if any of the arguments bound is <code>NaN</code>.</li><li><code><a href="../Alea/InfinityError.html">Alea::InfinityError</a></code> if any of the arguments bound is <code>Infinity</code>.</li><li><code><a href="../Alea/UndefinedError.html">Alea::UndefinedError</a></code> if <code>range.end</code> is less than <code>range.begin</code>.</li><li><code><a href="../Alea/UndefinedError.html">Alea::UndefinedError</a></code> if <code>range</code> is not end-inclusive but bounds are the same.</li></ul>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/nin93/alea/blob/de6af4e2a2a295379b259c493e2f4488c27e1bfe/src/alea/rand/runif.cr#L129" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="float(max:Float):Float64-instance-method">
+      <div class="signature">
+        
+        def <strong>float</strong>(max : Float) : Float64
+
+        <a class="method-permalink" href="#float(max:Float):Float64-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Generate a <em>uniform-distributed</em>, pseudo-random <code>Float64</code> in range <code>[0.0, max)</code>.</p>
+
+<p><strong>@parameters</strong>:</p>
+
+<ul><li><code>max</code>: right bound parameter of range of the distribution;
+  usually mentioned as <strong><code>b</code></strong>.</li></ul>
+
+<p><strong>@exceptions</strong>:</p>
+
+<ul><li><code><a href="../Alea/NaNError.html">Alea::NaNError</a></code> if any of the arguments is <code>NaN</code>.</li><li><code><a href="../Alea/InfinityError.html">Alea::InfinityError</a></code> if any of the arguments is <code>Infinity</code>.</li><li><code><a href="../Alea/UndefinedError.html">Alea::UndefinedError</a></code> if <code>max</code> is negative or zero.</li></ul>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/nin93/alea/blob/de6af4e2a2a295379b259c493e2f4488c27e1bfe/src/alea/rand/runif.cr#L91" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="gamma(shape,scale=1.0)-instance-method">
+      <div class="signature">
+        
+        def <strong>gamma</strong>(shape, scale = <span class="n">1.0</span>)
+
+        <a class="method-permalink" href="#gamma(shape,scale=1.0)-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Generate a <em>gamma-distributed</em>, pseudo-random <code>Float64</code>.</p>
+
+<p><strong>@parameters</strong>:</p>
+
+<ul><li><code>shape</code>: shape parameter of the distribution;
+  usually mentioned as <strong><code>k</code></strong>.</li><li><code>scale</code>: scale parameter of the distribution;
+  usually mentioned as <strong><code>θ</code></strong>.</li></ul>
+
+<p><strong>@exceptions</strong>:</p>
+
+<ul><li><code><a href="../Alea/NaNError.html">Alea::NaNError</a></code> if any of the arguments is <code>NaN</code>.</li><li><code><a href="../Alea/InfinityError.html">Alea::InfinityError</a></code> if any of the arguments is <code>Infinity</code>.</li><li><code><a href="../Alea/UndefinedError.html">Alea::UndefinedError</a></code> if any of <code>shape</code> or <code>scale</code> is negative or zero.</li></ul>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/nin93/alea/blob/de6af4e2a2a295379b259c493e2f4488c27e1bfe/src/alea/rand/rgamma.cr#L19" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="invexp(scale=1.0)-instance-method">
+      <div class="signature">
+        
+        def <strong>invexp</strong>(scale = <span class="n">1.0</span>)
+
+        <a class="method-permalink" href="#invexp(scale=1.0)-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Generate a <em>inverse-exp-distributed</em>, pseudo-random <code>Float64</code>.</p>
+
+<p><strong>@parameters</strong>:</p>
+
+<ul><li><code>scale</code>: scale parameter of the distribution;
+  usually mentioned as <strong><code>λ^-1</code></strong>.</li></ul>
+
+<p><strong>@exceptions</strong>:</p>
+
+<ul><li><code><a href="../Alea/NaNError.html">Alea::NaNError</a></code> if any of the arguments is <code>NaN</code>.</li><li><code><a href="../Alea/InfinityError.html">Alea::InfinityError</a></code> if any of the arguments is <code>Infinity</code>.</li><li><code><a href="../Alea/UndefinedError.html">Alea::UndefinedError</a></code> if <code>scale</code> is negative or zero.</li></ul>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/nin93/alea/blob/de6af4e2a2a295379b259c493e2f4488c27e1bfe/src/alea/rand/rinvexp.cr#L15" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="jump:self-instance-method">
+      <div class="signature">
+        
+        def <strong>jump</strong> : <span class="k">self</span>
+
+        <a class="method-permalink" href="#jump:self-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>This equals to 2^(STATE_STORAGE * 32) calls to <code><a href="../Alea/Random.html#next_u:UInt64-instance-method">#next_u</a></code> or <code><a href="../Alea/Random.html#next_f:Float64-instance-method">#next_f</a></code>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/nin93/alea/blob/de6af4e2a2a295379b259c493e2f4488c27e1bfe/src/alea/rand/random.cr#L54" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="laplace(loc=0.0,scale=1.0)-instance-method">
+      <div class="signature">
+        
+        def <strong>laplace</strong>(loc = <span class="n">0.0</span>, scale = <span class="n">1.0</span>)
+
+        <a class="method-permalink" href="#laplace(loc=0.0,scale=1.0)-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Generate a <em>laplace-distributed</em>, pseudo-random <code>Float64</code>.</p>
+
+<p><strong>@parameters</strong>:</p>
+
+<ul><li><code>loc</code>: centrality parameter, or mean of the distribution;
+  usually mentioned as <strong><code>μ</code></strong>.</li><li><code>scale</code>: scale parameter of the distribution;
+  usually mentioned as <strong><code>b</code></strong>.</li></ul>
+
+<p><strong>@exceptions</strong>:</p>
+
+<ul><li><code><a href="../Alea/NaNError.html">Alea::NaNError</a></code> if any of the arguments is <code>NaN</code>.</li><li><code><a href="../Alea/InfinityError.html">Alea::InfinityError</a></code> if any of the arguments is <code>Infinity</code>.</li><li><code><a href="../Alea/UndefinedError.html">Alea::UndefinedError</a></code> if <code>scale</code> is negative or zero.</li></ul>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/nin93/alea/blob/de6af4e2a2a295379b259c493e2f4488c27e1bfe/src/alea/rand/rlaplace.cr#L17" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="lognormal(loc=0.0,sigma=1.0)-instance-method">
+      <div class="signature">
+        
+        def <strong>lognormal</strong>(loc = <span class="n">0.0</span>, sigma = <span class="n">1.0</span>)
+
+        <a class="method-permalink" href="#lognormal(loc=0.0,sigma=1.0)-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Generate a <em>log-normal-distributed</em>, pseudo-random <code>Float64</code>.</p>
+
+<p><strong>@parameters</strong>:</p>
+
+<ul><li><code>loc</code>: centrality parameter, or mean of the underlying normal distribution;
+  usually mentioned as <strong><code>μ</code></strong>.</li><li><code>sigma</code>: scale parameter, or standard deviation of the underlying normal distribution;
+  usually mentioned as <strong><code>σ</code></strong>.</li></ul>
+
+<p><strong>@exceptions</strong>:</p>
+
+<ul><li><code><a href="../Alea/NaNError.html">Alea::NaNError</a></code> if any of the arguments is <code>NaN</code>.</li><li><code><a href="../Alea/InfinityError.html">Alea::InfinityError</a></code> if any of the arguments is <code>Infinity</code>.</li><li><code><a href="../Alea/UndefinedError.html">Alea::UndefinedError</a></code> if <code>sigma</code> is negative or zero.</li></ul>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/nin93/alea/blob/de6af4e2a2a295379b259c493e2f4488c27e1bfe/src/alea/rand/rlognor.cr#L18" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="next_f:Float64-instance-method">
+      <div class="signature">
+        
+        def <strong>next_f</strong> : Float64
+
+        <a class="method-permalink" href="#next_f:Float64-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the next generated <code>Float64</code>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/nin93/alea/blob/de6af4e2a2a295379b259c493e2f4488c27e1bfe/src/alea/rand/random.cr#L49" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="next_u:UInt64-instance-method">
+      <div class="signature">
+        
+        def <strong>next_u</strong> : UInt64
+
+        <a class="method-permalink" href="#next_u:UInt64-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the next generated <code>UInt64</code>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/nin93/alea/blob/de6af4e2a2a295379b259c493e2f4488c27e1bfe/src/alea/rand/random.cr#L44" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="normal(loc=0.0,sigma=1.0)-instance-method">
+      <div class="signature">
+        
+        def <strong>normal</strong>(loc = <span class="n">0.0</span>, sigma = <span class="n">1.0</span>)
+
+        <a class="method-permalink" href="#normal(loc=0.0,sigma=1.0)-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Generate a <em>normal-distributed</em>, pseudo-random <code>Float64</code>.</p>
+
+<p><strong>@parameters</strong>:</p>
+
+<ul><li><code>loc</code>: centrality parameter, or mean of the distribution;
+  usually mentioned as <strong><code>μ</code></strong>.</li><li><code>sigma</code>: scale parameter, or standard deviation of the distribution;
+  usually mentioned as <strong><code>σ</code></strong>.</li></ul>
+
+<p><strong>@exceptions</strong>:</p>
+
+<ul><li><code><a href="../Alea/NaNError.html">Alea::NaNError</a></code> if any of the arguments is <code>NaN</code>.</li><li><code><a href="../Alea/InfinityError.html">Alea::InfinityError</a></code> if any of the arguments is <code>Infinity</code>.</li><li><code><a href="../Alea/UndefinedError.html">Alea::UndefinedError</a></code> if <code>sigma</code> is negative or zero.</li></ul>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/nin93/alea/blob/de6af4e2a2a295379b259c493e2f4488c27e1bfe/src/alea/rand/rnorm.cr#L18" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="poisson(lam=1.0)-instance-method">
+      <div class="signature">
+        
+        def <strong>poisson</strong>(lam = <span class="n">1.0</span>)
+
+        <a class="method-permalink" href="#poisson(lam=1.0)-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Generate a <em>poisson-distributed</em>, pseudo-random <code>Int64</code>.</p>
+
+<p><strong>@parameters</strong>:</p>
+
+<ul><li><code>lam</code>: separation parameter of the distribution;
+  usually mentioned as <strong><code>λ</code></strong>.</li></ul>
+
+<p><strong>@exceptions</strong>:</p>
+
+<ul><li><code><a href="../Alea/NaNError.html">Alea::NaNError</a></code> if any of the arguments is <code>NaN</code>.</li><li><code><a href="../Alea/InfinityError.html">Alea::InfinityError</a></code> if any of the arguments is <code>Infinity</code>.</li><li><code><a href="../Alea/UndefinedError.html">Alea::UndefinedError</a></code> if <code>lam</code> is negative or zero.</li></ul>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/nin93/alea/blob/de6af4e2a2a295379b259c493e2f4488c27e1bfe/src/alea/rand/rpoiss.cr#L15" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="prng:Alea::PRNG-instance-method">
+      <div class="signature">
+        
+        def <strong>prng</strong> : <a href="../Alea/PRNG.html">Alea::PRNG</a>
+
+        <a class="method-permalink" href="#prng:Alea::PRNG-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>The PRNG in use by this struct.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/nin93/alea/blob/de6af4e2a2a295379b259c493e2f4488c27e1bfe/src/alea/rand/random.cr#L31" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="uint:UInt64-instance-method">
+      <div class="signature">
+        
+        def <strong>uint</strong> : UInt64
+
+        <a class="method-permalink" href="#uint:UInt64-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Generate a <em>uniform-distributed</em>, pseudo-random <code>UInt64</code>.</p>
+
+<p><strong>@references</strong>: <code><a href="../Alea/Random.html#next_u:UInt64-instance-method">#next_u</a></code>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/nin93/alea/blob/de6af4e2a2a295379b259c493e2f4488c27e1bfe/src/alea/rand/runif.cr#L6" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="uint(max:Int):UInt64-instance-method">
+      <div class="signature">
+        
+        def <strong>uint</strong>(max : Int) : UInt64
+
+        <a class="method-permalink" href="#uint(max:Int):UInt64-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Generate a <em>uniform-distributed</em>, pseudo-random <code>UInt64</code> in range <code>[0, max)</code>.</p>
+
+<p><strong>@parameters</strong>:</p>
+
+<ul><li><code>max</code>: right bound parameter of range of the distribution;
+  usually mentioned as <strong><code>b</code></strong>.</li></ul>
+
+<p><strong>@exceptions</strong>:</p>
+
+<ul><li><code><a href="../Alea/UndefinedError.html">Alea::UndefinedError</a></code> if <code>max</code> is negative or zero.</li></ul>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/nin93/alea/blob/de6af4e2a2a295379b259c493e2f4488c27e1bfe/src/alea/rand/runif.cr#L18" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="uint(range:Range(Int,Int)):UInt64-instance-method">
+      <div class="signature">
+        
+        def <strong>uint</strong>(range : Range(Int, Int)) : UInt64
+
+        <a class="method-permalink" href="#uint(range:Range(Int,Int)):UInt64-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Generate a <em>uniform-distributed</em>, pseudo-random <code>UInt64</code> in fixed range.</p>
+
+<p><strong>@parameters</strong>:</p>
+
+<ul><li><code>range</code>: range parameter, inclusive or exclusive, of the distribution:</li><li><code>range.begin</code>: left bound parameter of range of the distribution;
+  usually mentioned as <strong><code>a</code></strong>.</li><li><code>range.end</code>: right bound parameter of range of the distribution;
+  usually mentioned as <strong><code>b</code></strong>.</li></ul>
+
+<h1><a id="notes" class="anchor" href="#notes">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a><strong>@notes</strong>:</h1>
+
+<ul><li><em>inclusive</em> means <code>[range.begin, range.end]</code>.</li><li><em>exclusive</em> means <code>[range.begin, range.end)</code>.</li><li>see <code>Range</code> from Crystal stdlib.</li></ul>
+
+<p><strong>@examples</strong>:</p>
+
+<pre><code>range_in <span class="o">=</span> <span class="n">10</span>..<span class="n">9377</span>
+range_in <span class="c"># Range(Int32, Int32), end-inclusive</span>
+
+range_ex <span class="o">=</span> <span class="n">10</span>...<span class="n">9377</span>
+range_ex <span class="c"># Range(Int32, Int32), end-exclusive</span>
+
+random <span class="o">=</span> <span class="t">Alea</span><span class="t">::</span><span class="t">Random</span>.<span class="k">new</span>
+random.uint(range_in) <span class="c"># =&gt; 2640</span>
+random.uint(range_ex) <span class="c"># =&gt; 527</span></code></pre>
+
+<p><strong>@exceptions</strong>:</p>
+
+<ul><li><code><a href="../Alea/UndefinedError.html">Alea::UndefinedError</a></code> if <code>range.end</code> is less than <code>range.begin</code>.</li><li><code><a href="../Alea/UndefinedError.html">Alea::UndefinedError</a></code> if <code>range</code> is not end-inclusive but bounds are the same.</li></ul>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/nin93/alea/blob/de6af4e2a2a295379b259c493e2f4488c27e1bfe/src/alea/rand/runif.cr#L59" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="wald(loc,shape=1.0)-instance-method">
+      <div class="signature">
+        
+        def <strong>wald</strong>(loc, shape = <span class="n">1.0</span>)
+
+        <a class="method-permalink" href="#wald(loc,shape=1.0)-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Generate a <em>wald-distributed</em>, pseudo-random <code>Float64</code>.</p>
+
+<p><strong>@note</strong>: the Wald distribution is also known as Inverse Normal distribution.</p>
+
+<p><strong>@parameters</strong>:</p>
+
+<ul><li><code>loc</code>: centrality parameter, or mean of the distribution;
+  usually mentioned as <strong><code>μ</code></strong>.</li><li><code>shape</code>: shape parameter of the distribution;
+  usually mentioned as <strong><code>λ</code></strong>.</li></ul>
+
+<p><strong>@exceptions</strong>:</p>
+
+<ul><li><code><a href="../Alea/NaNError.html">Alea::NaNError</a></code> if any of the arguments is <code>NaN</code>.</li><li><code><a href="../Alea/InfinityError.html">Alea::InfinityError</a></code> if any of the arguments is <code>Infinity</code>.</li><li><code><a href="../Alea/UndefinedError.html">Alea::UndefinedError</a></code> if any of <code>loc</code> or <code>shape</code> is negative or zero.</li></ul>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/nin93/alea/blob/de6af4e2a2a295379b259c493e2f4488c27e1bfe/src/alea/rand/rwald.cr#L20" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+
+
+
+
+</div>
+
+</body>
+</html>

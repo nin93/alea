@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Crystal Docs 0.33.0">
+
+<link href="../css/style.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../js/doc.js"></script>
+
+<svg class="hidden">
+  <symbol id="octicon-link" viewBox="0 0 16 16">
+    <path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path>
+  </symbol>
+</svg>
+
+  <meta id="repository-name" content="github.com/nin93/alea">
+  <title>Alea::CDF - github.com/nin93/alea</title>
+  <script type="text/javascript">
+    CrystalDoc.base_path = "../";
+  </script>
+</head>
+<body>
+
+<div class="sidebar">
+  <div class="sidebar-header">
+    <div class="search-box">
+      <input type="search" class="search-input" placeholder="Search..." spellcheck="false" aria-label="Search">
+    </div>
+
+    <div class="repository-links">
+      <a href="../index.html">README</a>
+    </div>
+  </div>
+
+  <div class="search-results" class="hidden">
+    <ul class="search-list"></ul>
+  </div>
+
+  <div class="types-list">
+    <ul>
+  
+  <li class="parent open current" data-id="github.com/nin93/alea/Alea" data-name="alea">
+      <a href="../Alea.html">Alea</a>
+      
+        <ul>
+  
+  <li class=" current" data-id="github.com/nin93/alea/Alea/CDF" data-name="alea::cdf">
+      <a href="../Alea/CDF.html">CDF</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/nin93/alea/Alea/InfinityError" data-name="alea::infinityerror">
+      <a href="../Alea/InfinityError.html">InfinityError</a>
+      
+    </li>
+  
+  <li class="parent " data-id="github.com/nin93/alea/Alea/Internal" data-name="alea::internal">
+      <a href="../Alea/Internal.html">Internal</a>
+      
+        <ul>
+  
+  <li class="parent " data-id="github.com/nin93/alea/Alea/Internal/GaussLegendre" data-name="alea::internal::gausslegendre">
+      <a href="../Alea/Internal/GaussLegendre.html">GaussLegendre</a>
+      
+        <ul>
+  
+  <li class=" " data-id="github.com/nin93/alea/Alea/Internal/GaussLegendre/Quad50" data-name="alea::internal::gausslegendre::quad50">
+      <a href="../Alea/Internal/GaussLegendre/Quad50.html">Quad50</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="github.com/nin93/alea/Alea/Internal/Ziggurat" data-name="alea::internal::ziggurat">
+      <a href="../Alea/Internal/Ziggurat.html">Ziggurat</a>
+      
+        <ul>
+  
+  <li class=" " data-id="github.com/nin93/alea/Alea/Internal/Ziggurat/Exp" data-name="alea::internal::ziggurat::exp">
+      <a href="../Alea/Internal/Ziggurat/Exp.html">Exp</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/nin93/alea/Alea/Internal/Ziggurat/Normal" data-name="alea::internal::ziggurat::normal">
+      <a href="../Alea/Internal/Ziggurat/Normal.html">Normal</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="github.com/nin93/alea/Alea/NaNError" data-name="alea::nanerror">
+      <a href="../Alea/NaNError.html">NaNError</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/nin93/alea/Alea/NoConvergeError" data-name="alea::noconvergeerror">
+      <a href="../Alea/NoConvergeError.html">NoConvergeError</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/nin93/alea/Alea/PRNG" data-name="alea::prng">
+      <a href="../Alea/PRNG.html">PRNG</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/nin93/alea/Alea/Random" data-name="alea::random">
+      <a href="../Alea/Random.html">Random</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/nin93/alea/Alea/UndefinedError" data-name="alea::undefinederror">
+      <a href="../Alea/UndefinedError.html">UndefinedError</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/nin93/alea/Alea/XSR128" data-name="alea::xsr128">
+      <a href="../Alea/XSR128.html">XSR128</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/nin93/alea/Alea/XSR256" data-name="alea::xsr256">
+      <a href="../Alea/XSR256.html">XSR256</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+
+  </div>
+</div>
+
+
+<div class="main-content">
+<h1 class="type-name">
+
+  <span class="kind">module</span> Alea::CDF
+
+</h1>
+
+
+
+
+
+  <h2>
+    <a id="overview" class="anchor" href="#overview">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Overview
+  </h2>
+
+  <p><code><a href="../Alea/CDF.html">Alea::CDF</a></code> is the interface used to calculate the Cumulative Distribution Functions.
+Given <em>X</em> ~ <em>D</em> and a fixed quantile <em>x</em>, CDFs are defined as the functions that associate <em>x</em>
+to the probability that the real-valued random <em>X</em> from the distribution <em>D</em>
+will take a value less or equal to <em>x</em>.</p>
+
+<p>Arguments passed to <code><a href="../Alea/CDF.html">Alea::CDF</a></code> methods to shape the distributions are analogous to those used for sampling:</p>
+
+<pre><code class="language-crystal"><span class="t">Alea</span><span class="t">::</span><span class="t">CDF</span>.normal(<span class="n">0.0</span>)                       <span class="c"># =&gt; 0.5</span>
+<span class="t">Alea</span><span class="t">::</span><span class="t">CDF</span>.normal(<span class="n">2.0</span>, loc: <span class="n">1.0</span>, sigma: <span class="n">0.5</span>) <span class="c"># =&gt; 0.9772498680518208</span>
+<span class="t">Alea</span><span class="t">::</span><span class="t">CDF</span>.chisq(<span class="n">5.279</span>, df: <span class="n">5.0</span>)             <span class="c"># =&gt; 0.6172121213841358</span></code></pre>
+
+<p><span class="flag purple">NOTE</span>  for real-valued quantiles is used <code>x</code>, <code>k</code> for discrete-valued instead.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <h2>
+    <a id="defined-in" class="anchor" href="#defined-in">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Defined in:
+  </h2>
+  
+    
+      <a href="https://github.com/nin93/alea/blob/de6af4e2a2a295379b259c493e2f4488c27e1bfe/src/alea/prob/cdf.cr#L16" target="_blank">
+        alea/prob/cdf.cr
+      </a>
+    
+    <br/>
+  
+    
+      <a href="https://github.com/nin93/alea/blob/de6af4e2a2a295379b259c493e2f4488c27e1bfe/src/alea/prob/pchisq.cr#L1" target="_blank">
+        alea/prob/pchisq.cr
+      </a>
+    
+    <br/>
+  
+    
+      <a href="https://github.com/nin93/alea/blob/de6af4e2a2a295379b259c493e2f4488c27e1bfe/src/alea/prob/pexp.cr#L1" target="_blank">
+        alea/prob/pexp.cr
+      </a>
+    
+    <br/>
+  
+    
+      <a href="https://github.com/nin93/alea/blob/de6af4e2a2a295379b259c493e2f4488c27e1bfe/src/alea/prob/pgamma.cr#L1" target="_blank">
+        alea/prob/pgamma.cr
+      </a>
+    
+    <br/>
+  
+    
+      <a href="https://github.com/nin93/alea/blob/de6af4e2a2a295379b259c493e2f4488c27e1bfe/src/alea/prob/plaplace.cr#L1" target="_blank">
+        alea/prob/plaplace.cr
+      </a>
+    
+    <br/>
+  
+    
+      <a href="https://github.com/nin93/alea/blob/de6af4e2a2a295379b259c493e2f4488c27e1bfe/src/alea/prob/plognor.cr#L1" target="_blank">
+        alea/prob/plognor.cr
+      </a>
+    
+    <br/>
+  
+    
+      <a href="https://github.com/nin93/alea/blob/de6af4e2a2a295379b259c493e2f4488c27e1bfe/src/alea/prob/pnorm.cr#L1" target="_blank">
+        alea/prob/pnorm.cr
+      </a>
+    
+    <br/>
+  
+    
+      <a href="https://github.com/nin93/alea/blob/de6af4e2a2a295379b259c493e2f4488c27e1bfe/src/alea/prob/ppoiss.cr#L1" target="_blank">
+        alea/prob/ppoiss.cr
+      </a>
+    
+    <br/>
+  
+    
+      <a href="https://github.com/nin93/alea/blob/de6af4e2a2a295379b259c493e2f4488c27e1bfe/src/alea/prob/punif.cr#L1" target="_blank">
+        alea/prob/punif.cr
+      </a>
+    
+    <br/>
+  
+
+
+
+
+
+
+
+  <h2>
+    <a id="class-method-summary" class="anchor" href="#class-method-summary">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Class Method Summary
+  </h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#chisq(x:Float,df:Float=1.0):Float64-class-method" class="signature"><strong>.chisq</strong>(x : Float, df : Float = <span class="n">1.0</span>) : Float64</a>
+        
+          <div class="summary"><p>Calculate the cumulative distribution function evaluated at <code>x</code>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#exp(x:Float,scale:Float=1.0):Float64-class-method" class="signature"><strong>.exp</strong>(x : Float, scale : Float = <span class="n">1.0</span>) : Float64</a>
+        
+          <div class="summary"><p>Calculate the cumulative distribution function evaluated at <code>x</code>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#gamma(x:Float,shape:Float,scale:Float=1.0):Float64-class-method" class="signature"><strong>.gamma</strong>(x : Float, shape : Float, scale : Float = <span class="n">1.0</span>) : Float64</a>
+        
+          <div class="summary"><p>Calculate the cumulative distribution function evaluated at <code>x</code>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#laplace(x:Float,loc:Float=0.0,scale:Float=1.0):Float64-class-method" class="signature"><strong>.laplace</strong>(x : Float, loc : Float = <span class="n">0.0</span>, scale : Float = <span class="n">1.0</span>) : Float64</a>
+        
+          <div class="summary"><p>Calculate the cumulative distribution function evaluated at <code>x</code>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#lognormal(x:Float,loc:Float=0.0,sigma:Float=1.0):Float64-class-method" class="signature"><strong>.lognormal</strong>(x : Float, loc : Float = <span class="n">0.0</span>, sigma : Float = <span class="n">1.0</span>) : Float64</a>
+        
+          <div class="summary"><p>Calculate the cumulative distribution function evaluated at <code>x</code>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#normal(x:Float,loc:Float=0.0,sigma:Float=1.0):Float64-class-method" class="signature"><strong>.normal</strong>(x : Float, loc : Float = <span class="n">0.0</span>, sigma : Float = <span class="n">1.0</span>) : Float64</a>
+        
+          <div class="summary"><p>Calculate the cumulative distribution function evaluated at <code>x</code>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#poisson(k:Int,lam:Float=1.0):Float64-class-method" class="signature"><strong>.poisson</strong>(k : Int, lam : Float = <span class="n">1.0</span>) : Float64</a>
+        
+          <div class="summary"><p>Calculate the cumulative distribution function evaluated at <code>k</code>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#uniform(x:Float,min:Float,max:Float):Float64-class-method" class="signature"><strong>.uniform</strong>(x : Float, min : Float, max : Float) : Float64</a>
+        
+          <div class="summary"><p>Calculate the cumulative distribution function evaluated at <code>x</code>.</p></div>
+        
+      </li>
+    
+  </ul>
+
+
+
+
+
+
+
+<div class="methods-inherited">
+  
+</div>
+
+
+
+
+  <h2>
+    <a id="class-method-detail" class="anchor" href="#class-method-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Class Method Detail
+  </h2>
+  
+    <div class="entry-detail" id="chisq(x:Float,df:Float=1.0):Float64-class-method">
+      <div class="signature">
+        
+        def self.<strong>chisq</strong>(x : Float, df : Float = <span class="n">1.0</span>) : Float64
+
+        <a class="method-permalink" href="#chisq(x:Float,df:Float=1.0):Float64-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Calculate the cumulative distribution function evaluated at <code>x</code>.</p>
+
+<p><strong>@parameters</strong>:</p>
+
+<ul><li><code>x</code>: real-valued quantile of which estimate the cdf.</li><li><code>df</code>: degrees of freedom of the distribution;
+  usually mentioned as <strong><code>k</code></strong>.</li></ul>
+
+<p><strong>@exceptions</strong>:</p>
+
+<ul><li><code><a href="../Alea/NaNError.html">Alea::NaNError</a></code> if any of the arguments is <code>NaN</code>.</li><li><code><a href="../Alea/InfinityError.html">Alea::InfinityError</a></code> if any of the arguments is <code>Infinity</code>.</li><li><code><a href="../Alea/UndefinedError.html">Alea::UndefinedError</a></code> if <code>df</code> is negative or zero.</li></ul>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/nin93/alea/blob/de6af4e2a2a295379b259c493e2f4488c27e1bfe/src/alea/prob/pchisq.cr#L13" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="exp(x:Float,scale:Float=1.0):Float64-class-method">
+      <div class="signature">
+        
+        def self.<strong>exp</strong>(x : Float, scale : Float = <span class="n">1.0</span>) : Float64
+
+        <a class="method-permalink" href="#exp(x:Float,scale:Float=1.0):Float64-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Calculate the cumulative distribution function evaluated at <code>x</code>.</p>
+
+<p><strong>@parameters</strong>:</p>
+
+<ul><li><code>x</code>: real-valued quantile of which estimate the cdf.</li><li><code>scale</code>: scale parameter of the distribution;
+  usually mentioned as <strong><code>λ^-1</code></strong>.</li></ul>
+
+<p><strong>@exceptions</strong>:</p>
+
+<ul><li><code><a href="../Alea/NaNError.html">Alea::NaNError</a></code> if any of the arguments is <code>NaN</code>.</li><li><code><a href="../Alea/InfinityError.html">Alea::InfinityError</a></code> if any of the arguments is <code>Infinity</code>.</li><li><code><a href="../Alea/UndefinedError.html">Alea::UndefinedError</a></code> if <code>scale</code> is negative or zero.</li></ul>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/nin93/alea/blob/de6af4e2a2a295379b259c493e2f4488c27e1bfe/src/alea/prob/pexp.cr#L13" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="gamma(x:Float,shape:Float,scale:Float=1.0):Float64-class-method">
+      <div class="signature">
+        
+        def self.<strong>gamma</strong>(x : Float, shape : Float, scale : Float = <span class="n">1.0</span>) : Float64
+
+        <a class="method-permalink" href="#gamma(x:Float,shape:Float,scale:Float=1.0):Float64-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Calculate the cumulative distribution function evaluated at <code>x</code>.</p>
+
+<p><strong>@parameters</strong>:</p>
+
+<ul><li><code>x</code>: real-valued quantile of which estimate the cdf.</li><li><code>shape</code>: shape parameter of the distribution;
+  usually mentioned as <strong><code>k</code></strong>.</li><li><code>scale</code>: scale parameter of the distribution;
+  usually mentioned as <strong><code>θ</code></strong>.</li></ul>
+
+<p><strong>@exceptions</strong>:</p>
+
+<ul><li><code><a href="../Alea/NaNError.html">Alea::NaNError</a></code> if any of the arguments is <code>NaN</code>.</li><li><code><a href="../Alea/InfinityError.html">Alea::InfinityError</a></code> if any of the arguments is <code>Infinity</code>.</li><li><code><a href="../Alea/UndefinedError.html">Alea::UndefinedError</a></code> if any of <code>shape</code> or <code>scale</code> is negative or zero.</li></ul>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/nin93/alea/blob/de6af4e2a2a295379b259c493e2f4488c27e1bfe/src/alea/prob/pgamma.cr#L15" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="laplace(x:Float,loc:Float=0.0,scale:Float=1.0):Float64-class-method">
+      <div class="signature">
+        
+        def self.<strong>laplace</strong>(x : Float, loc : Float = <span class="n">0.0</span>, scale : Float = <span class="n">1.0</span>) : Float64
+
+        <a class="method-permalink" href="#laplace(x:Float,loc:Float=0.0,scale:Float=1.0):Float64-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Calculate the cumulative distribution function evaluated at <code>x</code>.</p>
+
+<p><strong>@parameters</strong>:</p>
+
+<ul><li><code>x</code>: real-valued quantile of which estimate the cdf.</li><li><code>loc</code>: centrality parameter, or mean of the distribution;
+  usually mentioned as <strong><code>μ</code></strong>.</li><li><code>scale</code>: scale parameter of the distribution;
+  usually mentioned as <strong><code>b</code></strong>.</li></ul>
+
+<p><strong>@exceptions</strong>:</p>
+
+<ul><li><code><a href="../Alea/NaNError.html">Alea::NaNError</a></code> if any of the arguments is <code>NaN</code>.</li><li><code><a href="../Alea/InfinityError.html">Alea::InfinityError</a></code> if any of the arguments is <code>Infinity</code>.</li><li><code><a href="../Alea/UndefinedError.html">Alea::UndefinedError</a></code> if <code>scale</code> is negative or zero.</li></ul>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/nin93/alea/blob/de6af4e2a2a295379b259c493e2f4488c27e1bfe/src/alea/prob/plaplace.cr#L15" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="lognormal(x:Float,loc:Float=0.0,sigma:Float=1.0):Float64-class-method">
+      <div class="signature">
+        
+        def self.<strong>lognormal</strong>(x : Float, loc : Float = <span class="n">0.0</span>, sigma : Float = <span class="n">1.0</span>) : Float64
+
+        <a class="method-permalink" href="#lognormal(x:Float,loc:Float=0.0,sigma:Float=1.0):Float64-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Calculate the cumulative distribution function evaluated at <code>x</code>.</p>
+
+<p><strong>@parameters</strong>:</p>
+
+<ul><li><code>x</code>: real-valued quantile of which estimate the cdf.</li><li><code>loc</code>: centrality parameter, or mean of the underlying normal distribution;
+  usually mentioned as <strong><code>μ</code></strong>.</li><li><code>sigma</code>: scale parameter, or standard deviation of the underlying normal distribution;
+  usually mentioned as <strong><code>σ</code></strong>.</li></ul>
+
+<p><strong>@exceptions</strong>:</p>
+
+<ul><li><code><a href="../Alea/NaNError.html">Alea::NaNError</a></code> if any of the arguments is <code>NaN</code>.</li><li><code><a href="../Alea/InfinityError.html">Alea::InfinityError</a></code> if any of the arguments is <code>Infinity</code>.</li><li><code><a href="../Alea/UndefinedError.html">Alea::UndefinedError</a></code> if <code>sigma</code> is negative or zero.</li></ul>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/nin93/alea/blob/de6af4e2a2a295379b259c493e2f4488c27e1bfe/src/alea/prob/plognor.cr#L15" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="normal(x:Float,loc:Float=0.0,sigma:Float=1.0):Float64-class-method">
+      <div class="signature">
+        
+        def self.<strong>normal</strong>(x : Float, loc : Float = <span class="n">0.0</span>, sigma : Float = <span class="n">1.0</span>) : Float64
+
+        <a class="method-permalink" href="#normal(x:Float,loc:Float=0.0,sigma:Float=1.0):Float64-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Calculate the cumulative distribution function evaluated at <code>x</code>.</p>
+
+<p><strong>@parameters</strong>:</p>
+
+<ul><li><code>x</code>: real-valued quantile of which estimate the cdf.</li><li><code>loc</code>: centrality parameter, or mean of the distribution;
+  usually mentioned as <strong><code>μ</code></strong>.</li><li><code>sigma</code>: scale parameter, or standard deviation of the distribution;
+  usually mentioned as <strong><code>σ</code></strong>.</li></ul>
+
+<p><strong>@exceptions</strong>:</p>
+
+<ul><li><code><a href="../Alea/NaNError.html">Alea::NaNError</a></code> if any of the arguments is <code>NaN</code>.</li><li><code><a href="../Alea/InfinityError.html">Alea::InfinityError</a></code> if any of the arguments is <code>Infinity</code>.</li><li><code><a href="../Alea/UndefinedError.html">Alea::UndefinedError</a></code> if <code>sigma</code> is negative or zero.</li></ul>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/nin93/alea/blob/de6af4e2a2a295379b259c493e2f4488c27e1bfe/src/alea/prob/pnorm.cr#L15" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="poisson(k:Int,lam:Float=1.0):Float64-class-method">
+      <div class="signature">
+        
+        def self.<strong>poisson</strong>(k : Int, lam : Float = <span class="n">1.0</span>) : Float64
+
+        <a class="method-permalink" href="#poisson(k:Int,lam:Float=1.0):Float64-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Calculate the cumulative distribution function evaluated at <code>k</code>.</p>
+
+<p><strong>@parameters</strong>:</p>
+
+<ul><li><code>k</code>: discrete-valued quantile of which estimate the cdf.</li><li><code>lam</code>: separation parameter of the distribution;
+  usually mentioned as <strong><code>λ</code></strong>.</li></ul>
+
+<p><strong>@exceptions</strong>:</p>
+
+<ul><li><code><a href="../Alea/NaNError.html">Alea::NaNError</a></code> if any of the arguments is <code>NaN</code>.</li><li><code><a href="../Alea/InfinityError.html">Alea::InfinityError</a></code> if any of the arguments is <code>Infinity</code>.</li><li><code><a href="../Alea/UndefinedError.html">Alea::UndefinedError</a></code> if <code>lam</code> is negative or zero.</li></ul>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/nin93/alea/blob/de6af4e2a2a295379b259c493e2f4488c27e1bfe/src/alea/prob/ppoiss.cr#L13" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="uniform(x:Float,min:Float,max:Float):Float64-class-method">
+      <div class="signature">
+        
+        def self.<strong>uniform</strong>(x : Float, min : Float, max : Float) : Float64
+
+        <a class="method-permalink" href="#uniform(x:Float,min:Float,max:Float):Float64-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Calculate the cumulative distribution function evaluated at <code>x</code>.</p>
+
+<p><strong>@parameters</strong>:</p>
+
+<ul><li><code>x</code>: real-valued quantile of which estimate the cdf.</li><li><code>min</code>: left bound parameter of range of the distribution;
+  usually mentioned as <strong><code>a</code></strong>.</li><li><code>max</code>: right bound parameter of range of the distribution;
+  usually mentioned as <strong><code>b</code></strong>.</li></ul>
+
+<p><strong>@notes</strong>:</p>
+
+<ul><li><em>range</em> is <code>[min, max)</code>.</li></ul>
+
+<p><strong>@exceptions</strong>:</p>
+
+<ul><li><code><a href="../Alea/NaNError.html">Alea::NaNError</a></code> if any of the arguments bound is <code>NaN</code>.</li><li><code><a href="../Alea/InfinityError.html">Alea::InfinityError</a></code> if any of the arguments bound is <code>Infinity</code>.</li><li><code><a href="../Alea/UndefinedError.html">Alea::UndefinedError</a></code> if <code>max</code> is less than <code>min</code>.</li></ul>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/nin93/alea/blob/de6af4e2a2a295379b259c493e2f4488c27e1bfe/src/alea/prob/punif.cr#L18" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+
+
+
+
+
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Crystal Docs 0.33.0">
+
+<link href="../css/style.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../js/doc.js"></script>
+
+<svg class="hidden">
+  <symbol id="octicon-link" viewBox="0 0 16 16">
+    <path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path>
+  </symbol>
+</svg>
+
+  <meta id="repository-name" content="github.com/nin93/alea">
+  <title>Alea::Internal - github.com/nin93/alea</title>
+  <script type="text/javascript">
+    CrystalDoc.base_path = "../";
+  </script>
+</head>
+<body>
+
+<div class="sidebar">
+  <div class="sidebar-header">
+    <div class="search-box">
+      <input type="search" class="search-input" placeholder="Search..." spellcheck="false" aria-label="Search">
+    </div>
+
+    <div class="repository-links">
+      <a href="../index.html">README</a>
+    </div>
+  </div>
+
+  <div class="search-results" class="hidden">
+    <ul class="search-list"></ul>
+  </div>
+
+  <div class="types-list">
+    <ul>
+  
+  <li class="parent open current" data-id="github.com/nin93/alea/Alea" data-name="alea">
+      <a href="../Alea.html">Alea</a>
+      
+        <ul>
+  
+  <li class=" " data-id="github.com/nin93/alea/Alea/CDF" data-name="alea::cdf">
+      <a href="../Alea/CDF.html">CDF</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/nin93/alea/Alea/InfinityError" data-name="alea::infinityerror">
+      <a href="../Alea/InfinityError.html">InfinityError</a>
+      
+    </li>
+  
+  <li class="parent open current" data-id="github.com/nin93/alea/Alea/Internal" data-name="alea::internal">
+      <a href="../Alea/Internal.html">Internal</a>
+      
+        <ul>
+  
+  <li class="parent " data-id="github.com/nin93/alea/Alea/Internal/GaussLegendre" data-name="alea::internal::gausslegendre">
+      <a href="../Alea/Internal/GaussLegendre.html">GaussLegendre</a>
+      
+        <ul>
+  
+  <li class=" " data-id="github.com/nin93/alea/Alea/Internal/GaussLegendre/Quad50" data-name="alea::internal::gausslegendre::quad50">
+      <a href="../Alea/Internal/GaussLegendre/Quad50.html">Quad50</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="github.com/nin93/alea/Alea/Internal/Ziggurat" data-name="alea::internal::ziggurat">
+      <a href="../Alea/Internal/Ziggurat.html">Ziggurat</a>
+      
+        <ul>
+  
+  <li class=" " data-id="github.com/nin93/alea/Alea/Internal/Ziggurat/Exp" data-name="alea::internal::ziggurat::exp">
+      <a href="../Alea/Internal/Ziggurat/Exp.html">Exp</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/nin93/alea/Alea/Internal/Ziggurat/Normal" data-name="alea::internal::ziggurat::normal">
+      <a href="../Alea/Internal/Ziggurat/Normal.html">Normal</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="github.com/nin93/alea/Alea/NaNError" data-name="alea::nanerror">
+      <a href="../Alea/NaNError.html">NaNError</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/nin93/alea/Alea/NoConvergeError" data-name="alea::noconvergeerror">
+      <a href="../Alea/NoConvergeError.html">NoConvergeError</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/nin93/alea/Alea/PRNG" data-name="alea::prng">
+      <a href="../Alea/PRNG.html">PRNG</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/nin93/alea/Alea/Random" data-name="alea::random">
+      <a href="../Alea/Random.html">Random</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/nin93/alea/Alea/UndefinedError" data-name="alea::undefinederror">
+      <a href="../Alea/UndefinedError.html">UndefinedError</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/nin93/alea/Alea/XSR128" data-name="alea::xsr128">
+      <a href="../Alea/XSR128.html">XSR128</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/nin93/alea/Alea/XSR256" data-name="alea::xsr256">
+      <a href="../Alea/XSR256.html">XSR256</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+
+  </div>
+</div>
+
+
+<div class="main-content">
+<h1 class="type-name">
+
+  <span class="kind">module</span> Alea::Internal
+
+</h1>
+
+
+
+
+
+
+
+
+
+  <h2>
+    <a id="included-modules" class="anchor" href="#included-modules">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Included Modules
+  </h2>
+  <ul class="other-types-list">
+    
+      <li class="other-type"><a href="../Alea/Internal/Ziggurat.html">Alea::Internal::Ziggurat</a></li>
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+  <h2>
+    <a id="defined-in" class="anchor" href="#defined-in">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Defined in:
+  </h2>
+  
+    
+      <a href="https://github.com/nin93/alea/blob/de6af4e2a2a295379b259c493e2f4488c27e1bfe/src/alea/internal/izigg.cr#L1" target="_blank">
+        alea/internal/izigg.cr
+      </a>
+    
+    <br/>
+  
+    
+      <a href="https://github.com/nin93/alea/blob/de6af4e2a2a295379b259c493e2f4488c27e1bfe/src/alea/internal/igausleg.cr#L1" target="_blank">
+        alea/internal/igausleg.cr
+      </a>
+    
+    <br/>
+  
+    
+      <a href="https://github.com/nin93/alea/blob/de6af4e2a2a295379b259c493e2f4488c27e1bfe/src/alea/internal/igamma.cr#L3" target="_blank">
+        alea/internal/igamma.cr
+      </a>
+    
+    <br/>
+  
+    
+      <a href="https://github.com/nin93/alea/blob/de6af4e2a2a295379b259c493e2f4488c27e1bfe/src/alea/internal/ipoiss.cr#L3" target="_blank">
+        alea/internal/ipoiss.cr
+      </a>
+    
+    <br/>
+  
+
+
+
+  
+    <h2>
+      <a id="constant-summary" class="anchor" href="#constant-summary">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+      Constant Summary
+    </h2>
+  
+  <dl>
+    
+      <dt class="entry-const" id="SPECFUN_EPS32">
+        <strong>SPECFUN_EPS32</strong> = <code><span class="n">1.0e-06</span></code>
+      </dt>
+      
+      <dd class="entry-const-doc">
+        <p>Single precision tolerance</p>
+      </dd>
+      
+    
+      <dt class="entry-const" id="SPECFUN_EPS64">
+        <strong>SPECFUN_EPS64</strong> = <code><span class="n">1.0e-15</span></code>
+      </dt>
+      
+      <dd class="entry-const-doc">
+        <p>Double precision tolerance</p>
+      </dd>
+      
+    
+      <dt class="entry-const" id="SPECFUN_ITMAX">
+        <strong>SPECFUN_ITMAX</strong> = <code><span class="n">1000</span></code>
+      </dt>
+      
+      <dd class="entry-const-doc">
+        <p>Iteration limit within which <code><a href="../Alea/NoConvergeError.html">Alea::NoConvergeError</a></code> is not raised</p>
+      </dd>
+      
+    
+  </dl>
+
+
+
+
+
+  <h2>
+    <a id="class-method-summary" class="anchor" href="#class-method-summary">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Class Method Summary
+  </h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#inc_gamma(a,x,uorl)-class-method" class="signature"><strong>.inc_gamma</strong>(a, x, uorl)</a>
+        
+          <div class="summary"><p>Estimate the Incomplete Gamma Function</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#inc_gamma_regular(a,x,uorl)-class-method" class="signature"><strong>.inc_gamma_regular</strong>(a, x, uorl)</a>
+        
+          <div class="summary"><p>Estimate the Incomplete Regularized Gamma function.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#incg_regular_lower(a,x)-class-method" class="signature"><strong>.incg_regular_lower</strong>(a, x)</a>
+        
+          <div class="summary"><p>Estimate the Incomplete Regular Lower Gamma function.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#incg_regular_upper(a,x)-class-method" class="signature"><strong>.incg_regular_upper</strong>(a, x)</a>
+        
+          <div class="summary"><p>Estimate the Incomplete Regular Upper Gamma function.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#poisson_mult(lam:Float%7CInt,prng:Alea::PRNG)-class-method" class="signature"><strong>.poisson_mult</strong>(lam : Float | Int, prng : Alea::PRNG)</a>
+        
+          <div class="summary"><p>Ok here to pass the prng: it's a reference and it will not affect repeatability.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#poisson_ptrs(lam:Float%7CInt,prng:Alea::PRNG)-class-method" class="signature"><strong>.poisson_ptrs</strong>(lam : Float | Int, prng : Alea::PRNG)</a>
+        
+          <div class="summary"><p>Ok here to pass the prng: it's a reference and it will not affect repeatability.</p></div>
+        
+      </li>
+    
+  </ul>
+
+
+
+
+
+
+
+<div class="methods-inherited">
+  
+    
+
+
+    
+
+
+    
+
+
+  
+</div>
+
+
+
+
+  <h2>
+    <a id="class-method-detail" class="anchor" href="#class-method-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Class Method Detail
+  </h2>
+  
+    <div class="entry-detail" id="inc_gamma(a,x,uorl)-class-method">
+      <div class="signature">
+        
+        def self.<strong>inc_gamma</strong>(a, x, uorl)
+
+        <a class="method-permalink" href="#inc_gamma(a,x,uorl)-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Estimate the Incomplete Gamma Function</p>
+
+<p>When <code>x > (a+1)</code>, the upper gamma function can be evaluated as</p>
+
+<pre><code class="language-text">                -x    a
+               e   * x
+  G(a,x) ~= --------------
+               cf(a,x)</code></pre>
+
+<p>where <code>cf(a,x)</code> is the continued fraction defined above, its coefficients
+<code>a(i)</code> and <code>b(i)</code> are implemented in <code>#inc_gamma_ctdfr_proc</code>.</p>
+
+<p>When <code>x < (a+1)</code>, it is more convenient to apply the following Taylor series
+that evaluates the lower incomplete gamma function:</p>
+
+<pre><code class="language-text">                         inf
+                        -----
+             -x    a    \        G(a)       i
+  g(a,x) ~= e   * x  *   >    ---------- * x
+                        /      G(a+1+i)
+                        -----
+                         i=0</code></pre>
+
+<p>Applying the following property of the gamma function:</p>
+
+<pre><code class="language-text">  G(a+1) = a * G(a)</code></pre>
+
+<p>The Taylor series above can be further simplified to:</p>
+
+<pre><code class="language-text">                         inf
+                        -----              i
+             -x    a    \                 x
+  g(a,x) ~= e   * x  *   >    -------------------------
+                        /      a * (a+1) * ... * (a+i)
+                        -----
+                         i=0</code></pre>
+
+<p>Once either a lower or an upper incomplete gamma function is evaluated,
+the other value may be quickly obtained by applying the following
+property of the incomplete gamma function:</p>
+
+<pre><code class="language-text">  G(a,x) + g(a,x) = G(a)</code></pre>
+
+<p><strong>@parameters</strong>:</p>
+
+<ul><li><code>a</code>: parameter of the Incomplete Gamma function.</li><li><code>x</code>: the upper integration limit.</li><li><code>uorl</code>: symbol to request the <code>:upper</code> or <code>:lower</code> inc. gamma function.</li></ul>
+
+<p><strong>@exceptions</strong>:</p>
+
+<ul><li><code><a href="../Alea/NoConvergeError.html">Alea::NoConvergeError</a></code> if no convergence occurs within <code><a href="../Alea/Internal.html#SPECFUN_ITMAX">SPECFUN_ITMAX</a></code> iterations.</li></ul>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/nin93/alea/blob/de6af4e2a2a295379b259c493e2f4488c27e1bfe/src/alea/internal/igamma.cr#L168" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="inc_gamma_regular(a,x,uorl)-class-method">
+      <div class="signature">
+        
+        def self.<strong>inc_gamma_regular</strong>(a, x, uorl)
+
+        <a class="method-permalink" href="#inc_gamma_regular(a,x,uorl)-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Estimate the Incomplete Regularized Gamma function.</p>
+
+<p><strong>@parameters</strong>:</p>
+
+<ul><li><code>a</code>: parameter of the Incomplete Gamma function.</li><li><code>x</code>: the upper integration limit.</li><li><code>uorl</code>: symbol to request the <code>:upper</code> or <code>:lower</code> inc. reg. gamma function.</li></ul>
+
+<p><strong>@references</strong>:</p>
+
+<ul><li><code><a href="../Alea/Internal.html#inc_gamma(a,x,uorl)-class-method">Alea::Internal.inc_gamma</a></code></li></ul>
+
+<p><strong>@exceptions</strong>:</p>
+
+<ul><li><code><a href="../Alea/NoConvergeError.html">Alea::NoConvergeError</a></code> if no convergence occurs within <code><a href="../Alea/Internal.html#SPECFUN_ITMAX">SPECFUN_ITMAX</a></code> iterations.</li></ul>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/nin93/alea/blob/de6af4e2a2a295379b259c493e2f4488c27e1bfe/src/alea/internal/igamma.cr#L232" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="incg_regular_lower(a,x)-class-method">
+      <div class="signature">
+        
+        def self.<strong>incg_regular_lower</strong>(a, x)
+
+        <a class="method-permalink" href="#incg_regular_lower(a,x)-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Estimate the Incomplete Regular Lower Gamma function.</p>
+
+<p><strong>@parameters</strong>:</p>
+
+<ul><li><code>a</code>: parameter of the Incomplete Gamma function.</li><li><code>x</code>: the upper integration limit.</li></ul>
+
+<p><strong>@references</strong>:</p>
+
+<ul><li><code><a href="../Alea/Internal.html#inc_gamma(a,x,uorl)-class-method">Alea::Internal.inc_gamma</a></code></li></ul>
+
+<p><strong>@exceptions</strong>:</p>
+
+<ul><li><code><a href="../Alea/NoConvergeError.html">Alea::NoConvergeError</a></code> if no convergence occurs within <code><a href="../Alea/Internal.html#SPECFUN_ITMAX">SPECFUN_ITMAX</a></code> iterations.</li></ul>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/nin93/alea/blob/de6af4e2a2a295379b259c493e2f4488c27e1bfe/src/alea/internal/igamma.cr#L262" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="incg_regular_upper(a,x)-class-method">
+      <div class="signature">
+        
+        def self.<strong>incg_regular_upper</strong>(a, x)
+
+        <a class="method-permalink" href="#incg_regular_upper(a,x)-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Estimate the Incomplete Regular Upper Gamma function.</p>
+
+<p><strong>@parameters</strong>:</p>
+
+<ul><li><code>a</code>: parameter of the Incomplete Gamma function.</li><li><code>x</code>: the upper integration limit.</li></ul>
+
+<p><strong>@references</strong>:</p>
+
+<ul><li><code><a href="../Alea/Internal.html#inc_gamma(a,x,uorl)-class-method">Alea::Internal.inc_gamma</a></code></li></ul>
+
+<p><strong>@exceptions</strong>:</p>
+
+<ul><li><code><a href="../Alea/NoConvergeError.html">Alea::NoConvergeError</a></code> if no convergence occurs within <code><a href="../Alea/Internal.html#SPECFUN_ITMAX">SPECFUN_ITMAX</a></code> iterations.</li></ul>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/nin93/alea/blob/de6af4e2a2a295379b259c493e2f4488c27e1bfe/src/alea/internal/igamma.cr#L247" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="poisson_mult(lam:Float|Int,prng:Alea::PRNG)-class-method">
+      <div class="signature">
+        
+        def self.<strong>poisson_mult</strong>(lam : Float | Int, prng : <a href="../Alea/PRNG.html">Alea::PRNG</a>)
+
+        <a class="method-permalink" href="#poisson_mult(lam:Float%7CInt,prng:Alea::PRNG)-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Ok here to pass the prng: it's a reference and
+it will not affect repeatability.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/nin93/alea/blob/de6af4e2a2a295379b259c493e2f4488c27e1bfe/src/alea/internal/ipoiss.cr#L28" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="poisson_ptrs(lam:Float|Int,prng:Alea::PRNG)-class-method">
+      <div class="signature">
+        
+        def self.<strong>poisson_ptrs</strong>(lam : Float | Int, prng : <a href="../Alea/PRNG.html">Alea::PRNG</a>)
+
+        <a class="method-permalink" href="#poisson_ptrs(lam:Float%7CInt,prng:Alea::PRNG)-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Ok here to pass the prng: it's a reference and
+it will not affect repeatability.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/nin93/alea/blob/de6af4e2a2a295379b259c493e2f4488c27e1bfe/src/alea/internal/ipoiss.cr#L6" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+
+
+
+
+
+
+</div>
+
+</body>
+</html>

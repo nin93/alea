@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Crystal Docs 0.33.0">
+
+<link href="../../../css/style.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../../../js/doc.js"></script>
+
+<svg class="hidden">
+  <symbol id="octicon-link" viewBox="0 0 16 16">
+    <path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path>
+  </symbol>
+</svg>
+
+  <meta id="repository-name" content="github.com/nin93/alea">
+  <title>Alea::Internal::GaussLegendre::Quad50 - github.com/nin93/alea</title>
+  <script type="text/javascript">
+    CrystalDoc.base_path = "../../../";
+  </script>
+</head>
+<body>
+
+<div class="sidebar">
+  <div class="sidebar-header">
+    <div class="search-box">
+      <input type="search" class="search-input" placeholder="Search..." spellcheck="false" aria-label="Search">
+    </div>
+
+    <div class="repository-links">
+      <a href="../../../index.html">README</a>
+    </div>
+  </div>
+
+  <div class="search-results" class="hidden">
+    <ul class="search-list"></ul>
+  </div>
+
+  <div class="types-list">
+    <ul>
+  
+  <li class="parent open current" data-id="github.com/nin93/alea/Alea" data-name="alea">
+      <a href="../../../Alea.html">Alea</a>
+      
+        <ul>
+  
+  <li class=" " data-id="github.com/nin93/alea/Alea/CDF" data-name="alea::cdf">
+      <a href="../../../Alea/CDF.html">CDF</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/nin93/alea/Alea/InfinityError" data-name="alea::infinityerror">
+      <a href="../../../Alea/InfinityError.html">InfinityError</a>
+      
+    </li>
+  
+  <li class="parent open current" data-id="github.com/nin93/alea/Alea/Internal" data-name="alea::internal">
+      <a href="../../../Alea/Internal.html">Internal</a>
+      
+        <ul>
+  
+  <li class="parent open current" data-id="github.com/nin93/alea/Alea/Internal/GaussLegendre" data-name="alea::internal::gausslegendre">
+      <a href="../../../Alea/Internal/GaussLegendre.html">GaussLegendre</a>
+      
+        <ul>
+  
+  <li class=" current" data-id="github.com/nin93/alea/Alea/Internal/GaussLegendre/Quad50" data-name="alea::internal::gausslegendre::quad50">
+      <a href="../../../Alea/Internal/GaussLegendre/Quad50.html">Quad50</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="github.com/nin93/alea/Alea/Internal/Ziggurat" data-name="alea::internal::ziggurat">
+      <a href="../../../Alea/Internal/Ziggurat.html">Ziggurat</a>
+      
+        <ul>
+  
+  <li class=" " data-id="github.com/nin93/alea/Alea/Internal/Ziggurat/Exp" data-name="alea::internal::ziggurat::exp">
+      <a href="../../../Alea/Internal/Ziggurat/Exp.html">Exp</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/nin93/alea/Alea/Internal/Ziggurat/Normal" data-name="alea::internal::ziggurat::normal">
+      <a href="../../../Alea/Internal/Ziggurat/Normal.html">Normal</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="github.com/nin93/alea/Alea/NaNError" data-name="alea::nanerror">
+      <a href="../../../Alea/NaNError.html">NaNError</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/nin93/alea/Alea/NoConvergeError" data-name="alea::noconvergeerror">
+      <a href="../../../Alea/NoConvergeError.html">NoConvergeError</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/nin93/alea/Alea/PRNG" data-name="alea::prng">
+      <a href="../../../Alea/PRNG.html">PRNG</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/nin93/alea/Alea/Random" data-name="alea::random">
+      <a href="../../../Alea/Random.html">Random</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/nin93/alea/Alea/UndefinedError" data-name="alea::undefinederror">
+      <a href="../../../Alea/UndefinedError.html">UndefinedError</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/nin93/alea/Alea/XSR128" data-name="alea::xsr128">
+      <a href="../../../Alea/XSR128.html">XSR128</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/nin93/alea/Alea/XSR256" data-name="alea::xsr256">
+      <a href="../../../Alea/XSR256.html">XSR256</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+
+  </div>
+</div>
+
+
+<div class="main-content">
+<h1 class="type-name">
+
+  <span class="kind">module</span> Alea::Internal::GaussLegendre::Quad50
+
+</h1>
+
+
+
+
+
+  <h2>
+    <a id="overview" class="anchor" href="#overview">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Overview
+  </h2>
+
+  <p>Value tables for the computation of the regularized incomplete gamma functions</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <h2>
+    <a id="defined-in" class="anchor" href="#defined-in">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Defined in:
+  </h2>
+  
+    
+      <a href="https://github.com/nin93/alea/blob/de6af4e2a2a295379b259c493e2f4488c27e1bfe/src/alea/internal/igausleg.cr#L18" target="_blank">
+        alea/internal/igausleg.cr
+      </a>
+    
+    <br/>
+  
+
+
+
+  
+    <h2>
+      <a id="constant-summary" class="anchor" href="#constant-summary">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+      Constant Summary
+    </h2>
+  
+  <dl>
+    
+      <dt class="entry-const" id="P">
+        <strong>P</strong> = <code><span class="t">StaticArray</span>[<span class="n">-0.03109833832718887611232898966595</span>, <span class="n">0.03109833832718887611232898966595</span>, <span class="n">-0.09317470156008614085445037763960</span>, <span class="n">0.09317470156008614085445037763960</span>, <span class="n">-0.15489058999814590207162862094111</span>, <span class="n">0.15489058999814590207162862094111</span>, <span class="n">-0.21600723687604175684728453261710</span>, <span class="n">0.21600723687604175684728453261710</span>, <span class="n">-0.27628819377953199032764527852113</span>, <span class="n">0.27628819377953199032764527852113</span>, <span class="n">-0.33550024541943735683698825729107</span>, <span class="n">0.33550024541943735683698825729107</span>, <span class="n">-0.39341431189756512739422925382382</span>, <span class="n">0.39341431189756512739422925382382</span>, <span class="n">-0.44980633497403878914713146777838</span>, <span class="n">0.44980633497403878914713146777838</span>, <span class="n">-0.50445814490746420165145913184914</span>, <span class="n">0.50445814490746420165145913184914</span>, <span class="n">-0.55715830451465005431552290962580</span>, <span class="n">0.55715830451465005431552290962580</span>, <span class="n">-0.60770292718495023918038179639183</span>, <span class="n">0.60770292718495023918038179639183</span>, <span class="n">-0.65589646568543936078162486400368</span>, <span class="n">0.65589646568543936078162486400368</span>, <span class="n">-0.70155246870682225108954625788366</span>, <span class="n">0.70155246870682225108954625788366</span>, <span class="n">-0.74449430222606853826053625268219</span>, <span class="n">0.74449430222606853826053625268219</span>, <span class="n">-0.78455583290039926390530519634099</span>, <span class="n">0.78455583290039926390530519634099</span>, <span class="n">-0.82158207085933594835625411087394</span>, <span class="n">0.82158207085933594835625411087394</span>, <span class="n">-0.85542976942994608461136264393476</span>, <span class="n">0.85542976942994608461136264393476</span>, <span class="n">-0.88596797952361304863754098246675</span>, <span class="n">0.88596797952361304863754098246675</span>, <span class="n">-0.91307855665579189308973564277166</span>, <span class="n">0.91307855665579189308973564277166</span>, <span class="n">-0.93665661894487793378087494727250</span>, <span class="n">0.93665661894487793378087494727250</span>, <span class="n">-0.95661095524280794299774564415662</span>, <span class="n">0.95661095524280794299774564415662</span>, <span class="n">-0.97286438510669207371334410460625</span>, <span class="n">0.97286438510669207371334410460625</span>, <span class="n">-0.98535408404800588230900962563249</span>, <span class="n">0.98535408404800588230900962563249</span>, <span class="n">-0.99403196943209071258510820042069</span>, <span class="n">0.99403196943209071258510820042069</span>, <span class="n">-0.99886640442007105018545944497422</span>, <span class="n">0.99886640442007105018545944497422</span>]</code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="W">
+        <strong>W</strong> = <code><span class="t">StaticArray</span>[<span class="n">0.06217661665534726232103310736061</span>, <span class="n">0.06217661665534726232103310736061</span>, <span class="n">0.06193606742068324338408750978083</span>, <span class="n">0.06193606742068324338408750978083</span>, <span class="n">0.06145589959031666375640678608392</span>, <span class="n">0.06145589959031666375640678608392</span>, <span class="n">0.06073797084177021603175001538481</span>, <span class="n">0.06073797084177021603175001538481</span>, <span class="n">0.05978505870426545750957640531259</span>, <span class="n">0.05978505870426545750957640531259</span>, <span class="n">0.05860084981322244583512243663085</span>, <span class="n">0.05860084981322244583512243663085</span>, <span class="n">0.05718992564772838372302931506599</span>, <span class="n">0.05718992564772838372302931506599</span>, <span class="n">0.05555774480621251762356742561227</span>, <span class="n">0.05555774480621251762356742561227</span>, <span class="n">0.05371062188899624652345879725566</span>, <span class="n">0.05371062188899624652345879725566</span>, <span class="n">0.05165570306958113848990529584010</span>, <span class="n">0.05165570306958113848990529584010</span>, <span class="n">0.04940093844946631492124358075143</span>, <span class="n">0.04940093844946631492124358075143</span>, <span class="n">0.04695505130394843296563301363499</span>, <span class="n">0.04695505130394843296563301363499</span>, <span class="n">0.04432750433880327549202228683039</span>, <span class="n">0.04432750433880327549202228683039</span>, <span class="n">0.04152846309014769742241197896407</span>, <span class="n">0.04152846309014769742241197896407</span>, <span class="n">0.03856875661258767524477015023639</span>, <span class="n">0.03856875661258767524477015023639</span>, <span class="n">0.03545983561514615416073461100098</span>, <span class="n">0.03545983561514615416073461100098</span>, <span class="n">0.03221372822357801664816582732300</span>, <span class="n">0.03221372822357801664816582732300</span>, <span class="n">0.02884299358053519802990637311323</span>, <span class="n">0.02884299358053519802990637311323</span>, <span class="n">0.02536067357001239044019487838544</span>, <span class="n">0.02536067357001239044019487838544</span>, <span class="n">0.02178024317012479298159206906269</span>, <span class="n">0.02178024317012479298159206906269</span>, <span class="n">0.01811556071348939035125994342235</span>, <span class="n">0.01811556071348939035125994342235</span>, <span class="n">0.01438082276148557441937890892732</span>, <span class="n">0.01438082276148557441937890892732</span>, <span class="n">0.01059054838365096926356968149924</span>, <span class="n">0.01059054838365096926356968149924</span>, <span class="n">0.00675979919574540150277887817799</span>, <span class="n">0.00675979919574540150277887817799</span>, <span class="n">0.00290862255315514095840072434286</span>, <span class="n">0.00290862255315514095840072434286</span>]</code>
+      </dt>
+      
+    
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+<div class="methods-inherited">
+  
+</div>
+
+
+
+
+
+
+
+
+
+</div>
+
+</body>
+</html>
