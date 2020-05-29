@@ -47,6 +47,115 @@ describe Alea do
         # mean  is:   m
         # stdev is:   s
 
+        dist_test("generates normal-distributed random values with fixed loc 0.0 and sigma 0.1 parameters",
+          caller: SpecRng,
+          method: :next_normal,
+          params: {loc: 0.0, sigma: 0.1},
+          sample_type: Float64,
+          real_mean: 0.0,
+          real_stdev: 0.1,
+          mean_tol: 0.005,
+          stdev_tol: 0.005,
+        )
+
+        dist_test("generates normal-distributed random values with fixed loc 0.0 and sigma 0.01 parameters",
+          caller: SpecRng,
+          method: :next_normal,
+          params: {loc: 0.0, sigma: 0.01},
+          sample_type: Float64,
+          real_mean: 0.0,
+          real_stdev: 0.01,
+          mean_tol: 0.005,
+          stdev_tol: 0.005,
+        )
+
+        dist_test("generates normal-distributed random values with fixed loc 0.0 and sigma 0.00001 parameters",
+          caller: SpecRng,
+          method: :next_normal,
+          params: {loc: 0.0, sigma: 0.00001},
+          sample_type: Float64,
+          real_mean: 0.0,
+          real_stdev: 0.00001,
+          mean_tol: 0.005,
+          stdev_tol: 0.005,
+        )
+
+        dist_test("generates normal-distributed random values with fixed loc 0.0 and sigma 0.00000000001 parameters",
+          caller: SpecRng,
+          method: :next_normal,
+          params: {loc: 0.0, sigma: 0.00000000001},
+          sample_type: Float64,
+          real_mean: 0.0,
+          real_stdev: 0.00000000001,
+          mean_tol: 0.005,
+          stdev_tol: 0.005,
+        )
+
+        dist_test("generates normal-distributed random values with fixed loc 0.0 and sigma 1.0 parameters",
+          caller: SpecRng,
+          method: :next_normal,
+          sample_type: Float64,
+          real_mean: 0.0,
+          real_stdev: 1.0,
+          mean_tol: 0.005,
+          stdev_tol: 0.005,
+        )
+
+        dist_test("generates normal-distributed random values with fixed loc 0.0 and sigma 3.0 parameters",
+          caller: SpecRng,
+          method: :next_normal,
+          params: {loc: 0.0, sigma: 3.0},
+          sample_type: Float64,
+          real_mean: 0.0,
+          real_stdev: 3.0,
+          mean_tol: 0.005,
+          stdev_tol: 0.005,
+        )
+
+        dist_test("generates normal-distributed random values with fixed loc 0.0 and sigma 10.0 parameters",
+          caller: SpecRng,
+          method: :next_normal,
+          params: {loc: 0.0, sigma: 10.0},
+          sample_type: Float64,
+          real_mean: 0.0,
+          real_stdev: 10.0,
+          mean_tol: 0.005,
+          stdev_tol: 0.005,
+        )
+
+        dist_test("generates normal-distributed random values with fixed loc 0.0 and sigma 100.0 parameters",
+          caller: SpecRng,
+          method: :next_normal,
+          params: {loc: 0.0, sigma: 100.0},
+          sample_type: Float64,
+          real_mean: 0.0,
+          real_stdev: 100.0,
+          mean_tol: 0.005,
+          stdev_tol: 0.005,
+        )
+
+        dist_test("generates normal-distributed random values with fixed loc 0.0 and sigma 1_000.0 parameters",
+          caller: SpecRng,
+          method: :next_normal,
+          params: {loc: 0.0, sigma: 1_000.0},
+          sample_type: Float64,
+          real_mean: 0.0,
+          real_stdev: 1_000.0,
+          mean_tol: 0.005,
+          stdev_tol: 0.005,
+        )
+
+        dist_test("generates normal-distributed random values with fixed loc 0.0 and sigma 10_000.0 parameters",
+          caller: SpecRng,
+          method: :next_normal,
+          params: {loc: 0.0, sigma: 10_000.0},
+          sample_type: Float64,
+          real_mean: 0.0,
+          real_stdev: 10_000.0,
+          mean_tol: 0.005,
+          stdev_tol: 0.005,
+        )
+
         dist_test("generates normal-distributed random values with fixed loc 0.0 and sigma 1.0 parameters",
           caller: SpecRng,
           method: :next_normal,
