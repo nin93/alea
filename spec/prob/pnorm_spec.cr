@@ -4,53 +4,33 @@ describe Alea do
   context "Normal" do
     describe Alea::CDF do
       describe "#normal" do
-        it "raises Alea::NaNError if x is NaN" do
-          expect_raises(Alea::NaNError) do
-            Alea::CDF.normal(0.0 / 0.0)
-          end
-        end
+        arg_test("accepts any sized Int/UInt/Float as argument(s)",
+          pending: true,
+          caller: Alea::CDF,
+          method: :normal,
+          params: {x: 1.0, loc: 1.0, sigma: 1.0},
+          return_type: Float64,
+          types: [Int8, Int16, Int32, Int64, Int128,
+                  UInt8, UInt16, UInt32, UInt64, UInt128,
+                  Float32, Float64,
+          ]
+        )
 
-        it "raises Alea::InfinityError if x is Infinity" do
-          expect_raises(Alea::InfinityError) do
-            Alea::CDF.normal(1.0 / 0.0)
-          end
-        end
+        sanity_test(
+          caller: Alea::CDF,
+          method: :normal,
+          params: {x: 1.0, loc: 1.0, sigma: 1.0},
+          params_to_check: [:x, :loc, :sigma],
+        )
 
-        it "raises Alea::NaNError if loc is NaN" do
-          expect_raises(Alea::NaNError) do
-            Alea::CDF.normal(0.0, loc: 0.0 / 0.0)
-          end
-        end
-
-        it "raises Alea::InfinityError if loc is Infinity" do
-          expect_raises(Alea::InfinityError) do
-            Alea::CDF.normal(0.0, loc: 1.0 / 0.0)
-          end
-        end
-
-        it "raises Alea::NaNError if stdev is NaN" do
-          expect_raises(Alea::NaNError) do
-            Alea::CDF.normal(0.0, sigma: 0.0 / 0.0)
-          end
-        end
-
-        it "raises Alea::InfinityError if stdev is Infinity" do
-          expect_raises(Alea::InfinityError) do
-            Alea::CDF.normal(0.0, sigma: 1.0 / 0.0)
-          end
-        end
-
-        it "raises Alea::UndefinedError if stdev is equal to 0.0" do
-          expect_raises Alea::UndefinedError do
-            Alea::CDF.normal(0.0, sigma: 0.0)
-          end
-        end
-
-        it "raises Alea::UndefinedError if stdev is less than 0.0" do
-          expect_raises Alea::UndefinedError do
-            Alea::CDF.normal(0.0, sigma: -1.0)
-          end
-        end
+        param_test(
+          caller: Alea::CDF,
+          method: :normal,
+          params: {x: 1.0, loc: 1.0, sigma: 1.0},
+          params_to_check: [:sigma],
+          check_negatives: true,
+          check_zeros: true,
+        )
 
         it "returns the cdf of 0.0 in N(0, 1)" do
           Alea::CDF.normal(0.0).should eq(0.5)
