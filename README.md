@@ -11,8 +11,8 @@ Features:
   * [Cumulative Distribution Functions](#cumulative-distribution-functions)
 
 > **Note**: This project is in early development state and many distributions are
-> still missing, as well as cumulative distribution functions, so keep in mind that
-> breaking changes may occur frequently.
+  still missing, as well as cumulative distribution functions, so keep in mind that
+  breaking changes may occur frequently.
 
 ## Why Crystal?
 Crystal compiles to really fast native code without sacrificing any of the modern
@@ -22,11 +22,11 @@ programming languages standards providing a nice and clean interface.
 
 1. Add the dependency to your `shard.yml`:
 
-  ```yaml
+```yaml
   dependencies:
     alea:
       github: nin93/alea
-  ```
+```
 
 2. Run `shards install`
 
@@ -44,12 +44,12 @@ Sebastiano Vigna and David Blackman: really fast generators promising exquisite
 statistical properties as well.
 
 Implemented engines:
-  * `XSR128` backed by
-    - *xoroshiro128++* as `#next_u`
-    - *xoroshiro128+* as `#next_f`
-  * `XSR256` backed by
-    - *xoshiro256++* as `#next_u`
-    - *xoshiro256+* as `#next_f`
++ `XSR128` backed by:
+  - *xoroshiro128++* as `#next_u`
+  - *xoroshiro128+* as `#next_f`
++ `XSR256` backed by:
+  - *xoshiro256++* as `#next_u`
+  - *xoshiro256+* as `#next_f`
 
 Digits stand for the storage of their state in bits.
 Their period is thus `2^128 -1` for `XSR128` and `2^256 -1` for `XSR256`.
@@ -61,7 +61,7 @@ shifting to obtain the mantissa.
 More informations are detailed in: http://prng.di.unimi.it/.
 
 > See the [benchmarks](https://github.com/nin93/alea/tree/master/benchmarks) for a
-> comparison between these engines.
+  comparison between these engines.
 
 ## Sampling
 `Random` is the interface provided to perform sampling:
