@@ -47,13 +47,68 @@ describe Alea do
         # mean  is:   k
         # stdev is:   sqrt( 2k )
 
-        dist_test("generates chi^2-distributed random values with fixed df 3.0",
+        dist_test("generates chi^2-distributed random values with fixed df 1.0 parameter",
+          caller: SpecRng,
+          method: :next_chisq,
+          params: {df: 1.0},
+          sample_type: Float64,
+          real_mean: 1.0,
+          real_stdev: 1.4142135623730951,
+          mean_tol: 0.005,
+          stdev_tol: 0.01,
+        )
+
+        dist_test("generates chi^2-distributed random values with fixed df 3.0 parameter",
           caller: SpecRng,
           method: :next_chisq,
           params: {df: 3.0},
           sample_type: Float64,
           real_mean: 3.0,
           real_stdev: 2.449489742783178,
+          mean_tol: 0.005,
+          stdev_tol: 0.01,
+        )
+
+        dist_test("generates chi^2-distributed random values with fixed df 10.0 parameter",
+          caller: SpecRng,
+          method: :next_chisq,
+          params: {df: 10.0},
+          sample_type: Float64,
+          real_mean: 10.0,
+          real_stdev: 4.47213595499958,
+          mean_tol: 0.005,
+          stdev_tol: 0.01,
+        )
+
+        dist_test("generates chi^2-distributed random values with fixed df 100.0 parameter",
+          caller: SpecRng,
+          method: :next_chisq,
+          params: {df: 100.0},
+          sample_type: Float64,
+          real_mean: 100.0,
+          real_stdev: 14.142135623730951,
+          mean_tol: 0.005,
+          stdev_tol: 0.01,
+        )
+
+        dist_test("generates chi^2-distributed random values with fixed df 1_000.0 parameter",
+          caller: SpecRng,
+          method: :next_chisq,
+          params: {df: 1_000.0},
+          sample_type: Float64,
+          real_mean: 1_000.0,
+          real_stdev: 44.721359549995796,
+          mean_tol: 0.005,
+          stdev_tol: 0.01,
+        )
+
+        dist_test("generates chi^2-distributed random values with fixed df 10_000.0 parameter",
+          caller: SpecRng,
+          method: :next_chisq,
+          params: {df: 10_000.0},
+          sample_type: Float64,
+          real_mean: 10_000.0,
+          real_stdev: 141.4213562373095,
           mean_tol: 0.005,
           stdev_tol: 0.01,
         )
