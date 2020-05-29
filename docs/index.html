@@ -163,8 +163,8 @@ written in pure Crystal.</p>
 <ul><li><a href="#sampling" target="_blank">Random sampling</a></li><li><a href="#prngs" target="_blank">PRNGs implementations</a></li><li><a href="#cumulative-distribution-functions" target="_blank">Cumulative Distribution Functions</a></li></ul></ul>
 
 <blockquote><strong>Note</strong>: This project is in early development state and many distributions are
-> still missing, as well as cumulative distribution functions, so keep in mind that
-> breaking changes may occur frequently.</blockquote>
+  still missing, as well as cumulative distribution functions, so keep in mind that
+  breaking changes may occur frequently.</blockquote>
 
 <h2><a id="why-crystal" class="anchor" href="#why-crystal">
   <svg class="octicon-link" aria-hidden="true">
@@ -183,13 +183,9 @@ programming languages standards providing a nice and clean interface.</p>
 
 <ol><li>Add the dependency to your <code>shard.yml</code>:</li></ol>
 
-<p><code></code>`yaml
-  dependencies:</p>
-
-<pre><code>alea:
-  github: nin93<span class="s">/alea</code></pre>
-
-<p><code></code>`</p>
+<pre><code class="language-yaml">  dependencies:
+    alea:
+      github: nin93/alea</code></pre>
 
 <ol><li>Run <code>shards install</code></li></ol>
 
@@ -214,13 +210,13 @@ statistical properties as well.</p>
 
 <p>Implemented engines:</p>
 
-<ul><li><code>XSR128</code> backed by</li></ul>
+<ul><li><code>XSR128</code> backed by:</li></ul>
 
-<pre><code><span class="o">-</span> <span class="o">*</span>xoroshiro128</code></pre>
+<ul><li><em>xoroshiro128++</em> as <code>#next_u</code></li><li><em>xoroshiro128+</em> as <code>#next_f</code></li></ul></ul>
 
-<ul><li><code>XSR256</code> backed by</li></ul>
+<ul><li><code>XSR256</code> backed by:</li></ul>
 
-<pre><code><span class="o">-</span> <span class="o">*</span>xoshiro256</code></pre>
+<ul><li><em>xoshiro256++</em> as <code>#next_u</code></li><li><em>xoshiro256+</em> as <code>#next_f</code></li></ul></ul>
 
 <p>Digits stand for the storage of their state in bits.
 Their period is thus <code>2^128 -1</code> for <code>XSR128</code> and <code>2^256 -1</code> for <code>XSR256</code>.</p>
@@ -232,7 +228,7 @@ shifting to obtain the mantissa.</p>
 <p>More informations are detailed in: http://prng.di.unimi.it/.</p>
 
 <blockquote>See the <a href="https://github.com/nin93/alea/tree/master/benchmarks" target="_blank">benchmarks</a> for a
-> comparison between these engines.</blockquote>
+  comparison between these engines.</blockquote>
 
 <h2><a id="sampling" class="anchor" href="#sampling">
   <svg class="octicon-link" aria-hidden="true">
