@@ -22,8 +22,8 @@ module Alea::Core
     # **@parameters**:
     # * `seed`: initial seed; it must be an `UInt64`.
     def self.init_state(seed : UInt64)
-      StaticArray(UInt64, N).new do |i|
-        tmp = (seed &+ (i + 1) &* 0x9e3779b97f4a7c15)
+      StaticArray(UInt64, N).new do
+        tmp = (seed &+= 0x9e3779b97f4a7c15)
         tmp = (tmp ^ (tmp >> 30)) &* 0xbf58476d1ce4e5b9
         tmp = (tmp ^ (tmp >> 27)) &* 0x94d049bb133111eb
         tmp ^ (tmp >> 31)
