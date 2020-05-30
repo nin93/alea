@@ -22,6 +22,16 @@ module Alea
   class XSR128 < Alea::XSR
     STATE_STORAGE = 2
 
+    JUMP_64 = StaticArray[
+      0x2bd7a6a6e99c2ddc_u64,
+      0x0992ccaf6a6fca05_u64,
+    ]
+
+    JUMP_96 = StaticArray[
+      0x360fd5f2cf8d5d99_u64,
+      0x9c6e6877736c46e3_u64,
+    ]
+
     # The state of this PRNG.
     @state : StaticArray(UInt64, STATE_STORAGE)
 
@@ -76,10 +86,29 @@ module Alea
       (next_u >> 11) * 1.1102230246251565e-16
     end
 
-    # TODO:
+    # This is the equivalent of 2^64 calls to `#next_u`.
     def jump : self
-      raise NotImplementedError.new
+      jumper JUMP_64
       self
+    end
+
+    # This is the equivalent of 2^96 calls to `#next_u`.
+    def long_jump : self
+      jumper JUMP_96
+      self
+    end
+
+    private def jumper(const)
+      tmp = StaticArray(UInt64, STATE_STORAGE).new 0u64
+      STATE_STORAGE.times do |i|
+        64.times do |j|
+          if const[i] & (1u64 << j) != 0
+            STATE_STORAGE.times { |i| tmp[i] ^= @state[i] }
+          end
+          next_u
+        end
+      end
+      @state = tmp
     end
   end
 
@@ -93,9 +122,14 @@ module Alea
   class XSR256 < Alea::XSR
     STATE_STORAGE = 4
 
-    JUMP = StaticArray[
+    JUMP_128 = StaticArray[
       0x180ec6d33cfd0aba_u64, 0xd5a61266f0c9392c_u64,
       0xa9582618e03fc9aa_u64, 0x39abdc4529b1661c_u64,
+    ]
+
+    JUMP_192 = StaticArray[
+      0x76e15d3efefdcbbf_u64, 0xc5004e441c522fb3_u64,
+      0x77710069854ee241_u64, 0x39109bb02acbe635_u64,
     ]
 
     # The state of this PRNG.
@@ -150,10 +184,29 @@ module Alea
       (rnd >> 11) * 1.1102230246251565e-16
     end
 
-    # TODO:
+    # This is the equivalent of 2^128 calls to `#next_u`.
     def jump : self
-      raise NotImplementedError.new
+      jumper JUMP_128
       self
+    end
+
+    # This is the equivalent of 2^192 calls to `#next_u`.
+    def long_jump : self
+      jumper JUMP_192
+      self
+    end
+
+    private def jumper(const)
+      tmp = StaticArray(UInt64, STATE_STORAGE).new 0u64
+      STATE_STORAGE.times do |i|
+        64.times do |j|
+          if const[i] & (1u64 << j) != 0
+            STATE_STORAGE.times { |i| tmp[i] ^= @state[i] }
+          end
+          next_u
+        end
+      end
+      @state = tmp
     end
 
     # :nodoc:
