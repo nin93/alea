@@ -1,5 +1,3 @@
-require "./igausleg"
-
 module Alea::Core
   # Iteration limit within which `Alea::NoConvergeError` is not raised
   SPECFUN_ITMAX = 1_000
