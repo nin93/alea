@@ -1,7 +1,7 @@
 module Alea::Core
   # `SplitMix64(N)` generator to initialize a `N` sized state for the pseudo-random number generators.
   # NOTE: `N` refers to the size in bits of the state divided by 64.
-  # 
+  #
   # The algorithm comes from http://prng.di.unimi.it/splitmix64.c.
   #
   # ```
