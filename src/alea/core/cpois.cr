@@ -1,4 +1,4 @@
-require "./igamma"
+require "./cgam"
 
 module Alea::Core
   # Ok here to pass the prng: it's a reference and
