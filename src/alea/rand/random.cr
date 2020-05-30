@@ -46,6 +46,13 @@ module Alea
       @prng = prng.new
     end
 
+    # Initializes the PRNG with initial instance.
+    #
+    # **@parameters**:
+    # * `prng`: the PRNG instance itself.
+    def initialize(@prng : Alea::PRNG)
+    end
+
     # Returns the next generated `UInt64`.
     def next_u : UInt64
       @prng.next_u
