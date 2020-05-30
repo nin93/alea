@@ -1,4 +1,5 @@
 require "random/secure"
+require "../../core/cgen"
 require "./prng"
 
 module Alea
@@ -18,8 +19,7 @@ module Alea
 
     # Initializes the PRNG with initial state.
     def initialize(initstate : UInt64)
-      @state = StaticArray[0u64, 0u64]
-      init_state(pointerof(@state), STATE_STORAGE, initstate)
+      @state = Alea::Core::SplitMix64(STATE_STORAGE).init_state(initstate)
     end
 
     # Initializes the PRNG with initial state readed from system resorces.
@@ -83,8 +83,7 @@ module Alea
 
     # Initializes the PRNG with initial state.
     def initialize(initstate : UInt64)
-      @state = StaticArray[0u64, 0u64, 0u64, 0u64]
-      init_state(pointerof(@state), STATE_STORAGE, initstate)
+      @state = Alea::Core::SplitMix64(STATE_STORAGE).init_state(initstate)
     end
 
     # Initializes the PRNG with initial state readed from system resorces.
