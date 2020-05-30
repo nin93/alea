@@ -3,6 +3,14 @@ require "../../core/cgen"
 require "./prng"
 
 module Alea
+  abstract class XSR < Alea::PRNG
+    # :nodoc:
+    @[AlwaysInline]
+    protected def rotate(x, k)
+      (x << k) | (x >> (64 - k))
+    end
+  end
+
   # `Alea::XSR128` is the default pseudo-random number generator, with a state of 128 bits, and therefore
   # a period of 2^64 -1. It is as fast as `Random::PCG32`, but yielding a 64-bit unsigned integer.
   # If more state is needed, check `Alea::XSR256`.
@@ -11,7 +19,7 @@ module Alea
   #  - period:     2^128 -1
   #  - state type: UInt64
   # ```
-  class XSR128 < Alea::PRNG
+  class XSR128 < Alea::XSR
     STATE_STORAGE = 2
 
     # The state of this PRNG.
@@ -70,7 +78,7 @@ module Alea
   #  - period:     2^256 -1
   #  - state type: UInt64
   # ```
-  class XSR256 < Alea::PRNG
+  class XSR256 < Alea::XSR
     STATE_STORAGE = 4
 
     JUMP = StaticArray[

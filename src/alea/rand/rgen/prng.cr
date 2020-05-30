@@ -12,11 +12,5 @@ module Alea
 
     # Must perform a jump.
     abstract def jump : self
-
-    # :nodoc:
-    @[AlwaysInline]
-    protected def rotate(x, k)
-      (x << k) | (x >> (64 - k))
-    end
   end
 end
