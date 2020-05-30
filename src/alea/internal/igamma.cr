@@ -1,6 +1,6 @@
 require "./igausleg"
 
-module Alea::Internal
+module Alea::Core
   # Iteration limit within which `Alea::NoConvergeError` is not raised
   SPECFUN_ITMAX = 1_000
 
@@ -225,7 +225,7 @@ module Alea::Internal
   # * `uorl`: symbol to request the `:upper` or `:lower` inc. reg. gamma function.
   #
   # **@references**:
-  # * `Alea::Internal.inc_gamma`
+  # * `Alea::Core.inc_gamma`
   #
   # **@exceptions**:
   # * `Alea::NoConvergeError` if no convergence occurs within `SPECFUN_ITMAX` iterations.
@@ -240,7 +240,7 @@ module Alea::Internal
   # * `x`: the upper integration limit.
   #
   # **@references**:
-  # * `Alea::Internal.inc_gamma`
+  # * `Alea::Core.inc_gamma`
   #
   # **@exceptions**:
   # * `Alea::NoConvergeError` if no convergence occurs within `SPECFUN_ITMAX` iterations.
@@ -255,7 +255,7 @@ module Alea::Internal
   # * `x`: the upper integration limit.
   #
   # **@references**:
-  # * `Alea::Internal.inc_gamma`
+  # * `Alea::Core.inc_gamma`
   #
   # **@exceptions**:
   # * `Alea::NoConvergeError` if no convergence occurs within `SPECFUN_ITMAX` iterations.

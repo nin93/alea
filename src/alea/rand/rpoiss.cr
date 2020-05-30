@@ -22,7 +22,7 @@ module Alea
     # Unwrapped version of `poisson`.
     # Generate a *poisson-distributed*, pseudo-random `Int64`.
     def next_poisson : Int64
-      Alea::Internal.poisson_mult 1.0, @prng
+      Alea::Core.poisson_mult 1.0, @prng
     end
 
     # This are written to allow any combination of
@@ -32,9 +32,9 @@ module Alea
       # Unwrapped version of `poisson`.
       # Generate a *poisson-distributed*, pseudo-random `Int64`.
       def next_poisson(lam : {{t1}}) : Int64
-        (lam >= 10.0) && return Alea::Internal.poisson_ptrs lam, @prng
+        (lam >= 10.0) && return Alea::Core.poisson_ptrs lam, @prng
         (lam == 0.0) && return 0i64
-        Alea::Internal.poisson_mult lam, @prng
+        Alea::Core.poisson_mult lam, @prng
       end
     {% end %}
   end

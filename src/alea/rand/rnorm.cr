@@ -30,19 +30,19 @@ module Alea
         r = @prng.next_u >> 12
         rabs = Int64.new(r >> 1)
         idx = rabs & 0xff
-        x = (r & 0x1 == 1 ? -rabs : rabs) * Internal::Normal::W[idx]
+        x = (r & 0x1 == 1 ? -rabs : rabs) * Core::Normal::W[idx]
         # this returns 99.3% of the time on 1st try
-        rabs < Internal::Normal::K[idx] && return x
+        rabs < Core::Normal::K[idx] && return x
         if idx == 0
           while true
-            xx = -Internal::Normal::RINV * Math.log(@prng.next_f)
+            xx = -Core::Normal::RINV * Math.log(@prng.next_f)
             yy = -Math.log(@prng.next_f)
-            (yy + yy > xx * xx) && return (rabs >> 8) & 0x1 == 1 ? -Internal::Normal::R - xx : Internal::Normal::R + xx
+            (yy + yy > xx * xx) && return (rabs >> 8) & 0x1 == 1 ? -Core::Normal::R - xx : Core::Normal::R + xx
           end
         else
           # return from the triangular area
-          (Internal::Normal::F[idx - 1] - Internal::Normal::F[idx]) * @prng.next_f + \
-            Internal::Normal::F[idx] < Math.exp(-0.5 * x * x) && return x
+          (Core::Normal::F[idx - 1] - Core::Normal::F[idx]) * @prng.next_f + \
+            Core::Normal::F[idx] < Math.exp(-0.5 * x * x) && return x
         end
       end
     end

@@ -19,6 +19,6 @@ module Alea::CDF
     Alea.param_check(shape, :<=, 0.0, :shape, :gamma)
     Alea.param_check(scale, :<=, 0.0, :scale, :gamma)
     x <= 0.0 && return 0.0
-    Alea::Internal.inc_gamma_regular(shape, x / scale, :lower)
+    Alea::Core.inc_gamma_regular(shape, x / scale, :lower)
   end
 end

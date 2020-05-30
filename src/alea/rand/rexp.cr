@@ -26,13 +26,13 @@ module Alea
       while true
         r = @prng.next_u >> 12
         idx = r & 0xff
-        x = r * Internal::Exp::W[idx]
+        x = r * Core::Exp::W[idx]
         # this returns 98.9% of the time on 1st try
-        r < Internal::Exp::K[idx] && return x
-        idx == 0 && return Internal::Exp::R - Math.log(@prng.next_f)
+        r < Core::Exp::K[idx] && return x
+        idx == 0 && return Core::Exp::R - Math.log(@prng.next_f)
         # return from the triangular area
-        (Internal::Exp::F[idx - 1] - Internal::Exp::F[idx]) * @prng.next_f + \
-          Internal::Exp::F[idx] < Math.exp(-x) && return x
+        (Core::Exp::F[idx - 1] - Core::Exp::F[idx]) * @prng.next_f + \
+          Core::Exp::F[idx] < Math.exp(-x) && return x
       end
     end
 

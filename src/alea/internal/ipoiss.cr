@@ -1,6 +1,6 @@
 require "./igamma"
 
-module Alea::Internal
+module Alea::Core
   # Ok here to pass the prng: it's a reference and
   # it will not affect repeatability.
   def self.poisson_ptrs(lam : Float | Int, prng : Alea::PRNG)

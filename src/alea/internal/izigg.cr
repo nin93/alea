@@ -1,4 +1,4 @@
-module Alea::Internal
+module Alea::Core
   # The ziggurat tables for generating normal and exponential
   # distributed variables with better statistical properties
   #

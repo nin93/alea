@@ -15,6 +15,6 @@ module Alea::CDF
     Alea.sanity_check(df, :df, :chisq)
     Alea.param_check(df, :<=, 0.0, :df, :chisq)
     x <= 0.0 && return 0.0
-    Alea::Internal.inc_gamma_regular(df * 0.5, x * 0.5, :lower)
+    Alea::Core.inc_gamma_regular(df * 0.5, x * 0.5, :lower)
   end
 end
