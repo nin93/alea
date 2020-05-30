@@ -1,4 +1,4 @@
-require "../internal/ierr"
+require "../core/cerr"
 
 module Alea
   struct Random

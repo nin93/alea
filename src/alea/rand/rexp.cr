@@ -1,5 +1,5 @@
-require "../internal/izigg"
-require "../internal/ierr"
+require "../core/czig"
+require "../core/cerr"
 
 module Alea
   struct Random

@@ -1,4 +1,4 @@
-require "../internal/ipoiss"
+require "../core/cpois"
 
 module Alea
   struct Random
