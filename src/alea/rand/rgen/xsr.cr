@@ -25,12 +25,17 @@ module Alea
     # The state of this PRNG.
     @state : StaticArray(UInt64, STATE_STORAGE)
 
-    # Initializes the PRNG with initial state.
-    def initialize(initstate : UInt64)
-      @state = Alea::Core::SplitMix64(STATE_STORAGE).init_state(initstate)
+    # Initializes the PRNG with initial seed.
+    #
+    # **@parameters**:
+    # * `seed`: initial seed as input for generating the state of this PRNG.
+    #
+    # **@references**: `Alea::Core::SplitMix64(2)#init_state`.
+    def initialize(seed : UInt64)
+      @state = Alea::Core::SplitMix64(STATE_STORAGE).init_state(seed)
     end
 
-    # Initializes the PRNG with initial state readed from system resorces.
+    # Initializes the PRNG with initial seed readed from system resources.
     def self.new
       new ::Random::Secure.next_u.to_u64
     end
@@ -89,12 +94,17 @@ module Alea
     # The state of this PRNG.
     @state : StaticArray(UInt64, STATE_STORAGE)
 
-    # Initializes the PRNG with initial state.
-    def initialize(initstate : UInt64)
-      @state = Alea::Core::SplitMix64(STATE_STORAGE).init_state(initstate)
+    # Initializes the PRNG with initial seed.
+    #
+    # **@parameters**:
+    # * `seed`: initial seed as input for generating the state of this PRNG.
+    #
+    # **@references**: `Alea::Core::SplitMix64(4)#init_state`.
+    def initialize(seed : UInt64)
+      @state = Alea::Core::SplitMix64(STATE_STORAGE).init_state(seed)
     end
 
-    # Initializes the PRNG with initial state readed from system resorces.
+    # Initializes the PRNG with initial seed readed from system resources.
     def self.new
       new ::Random::Secure.next_u.to_u64
     end
