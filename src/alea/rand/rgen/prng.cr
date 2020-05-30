@@ -4,11 +4,17 @@ module Alea
   # Performance is comparable, but quality of generated `Float`s is much better.
   # Inherit this and implement `#next_u`, `#next_f` and `#jump` to build you own generator.
   abstract class PRNG
+    # Must return an uniform-distributed `UInt32`.
+    abstract def next_u32 : UInt32
+
     # Must return an uniform-distributed `UInt64`.
-    abstract def next_u : UInt64
+    abstract def next_u64 : UInt64
+
+    # Must return an uniform-distributed `Float32` in [0, 1).
+    abstract def next_f32 : Float32
 
     # Must return an uniform-distributed `Float64` in [0, 1).
-    abstract def next_f : Float64
+    abstract def next_f64 : Float64
 
     # Must perform a jump.
     abstract def jump : self
