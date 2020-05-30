@@ -42,6 +42,9 @@ module Alea
     end
 
     # Initializes the PRNG with initial state readed from system resorces.
+    #
+    # **@parameters**:
+    # * `prng`: the PRNG in use by this instance.
     def initialize(prng : Alea::PRNG.class = DEFAULT)
       @prng = prng.new
     end
@@ -63,7 +66,9 @@ module Alea
       @prng.next_f
     end
 
-    # This equals to 2^(STATE_STORAGE * 32) calls to `#next_u` or `#next_f`.
+    # Calls `jump` over inner `prng`.
+    #
+    # **@references**: `Alea::PRNG#jump`.
     def jump : self
       @prng.jump
     end
