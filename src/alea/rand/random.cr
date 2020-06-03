@@ -30,6 +30,19 @@ module Alea
     # The PRNG in use by this struct.
     getter prng : Alea::PRNG
 
+    # Initializes the PRNG with initial seeds.
+    #
+    # **@parameters**:
+    # * `seed32`: value as input to init. the state of 32-bit generators of `prng`.
+    # * `seed64`: value as input to init. the state of 64-bit generators of `prng`.
+    # * `prng`: the PRNG in use by this instance.
+    #
+    # **@exceptions**:
+    # * `Alea::UndefinedError` if any of `seed32` or `seed64` is negative.
+    def initialize(seed32 : Int, seed64 : Int, prng : Alea::PRNG.class = DEFAULT)
+      @prng = prng.new seed32, seed64
+    end
+
     # Initializes the PRNG with initial seed.
     #
     # **@parameters**:
