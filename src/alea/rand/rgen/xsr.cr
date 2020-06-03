@@ -1,4 +1,5 @@
 require "random/isaac"
+require "../../core/cerr"
 require "../../core/cgen"
 require "./prng"
 
@@ -38,9 +39,14 @@ module Alea
     # **@references**:
     # * `Alea::Core::Mulberry32(4)#init_state`.
     # * `Alea::Core::SplitMix64(2)#init_state`.
-    def initialize(seed32 : UInt32, seed64 : UInt64)
-      @state32 = Alea::Core::Mulberry32(STATE_STORAGE_32).init_state seed32
-      @state64 = Alea::Core::SplitMix64(STATE_STORAGE_64).init_state seed64
+    #
+    # **@exceptions**:
+    # * `Alea::UndefinedError` if any of `seed32` or `seed64` is negative.
+    def initialize(seed32 : Int, seed64 : Int)
+      Alea.param_check(seed32, :<, 0, :seed32, :"XSR128.new")
+      Alea.param_check(seed64, :<, 0, :seed64, :"XSR128.new")
+      @state32 = Alea::Core::Mulberry32(STATE_STORAGE_32).init_state seed32.to_u32
+      @state64 = Alea::Core::SplitMix64(STATE_STORAGE_64).init_state seed64.to_u64
     end
 
     # Initializes the PRNG with initial seed.
@@ -53,14 +59,11 @@ module Alea
     # * `Alea::Core::SplitMix64(2)#init_state`.
     #
     # **@exceptions**:
-    # * `ArgumentError` if `seed` is negative.
+    # * `Alea::UndefinedError` if `seed` is negative.
     def initialize(seed : Int)
-      if seed < 0
-        raise ArgumentError.new "Invalid value for `XSR128.new`: seed = #{seed}"
-      else
-        @state32 = Alea::Core::Mulberry32(STATE_STORAGE_32).init_state seed.to_u32
-        @state64 = Alea::Core::SplitMix64(STATE_STORAGE_64).init_state seed.to_u64
-      end
+      Alea.param_check(seed, :<, 0, :seed, :"XSR128.new")
+      @state32 = Alea::Core::Mulberry32(STATE_STORAGE_32).init_state seed.to_u32
+      @state64 = Alea::Core::SplitMix64(STATE_STORAGE_64).init_state seed.to_u64
     end
 
     # Initializes the PRNG with initial states.
@@ -265,9 +268,14 @@ module Alea
     #
     # **@references**:
     # * `Alea::Core::SplitMix64(4)#init_state`.
-    def initialize(seed32 : UInt64, seed64 : UInt64)
-      @state32 = Alea::Core::SplitMix64(STATE_STORAGE_64).init_state seed32
-      @state64 = Alea::Core::SplitMix64(STATE_STORAGE_64).init_state seed64
+    #
+    # **@exceptions**:
+    # * `Alea::UndefinedError` if any of `seed32` or `seed64` is negative.
+    def initialize(seed32 : Int, seed64 : Int)
+      Alea.param_check(seed32, :<, 0, :seed32, :"XSR256.new")
+      Alea.param_check(seed64, :<, 0, :seed64, :"XSR256.new")
+      @state32 = Alea::Core::SplitMix64(STATE_STORAGE_64).init_state seed32.to_u64
+      @state64 = Alea::Core::SplitMix64(STATE_STORAGE_64).init_state seed64.to_u64
     end
 
     # Initializes the PRNG with initial seed.
@@ -279,14 +287,11 @@ module Alea
     # * `Alea::Core::SplitMix64(4)#init_state`.
     #
     # **@exceptions**:
-    # * `ArgumentError` if `seed` is negative.
+    # * `Alea::UndefinedError` if `seed` is negative.
     def initialize(seed : Int)
-      if seed < 0
-        raise ArgumentError.new "Invalid value for `XSR256.new`: seed = #{seed}"
-      else
-        @state32 = Alea::Core::SplitMix64(STATE_STORAGE_64).init_state seed.to_u64
-        @state64 = Alea::Core::SplitMix64(STATE_STORAGE_64).init_state seed.to_u64
-      end
+      Alea.param_check(seed, :<, 0, :seed, :"XSR256.new")
+      @state32 = Alea::Core::SplitMix64(STATE_STORAGE_64).init_state seed.to_u64
+      @state64 = Alea::Core::SplitMix64(STATE_STORAGE_64).init_state seed.to_u64
     end
 
     # Initializes the PRNG with initial states.
