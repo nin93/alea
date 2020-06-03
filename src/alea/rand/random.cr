@@ -70,14 +70,24 @@ module Alea
     def initialize(@prng : Alea::PRNG)
     end
 
+    # Returns the next generated `UInt32`.
+    def next_u32 : UInt32
+      @prng.next_u32
+    end
+
     # Returns the next generated `UInt64`.
-    def next_u : UInt64
-      @prng.next_u
+    def next_u64 : UInt64
+      @prng.next_u64
+    end
+
+    # Returns the next generated `Float32`.
+    def next_f32 : Float32
+      @prng.next_f32
     end
 
     # Returns the next generated `Float64`.
-    def next_f : Float64
-      @prng.next_f
+    def next_f64 : Float64
+      @prng.next_f64
     end
 
     # Calls `jump` over inner `prng`.
