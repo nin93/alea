@@ -16,16 +16,62 @@ module Alea
     # * `Alea::InfinityError` if any of the arguments is `Infinity`.
     # * `Alea::UndefinedError` if `sigma` is negative or zero.
     def normal(loc = 0.0, sigma = 1.0)
-      Alea.sanity_check(loc, :loc, :normal)
-      Alea.sanity_check(sigma, :sigma, :normal)
-      Alea.param_check(sigma, :<=, 0.0, :sigma, :normal)
-      next_normal loc, sigma
+      __normal64 loc, sigma
     end
 
-    # :nodoc:
-    # Unwrapped version of `normal`.
+    # Run-time argument sanitizer for `#normal`.
+    private def __normal64(loc : Number, sigma : Number) : Float64
+      Alea.param_check(sigma, :<=, 0.0, :sigma, :normal)
+
+      if loc.class < Float
+        Alea.sanity_check(loc, :loc, :normal)
+      end
+
+      if sigma.class < Float
+        Alea.sanity_check(sigma, :sigma, :normal)
+      end
+
+      __next_normal64 * sigma.to_f64 + loc.to_f64
+    end
+
     # Generate a *normal-distributed*, pseudo-random `Float64`.
+    # Unparsed version of `#normal`.
+    #
+    # **@notes**:
+    # * `loc` is `0.0`.
+    # * `sigma` is `1.0`.
     def next_normal : Float64
+      __next_normal64
+    end
+
+    # Generate a *normal-distributed*, pseudo-random `Float64`.
+    # Unparsed version of `#normal`.
+    #
+    # **@parameters**:
+    # * `loc`: centrality parameter, or mean of the distribution;
+    #   usually mentioned as **`μ`**.
+    #
+    # **@notes**:
+    # * `sigma` is `1.0`.
+    def next_normal(loc : Float64) : Float64
+      __next_normal64 + loc
+    end
+
+    # Generate a *normal-distributed*, pseudo-random `Float64`.
+    # Unparsed version of `#normal`.
+    #
+    # **@parameters**:
+    # * `loc`: centrality parameter, or mean of the distribution;
+    #   usually mentioned as **`μ`**.
+    # * `sigma`: scale parameter, or standard deviation of the distribution;
+    #   usually mentioned as **`σ`**.
+    def next_normal(loc : Float64, sigma : Float64) : Float64
+      __next_normal64 * sigma + loc
+    end
+
+    # Generate a *normal-distributed*, pseudo-random `Float64`.
+    # Unwrapped version of `#normal`.
+    private def __next_normal64 : Float64
       while true
         r = @prng.next_u64 >> 12
         rabs = Int64.new(r >> 1)
@@ -46,29 +92,5 @@ module Alea
         end
       end
     end
-
-    # This are written to allow any combination of
-    # argument types and avoid tedious manual casting.
-    {% for t1 in ["Int".id, "Float".id] %}
-      # :nodoc:
-      # Unwrapped version of `normal`.
-      # Generate a *normal-distributed*, pseudo-random `Float64`.
-      def next_normal(loc : {{t1}}) : Float64
-        next_normal + loc
-      end
-    {% end %}
-
-    # This are written to allow any combination of
-    # argument types and avoid tedious manual casting.
-    {% for t1 in ["Int".id, "Float".id] %}
-      {% for t2 in ["Int".id, "Float".id] %}
-        # :nodoc:
-        # Unwrapped version of `normal`.
-        # Generate a *normal-distributed*, pseudo-random `Float64`.
-        def next_normal(loc : {{t1}}, sigma : {{t2}}) : Float64
-          next_normal * sigma + loc
-        end
-      {% end %}
-    {% end %}
   end
 end
