@@ -15,8 +15,5 @@ module Alea
 
     # Must return an uniform-distributed `Float64` in [0, 1).
     abstract def next_f64 : Float64
-
-    # Must perform a jump.
-    abstract def jump : self
   end
 end
