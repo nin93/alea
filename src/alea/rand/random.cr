@@ -89,12 +89,5 @@ module Alea
     def next_f64 : Float64
       @prng.next_f64
     end
-
-    # Calls `jump` over inner `prng`.
-    #
-    # **@references**: `Alea::PRNG#jump`.
-    def jump : self
-      @prng.jump
-    end
   end
 end
