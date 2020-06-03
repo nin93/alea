@@ -159,7 +159,7 @@ macro dist_test(message, *,
       it {{message}}, focus: {{focus}} do
     {% end %}
         ary = Array({{sample_type}}).new {{samples}}
-        ans = {{sample_type}}.new 0
+        ans = 0.0
 
         {{samples}}.times do
           {% if params %}
