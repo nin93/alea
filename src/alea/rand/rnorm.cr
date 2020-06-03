@@ -27,7 +27,7 @@ module Alea
     # Generate a *normal-distributed*, pseudo-random `Float64`.
     def next_normal : Float64
       while true
-        r = @prng.next_u >> 12
+        r = @prng.next_u64 >> 12
         rabs = Int64.new(r >> 1)
         idx = rabs & 0xff
         x = (r & 0x1 == 1 ? -rabs : rabs) * Core::Normal::W[idx]
@@ -35,13 +35,13 @@ module Alea
         rabs < Core::Normal::K[idx] && return x
         if idx == 0
           while true
-            xx = -Core::Normal::RINV * Math.log(@prng.next_f)
-            yy = -Math.log(@prng.next_f)
+            xx = -Core::Normal::RINV * Math.log(@prng.next_f64)
+            yy = -Math.log(@prng.next_f64)
             (yy + yy > xx * xx) && return (rabs >> 8) & 0x1 == 1 ? -Core::Normal::R - xx : Core::Normal::R + xx
           end
         else
           # return from the triangular area
-          (Core::Normal::F[idx - 1] - Core::Normal::F[idx]) * @prng.next_f + \
+          (Core::Normal::F[idx - 1] - Core::Normal::F[idx]) * @prng.next_f64 + \
             Core::Normal::F[idx] < Math.exp(-0.5 * x * x) && return x
         end
       end

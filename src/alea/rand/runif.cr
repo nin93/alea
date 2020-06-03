@@ -2,9 +2,9 @@ module Alea
   struct Random
     # Generate a *uniform-distributed*, pseudo-random `UInt64`.
     #
-    # **@references**: `#next_u`.
+    # **@references**: `#next_u64`.
     def uint : UInt64
-      @prng.next_u
+      @prng.next_u64
     end
 
     # Generate a *uniform-distributed*, pseudo-random `UInt64` in range `[0, max)`.
@@ -18,10 +18,10 @@ module Alea
     def uint(max : Int) : UInt64
       # No sanity check here: max is an Int
       Alea.param_check(max, :<=, 0, :max, :uint)
-      max == UInt64::MAX && return @prng.next_u
+      max == UInt64::MAX && return @prng.next_u64
       lim = UInt64::MAX - (UInt64::MAX % max)
       while true
-        u = @prng.next_u
+        u = @prng.next_u64
         u < lim && return u % max
       end
     end
@@ -73,9 +73,9 @@ module Alea
 
     # Generate a *uniform-distributed*, pseudo-random `Float64` in range `[0.0, 1.0)`.
     #
-    # **@references**: `#next_f`.
+    # **@references**: `#next_f64`.
     def float : Float64
-      @prng.next_f
+      @prng.next_f64
     end
 
     # Generate a *uniform-distributed*, pseudo-random `Float64` in range `[0.0, max)`.
@@ -91,7 +91,7 @@ module Alea
     def float(max : Float) : Float64
       Alea.sanity_check(max, :max, :float)
       Alea.param_check(max, :<=, 0.0, :max, :float)
-      @prng.next_f * max
+      @prng.next_f64 * max
     end
 
     # Generate a *uniform-distributed*, pseudo-random `Float64` in fixed range.
@@ -138,7 +138,7 @@ module Alea
           raise Alea::UndefinedError.new "Invalid value for `float': range = #{range}"
         end
       end
-      @prng.next_f * span + range.begin
+      @prng.next_f64 * span + range.begin
     end
   end
 end

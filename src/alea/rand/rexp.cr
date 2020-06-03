@@ -24,14 +24,14 @@ module Alea
     # Generate a *exp-distributed*, pseudo-random `Float64`.
     def next_exp : Float64
       while true
-        r = @prng.next_u >> 12
+        r = @prng.next_u64 >> 12
         idx = r & 0xff
         x = r * Core::Exp::W[idx]
         # this returns 98.9% of the time on 1st try
         r < Core::Exp::K[idx] && return x
-        idx == 0 && return Core::Exp::R - Math.log(@prng.next_f)
+        idx == 0 && return Core::Exp::R - Math.log(@prng.next_f64)
         # return from the triangular area
-        (Core::Exp::F[idx - 1] - Core::Exp::F[idx]) * @prng.next_f + \
+        (Core::Exp::F[idx - 1] - Core::Exp::F[idx]) * @prng.next_f64 + \
           Core::Exp::F[idx] < Math.exp(-x) && return x
       end
     end

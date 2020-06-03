@@ -26,7 +26,7 @@ module Alea
     # Generate a *laplace-distributed*, pseudo-random `Float64`.
     def next_laplace : Float64
       while true
-        u = @prng.next_f
+        u = @prng.next_f64
         u >= 0.5 && return -Math.log(2.0 - u - u)
         u > 0.0 && return Math.log(u + u)
         # Reject u == 0.0

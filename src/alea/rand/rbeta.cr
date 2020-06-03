@@ -35,8 +35,8 @@ module Alea
         def next_beta(*, a : {{t1}}, b : {{t2}}) : Float64
           if a <= 1.0 && b <= 1.0
             while true
-              u = @prng.next_f
-              v = @prng.next_f
+              u = @prng.next_f64
+              v = @prng.next_f64
               x = u ** (1.0 / a)
               y = v ** (1.0 / b)
               if (x + y) <= 1.0

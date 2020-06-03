@@ -35,7 +35,7 @@ module Alea
         shape == 0.0 && return 0.0
         if shape < 1.0
           while true
-            u = @prng.next_f
+            u = @prng.next_f64
             v = next_exp
             if u <= 1.0 - shape
               x = u ** (1.0 / shape)
@@ -56,7 +56,7 @@ module Alea
               break unless v <= 0.0
             end
             v = v * v * v
-            u = @prng.next_f
+            u = @prng.next_f64
             u < (1.0 - 0.0331_f64 * (x * x) * (x * x)) && return b * v
             Math.log(u) < 0.5 * x * x + b * (1.0 - v + Math.log(v)) && return b * v
           end
