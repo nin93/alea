@@ -36,12 +36,13 @@ module Alea
     # * `seed`: initial seed as input for generating the state of `prng`.
     # * `prng`: the PRNG in use by this instance.
     #
-    # **@references**: `Alea::Core::SplitMix64(N)#init_state`.
-    def initialize(seed : UInt64, prng : Alea::PRNG.class = DEFAULT)
+    # **@exceptions**:
+    # * `Alea::UndefinedError` if `seed` is negative.
+    def initialize(seed : Int, prng : Alea::PRNG.class = DEFAULT)
       @prng = prng.new seed
     end
 
-    # Initializes the PRNG with initial state readed from system resorces.
+    # Initializes the PRNG with initial state readed from system resources.
     #
     # **@parameters**:
     # * `prng`: the PRNG in use by this instance.
