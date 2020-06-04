@@ -33,17 +33,6 @@ describe Alea do
       end
 
       describe "#next_gamma" do
-        arg_test("accepts any sized Int/UInt/Float as argument(s)",
-          caller: SpecRng,
-          method: :next_gamma,
-          params: {shape: 0.1, scale: 0.1},
-          return_type: Float64,
-          types: [Int8, Int16, Int32, Int64, Int128,
-                  UInt8, UInt16, UInt32, UInt64, UInt128,
-                  Float32, Float64,
-          ]
-        )
-
         # mean  is:   ks
         # stdev is:   sqrt( ks^2 )
 
