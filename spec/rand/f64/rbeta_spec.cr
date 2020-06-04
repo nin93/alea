@@ -33,17 +33,6 @@ describe Alea do
       end
 
       describe "#next_beta" do
-        arg_test("accepts any sized Int/UInt/Float as argument(s)",
-          caller: SpecRng,
-          method: :next_beta,
-          params: {a: 1.0, b: 1.0},
-          return_type: Float64,
-          types: [Int8, Int16, Int32, Int64, Int128,
-                  UInt8, UInt16, UInt32, UInt64, UInt128,
-                  Float32, Float64,
-          ]
-        )
-
         # mean  is:   1.0 / (1.0 + (b / a))
         # stdev is:   sqrt( ab / ((a + b)^2 * (a + b + 1.0)) )
 
