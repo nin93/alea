@@ -32,8 +32,7 @@ describe Alea do
         )
       end
 
-      describe "#next_normal32", focus: true do
-
+      describe "#next_normal32" do
         # mean  is:   m
         # stdev is:   s
 
@@ -81,7 +80,6 @@ describe Alea do
         )
 
         dist_test("generates normal-distributed random values with fixed loc 0.0 and sigma 3.0 parameters",
-          focus: true,
           caller: SpecRng,
           method: :next_normal32,
           params: {loc: 0.0f32, sigma: 3.0f32},
@@ -158,7 +156,6 @@ describe Alea do
         )
 
         dist_test("generates normal-distributed random values with fixed loc 93.0 and sigma 0.5 parameters",
-          focus: true,
           caller: SpecRng,
           method: :next_normal32,
           params: {loc: 93.0f32, sigma: 0.5f32},
@@ -170,7 +167,6 @@ describe Alea do
         )
 
         dist_test("generates normal-distributed random values with fixed loc -93.0 and sigma 0.5 parameters",
-          focus: true,
           caller: SpecRng,
           method: :next_normal32,
           params: {loc: -93.0f32, sigma: 0.5f32},
