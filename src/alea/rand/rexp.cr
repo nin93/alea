@@ -13,16 +13,43 @@ module Alea
     # * `Alea::NaNError` if any of the arguments is `NaN`.
     # * `Alea::InfinityError` if any of the arguments is `Infinity`.
     # * `Alea::UndefinedError` if `scale` is negative or zero.
-    def exp(scale = 1.0)
-      Alea.sanity_check(scale, :scale, :exp)
-      Alea.param_check(scale, :<=, 0.0, :scale, :exp)
-      next_exp scale
+    def exp(scale = 1.0) : Float64
+      __exp64 scale
     end
 
-    # :nodoc:
-    # Unwrapped version of `exp`.
+    # Run-time argument sanitizer for `#exp`.
+    private def __exp64(scale : Number) : Float64
+      Alea.param_check(scale, :<=, 0.0, :scale, :exp)
+
+      if scale.class < Float
+        Alea.sanity_check(scale, :scale, :exp)
+      end
+
+      __next_exp64 * scale.to_f64
+    end
+
     # Generate a *exp-distributed*, pseudo-random `Float64`.
+    # Unparsed version of `exp`.
+    #
+    # **@note**:
+    # * `scale` is `1.0`.
     def next_exp : Float64
+      __next_exp64
+    end
+
+    # Generate a *exp-distributed*, pseudo-random `Float64`.
+    # Unparsed version of `exp`.
+    #
+    # **@parameters**:
+    # * `scale`: scale parameter of the distribution;
+    #   usually mentioned as **`λ^-1`**.
+    def next_exp(scale : Float64) : Float64
+      __next_exp64 * scale
+    end
+
+    # Generate a *exp-distributed*, pseudo-random `Float64`.
+    # Unwrapped version of `exp`.
+    private def __next_exp64 : Float64
       while true
         r = @prng.next_u64 >> 12
         idx = r & 0xff
@@ -35,16 +62,5 @@ module Alea
           Core::Exp::F[idx] < Math.exp(-x) && return x
       end
     end
-
-    # This are written to allow any combination of
-    # argument types and avoid tedious manual casting.
-    {% for t1 in ["Int".id, "Float".id] %}
-      # :nodoc:
-      # Unwrapped version of `exp`.
-      # Generate a *exp-distributed*, pseudo-random `Float64`.
-      def next_exp(scale : {{t1}}) : Float64
-        next_exp * scale
-      end
-    {% end %}
   end
 end

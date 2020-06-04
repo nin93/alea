@@ -33,17 +33,6 @@ describe Alea do
       end
 
       describe "#next_exp" do
-        arg_test("accepts any sized Int/UInt/Float as argument(s)",
-          caller: SpecRng,
-          method: :next_exp,
-          params: {scale: 1.0},
-          return_type: Float64,
-          types: [Int8, Int16, Int32, Int64, Int128,
-                  UInt8, UInt16, UInt32, UInt64, UInt128,
-                  Float32, Float64,
-          ]
-        )
-
         # mean  is:   k
         # stdev is:   k
 
