@@ -78,5 +78,82 @@ module Alea
         # Reject u == 0.0
       end
     end
+
+    # Generate a *laplace-distributed*, pseudo-random `Float32`.
+    #
+    # **@parameters**:
+    # * `loc`: centrality parameter, or mean of the distribution;
+    #   usually mentioned as **`μ`**.
+    # * `scale`: scale parameter of the distribution;
+    #   usually mentioned as **`b`**.
+    #
+    # **@exceptions**:
+    # * `Alea::NaNError` if any of the arguments is `NaN`.
+    # * `Alea::InfinityError` if any of the arguments is `Infinity`.
+    # * `Alea::UndefinedError` if `scale` is negative or zero.
+    def laplace32(loc = 0.0f32, scale = 1.0f32)
+      __laplace32 loc, scale
+    end
+
+    # Run-time argument sanitizer for `#laplace32`.
+    private def __laplace32(loc : Number, scale : Number) : Float32
+      Alea.param_check(scale, :<=, 0.0, :scale, :laplace32)
+
+      if loc.class < Float
+        Alea.sanity_check(loc, :loc, :laplace32)
+      end
+
+      if scale.class < Float
+        Alea.sanity_check(scale, :scale, :laplace32)
+      end
+
+      __next_laplace32 * scale.to_f32 + loc.to_f32
+    end
+
+    # Generate a *laplace-distributed*, pseudo-random `Float32`.
+    # Unparsed version of `#laplace32`.
+    #
+    # **@notes**:
+    # * `loc` is `0.0`.
+    # * `scale` is `1.0`.
+    def next_laplace32 : Float32
+      __next_laplace32
+    end
+
+    # Generate a *laplace-distributed*, pseudo-random `Float32`.
+    # Unparsed version of `#laplace32`.
+    #
+    # **@parameters**:
+    # * `loc`: centrality parameter, or mean of the distribution;
+    #   usually mentioned as **`μ`**.
+    #
+    # **@notes**:
+    # * `scale` is `1.0`.
+    def next_laplace32(loc : Float32) : Float32
+      __next_laplace32 + loc
+    end
+
+    # Generate a *laplace-distributed*, pseudo-random `Float32`.
+    # Unparsed version of `#laplace32`.
+    #
+    # **@parameters**:
+    # * `loc`: centrality parameter, or mean of the distribution;
+    #   usually mentioned as **`μ`**.
+    # * `scale`: scale parameter of the distribution;
+    #   usually mentioned as **`b`**.
+    def next_laplace32(loc : Float32, scale : Float32) : Float32
+      __next_laplace32 * scale + loc
+    end
+
+    # Generate a *laplace-distributed*, pseudo-random `Float32`.
+    # Unwrapped version of `#laplace32`.
+    private def __next_laplace32 : Float32
+      while true
+        u = @prng.next_f32
+        u >= 0.5f32 && return -Math.log(2.0f32 - u - u)
+        u > 0.0f32 && return Math.log(u + u)
+        # Reject u == 0.0
+      end
+    end
   end
 end
