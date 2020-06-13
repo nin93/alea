@@ -10,6 +10,18 @@ module Alea
     # Must return an uniform-distributed `UInt64`.
     abstract def next_u64 : UInt64
 
+    # Generate a uniform-distributed random `Int32` in range `Int32::MIN..Int32::MAX`.
+    @[AlwaysInline]
+    def next_i32 : Int32
+      next_u32.to_i32!
+    end
+
+    # Generate a uniform-distributed random `Int64` in range `Int64::MIN..Int64::MAX`.
+    @[AlwaysInline]
+    def next_i64 : Int64
+      next_u64.to_i64!
+    end
+
     # Generate a uniform-distributed random `Float32` in `[0, 1)`.
     @[AlwaysInline]
     def next_f32 : Float32
