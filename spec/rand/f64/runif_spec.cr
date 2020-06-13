@@ -4,19 +4,42 @@ describe Alea do
   context "Uniform" do
     describe Alea::Random do
       describe "#float" do
-        arg_test("accepts any sized Float as argument(s)",
-          caller: SpecRng,
-          method: :float,
-          params: {max: 1.0},
-          return_type: Float64,
-          types: [Float32, Float64]
-        )
+        it "accepts any sized Int/UInt/Float as argument(s)" do
+          {% begin %}
+            {% types = [Int8, Int16, Int32, Int64, Int128,
+                        UInt8, UInt16, UInt32, UInt64, UInt128,
+                        Float32, Float64] %}
+
+            {% for t1 in types %}
+              %args = { max: {{t1}}.new(1) }
+              SpecRng.float( **%args ).should be_a(Float64)
+
+              {% for t2 in types %}
+                %args = { min: {{t1}}.new(0), max: {{t2}}.new(1) }
+                SpecRng.float( **%args ).should be_a(Float64)
+
+                %args = { range: ( {{t1}}.new(0)..{{t2}}.new(1) ) }
+                SpecRng.float( **%args ).should be_a(Float64)
+
+                %args = { range: ( {{t1}}.new(0)...{{t2}}.new(1) ) }
+                SpecRng.float( **%args ).should be_a(Float64)
+              {% end %}
+            {% end %}
+          {% end %}
+        end
 
         sanity_test(
           caller: SpecRng,
           method: :float,
           params: {max: 1.0},
           params_to_check: [:max],
+        )
+
+        sanity_test(
+          caller: SpecRng,
+          method: :float,
+          params: {min: 0.0, max: 1.0},
+          params_to_check: [:min, :max],
         )
 
         param_test(
@@ -28,16 +51,16 @@ describe Alea do
           check_zeros: true,
         )
 
-        it "accepts any sized Range as argument" do
-          # TODO: uncomment when `float` accepts Int arguments
-          # {% for bits in %i[8 16 32 64 128] %}
-          #   SpecRng.float 1_i{{bits.id}}..1_i{{bits.id}}
-          #   SpecRng.float 1_u{{bits.id}}..1_u{{bits.id}}
-          # {% end %}
+        it "raises Alea::UndefinedError if min is less than max" do
+          expect_raises Alea::UndefinedError do
+            SpecRng.float 1.0, 0.0
+          end
+        end
 
-          {% for bits in %i[32 64] %}
-            SpecRng.float 1.0_f{{bits.id}}..1.0_f{{bits.id}}
-          {% end %}
+        it "raises Alea::UndefinedError if min is eq to max" do
+          expect_raises Alea::UndefinedError do
+            SpecRng.float 1.0, 1.0
+          end
         end
 
         it "raises Alea::NaNError if left bound is NaN" do

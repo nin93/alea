@@ -177,10 +177,76 @@ module Alea
     # * `Alea::NaNError` if any of the arguments is `NaN`.
     # * `Alea::InfinityError` if any of the arguments is `Infinity`.
     # * `Alea::UndefinedError` if `max` is negative or zero.
-    def float(max : Float) : Float64
-      Alea.sanity_check(max, :max, :float)
-      Alea.param_check(max, :<=, 0.0, :max, :float)
-      @prng.next_f64 * max
+    def float(max : Number) : Float64
+      __float64 max
+    end
+
+    # Run-time argument sanitizer for `#float`.
+    private def __float64(max : Number) : Float64
+      if max.class < Float
+        Alea.sanity_check(max, :max, :float)
+      end
+
+      Alea.param_check(max, :<=, 0, :max, :float)
+
+      __next_float64 max.to_f64
+    end
+
+    # Generate a *uniform-distributed*, pseudo-random `Float64` in range `[0, max)`.
+    # Unparsed version for `#float`.
+    #
+    # **@parameters**:
+    # * `max`: right bound parameter of range of the distribution;
+    #   usually mentioned as **`b`**.
+    def next_float(max : Float64) : Float64
+      __next_float64 max
+    end
+
+    # Generate a *uniform-distributed*, pseudo-random `Float64` in range `[0.0, max)`.
+    # Unwrapped version for `#float`.
+    private def __next_float64(max : Float64) : Float64
+      # Float64, excluding mantissa, has 2^53 values
+      max_prec = 1u64 << 53
+      __next_uint64(max_prec) / max_prec.to_f64 * max
+    end
+
+    # Generate a *uniform-distributed*, pseudo-random `Float64` in fixed range.
+    #
+    # **@parameters**:
+    # * `min`: left bound parameter of range of the distribution;
+    #   usually mentioned as **`a`**.
+    # * `max`: right bound parameter of range of the distribution;
+    #   usually mentioned as **`b`**.
+    def float(min : Number, max : Number) : Float64
+      __float64 min, max
+    end
+
+    # Run-time argument sanitizer for `#float`.
+    private def __float64(min : Number, max : Number) : Float64
+      if min.class < Float
+        Alea.sanity_check(min, :min, :float)
+      end
+
+      if max.class < Float
+        Alea.sanity_check(max, :max, :float)
+      end
+
+      Alea.param_check(min, :>=, max, :min, :float)
+
+      span = (max - min).to_f64
+      __next_float64(span) + min.to_f64
+    end
+
+    # Generate a *uniform-distributed*, pseudo-random `Float64` in fixed range.
+    # Unparsed version for `#float`.
+    #
+    # **@parameters**:
+    # * `min`: left bound parameter of range of the distribution;
+    #   usually mentioned as **`a`**.
+    # * `max`: right bound parameter of range of the distribution;
+    #   usually mentioned as **`b`**.
+    def next_float(min : Float64, max : Float64) : Float64
+      __next_float64(max - min) + min
     end
 
     # Generate a *uniform-distributed*, pseudo-random `Float64` in fixed range.
@@ -215,19 +281,36 @@ module Alea
     # * `Alea::InfinityError` if any of the arguments bound is `Infinity`.
     # * `Alea::UndefinedError` if `range.end` is less than `range.begin`.
     # * `Alea::UndefinedError` if `range` is not end-inclusive but bounds are the same.
-    def float(range : Range(Float, Float)) : Float64
-      Alea.sanity_check(range.begin, :"range.begin", :float)
-      Alea.sanity_check(range.end, :"range.end", :float)
-      unless range.begin <= range.end
-        raise Alea::UndefinedError.new "Invalid value for `float': range = #{range}"
+    def float(range : Range(Number, Number)) : Float64
+      __float64 range
+    end
+
+    # Run-time argument sanitizer for `#float`.
+    private def __float64(range : Range(Number, Number)) : Float64
+      min = range.begin
+      max = range.end
+
+      if min.class < Float
+        Alea.sanity_check(min, :"range.begin", :float)
       end
-      span = range.end - range.begin
+
+      if max.class < Float
+        Alea.sanity_check(max, :"range.end", :float)
+      end
+
+      span = (max - min).to_f64
+
       if range.excludes_end?
-        if range.end == range.begin
+        unless min < max
           raise Alea::UndefinedError.new "Invalid value for `float': range = #{range}"
         end
+        __next_float64(span) + min.to_f64
+      else
+        unless min <= max
+          raise Alea::UndefinedError.new "Invalid value for `float': range = #{range}"
+        end
+        min.to_f64 + @prng.next_f64 * span
       end
-      @prng.next_f64 * span + range.begin
     end
   end
 end
