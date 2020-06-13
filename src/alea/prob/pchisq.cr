@@ -10,10 +10,27 @@ module Alea::CDF
   # * `Alea::NaNError` if any of the arguments is `NaN`.
   # * `Alea::InfinityError` if any of the arguments is `Infinity`.
   # * `Alea::UndefinedError` if `df` is negative or zero.
-  def self.chisq(x : Float, df : Float) : Float64
-    Alea.sanity_check(x, :x, :chisq)
-    Alea.sanity_check(df, :df, :chisq)
+  def self.chisq(x, df) : Float64
+    __chisq64 x, df
+  end
+
+  # Run-time argument sanitizer for `#chisq`.
+  private def self.__chisq64(x : Number, df : Number) : Float64
+    if x.class < Float
+      Alea.sanity_check(x, :x, :chisq)
+    end
+
+    if df.class < Float
+      Alea.sanity_check(df, :df, :chisq)
+    end
+
     Alea.param_check(df, :<=, 0.0, :df, :chisq)
+
+    __cdf_chisq64 x.to_f64, df.to_i32
+  end
+
+  # Unwrapped version of `#chisq`.
+  private def self.__cdf_chisq64(x : Float64, df : Int32) : Float64
     x <= 0.0 && return 0.0
     Alea::Core.inc_gamma_regular(df * 0.5, x * 0.5, :lower)
   end
