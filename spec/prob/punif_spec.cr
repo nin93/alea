@@ -4,17 +4,22 @@ describe Alea do
   context "Uniform" do
     describe Alea::CDF do
       describe "#uniform" do
-        arg_test("accepts any sized Int/UInt/Float as argument(s)",
-          pending: true,
-          caller: Alea::CDF,
-          method: :uniform,
-          params: {x: 1.0, min: 1.0, max: 1.0},
-          return_type: Float64,
-          types: [Int8, Int16, Int32, Int64, Int128,
-                  UInt8, UInt16, UInt32, UInt64, UInt128,
-                  Float32, Float64,
-          ]
-        )
+        it "accepts any sized Int/UInt/Float as argument(s)" do
+          {% begin %}
+            {% types = [Int8, Int16, Int32, Int64, Int128,
+                        UInt8, UInt16, UInt32, UInt64, UInt128,
+                        Float32, Float64] %}
+
+            {% for t1 in types %}
+              {% for t2 in types %}
+                {% for t3 in types %}
+                  %args = { x: {{t1}}.new(1), min: {{t2}}.new(0), max: {{t3}}.new(1) }
+                  Alea::CDF.uniform( **%args ).should be_a(Float64)
+                {% end %}
+              {% end %}
+            {% end %}
+          {% end %}
+        end
 
         sanity_test(
           caller: Alea::CDF,

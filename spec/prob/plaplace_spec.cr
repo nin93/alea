@@ -5,7 +5,6 @@ describe Alea do
     describe Alea::CDF do
       describe "#laplace" do
         arg_test("accepts any sized Int/UInt/Float as argument(s)",
-          pending: true,
           caller: Alea::CDF,
           method: :laplace,
           params: {x: 1.0, loc: 1.0, scale: 1.0},

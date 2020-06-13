@@ -5,7 +5,6 @@ describe Alea do
     describe Alea::CDF do
       describe "#poisson" do
         arg_test("accepts any sized Int/UInt/Float as argument(s)",
-          pending: true,
           caller: Alea::CDF,
           method: :poisson,
           params: {k: 1, lam: 1.0},

@@ -5,7 +5,6 @@ describe Alea do
     describe Alea::CDF do
       describe "#exp" do
         arg_test("accepts any sized Int/UInt/Float as argument(s)",
-          pending: true,
           caller: Alea::CDF,
           method: :exp,
           params: {x: 1.0, scale: 1.0},
