@@ -117,32 +117,6 @@ module Alea
       rnd
     end
 
-    # Generate a uniform-distributed random `Float32` in `[0, 1)`.
-    #
-    # **@examples**:
-    # ```
-    # rng = Alea::XSR128.new
-    # rng.next_f32 # => 0.41157538
-    # ```
-    @[AlwaysInline]
-    def next_f32 : Float32
-      # 5.9604645e-8 is ldexp(1.0, -24.0).
-      (next_u32 >> 8) * 5.9604645e-08f32
-    end
-
-    # Generate a uniform-distributed random `Float64` in `[0, 1)`.
-    #
-    # **@examples**:
-    # ```
-    # rng = Alea::XSR128.new
-    # rng.next_f64 # => 0.12194680409000741
-    # ```
-    @[AlwaysInline]
-    def next_f64 : Float64
-      # 1.1102230246251565e-16 is ldexp(1.0, -53.0).
-      (next_u64 >> 11) * 1.1102230246251565e-16f64
-    end
-
     JUMP_32B_64 = StaticArray[
       0x8764000b_u32, 0xf542d2d3_u32,
       0x6fa035c3_u32, 0x77f2db5b_u32,
@@ -354,32 +328,6 @@ module Alea
       rnd = rotate(@state64[0] &+ @state64[3], 23, size: 64) &+ @state64[0]
       xsr64_next_state
       rnd
-    end
-
-    # Generate a uniform-distributed random `Float32` in `[0, 1)`.
-    #
-    # **@examples**:
-    # ```
-    # rng = Alea::XSR256.new
-    # rng.next_f32 # => 0.41157538
-    # ```
-    @[AlwaysInline]
-    def next_f32 : Float32
-      # 5.9604645e-8 is ldexp(1.0, -24.0).
-      (next_u32 >> 8) * 5.9604645e-08f32
-    end
-
-    # Generate a uniform-distributed random `Float64` in `[0, 1)`.
-    #
-    # **@examples**:
-    # ```
-    # rng = Alea::XSR256.new
-    # rng.next_f64 # => 0.12194680409000741
-    # ```
-    @[AlwaysInline]
-    def next_f64 : Float64
-      # 1.1102230246251565e-16 is ldexp(1.0, -53.0).
-      (next_u64 >> 11) * 1.1102230246251565e-16f64
     end
 
     JUMP_64B_128 = StaticArray[
