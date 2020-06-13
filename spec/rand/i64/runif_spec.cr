@@ -4,25 +4,43 @@ describe Alea do
   context "Uniform" do
     describe Alea::Random do
       describe "#uint" do
-        arg_test("accepts any sized Int/UInt/Float as argument(s)",
+        it "accepts any sized Int/UInt/Float as argument(s)" do
+          {% begin %}
+            {% types = [Int8, Int16, Int32, Int64, Int128,
+                        UInt8, UInt16, UInt32, UInt64, UInt128,
+                        Float32, Float64] %}
+
+            {% for t1 in types %}
+              %args = { max: {{t1}}.new(1) }
+              SpecRng.uint( **%args ).should be_a(UInt64)
+
+              {% for t2 in types %}
+                %args = { min: {{t1}}.new(0), max: {{t2}}.new(1) }
+                SpecRng.uint( **%args ).should be_a(UInt64)
+
+                %args = { range: ( {{t1}}.new(0)..{{t2}}.new(1) ) }
+                SpecRng.uint( **%args ).should be_a(UInt64)
+
+                %args = { range: ( {{t1}}.new(0)...{{t2}}.new(1) ) }
+                SpecRng.uint( **%args ).should be_a(UInt64)
+              {% end %}
+            {% end %}
+          {% end %}
+        end
+
+        sanity_test(
           caller: SpecRng,
           method: :uint,
           params: {max: 1},
-          return_type: UInt64,
-          types: [Int8, Int16, Int32, Int64, Int128,
-                  UInt8, UInt16, UInt32, UInt64, UInt128,
-                  Float32, Float64,
-          ]
+          params_to_check: [:max],
         )
 
-        it "accepts any sized Int/UInt/Float as argument(s)" do
-          {% for type in [Int8, Int16, Int32, Int64, Int128,
-                          UInt8, UInt16, UInt32, UInt64, UInt128,
-                          Float32, Float64] %}
-            %args = { min: {{type}}.new(0), max: {{type}}.new(1) }
-            SpecRng.uint( **%args ).should be_a(UInt64)
-          {% end %}
-        end
+        sanity_test(
+          caller: SpecRng,
+          method: :uint,
+          params: {min: 0, max: 1},
+          params_to_check: [:min, :max],
+        )
 
         param_test(
           caller: SpecRng,
@@ -43,13 +61,6 @@ describe Alea do
           expect_raises Alea::UndefinedError do
             SpecRng.uint 1, 1
           end
-        end
-
-        it "accepts any sized Range as argument" do
-          {% for bits in %i[8 16 32 64 128] %}
-            SpecRng.uint 1_i{{bits.id}}..1_i{{bits.id}}
-            SpecRng.uint 1_u{{bits.id}}..1_u{{bits.id}}
-          {% end %}
         end
 
         it "raises Alea::UndefinedError if range is negative" do

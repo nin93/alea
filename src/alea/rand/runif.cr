@@ -21,11 +21,11 @@ module Alea
 
     # Run-time argument sanitizer for `#uint`.
     private def __uint64(max : Number) : UInt64
-      Alea.param_check(max, :<=, 0, :max, :uint)
-
       if max.class < Float
         Alea.sanity_check(max, :max, :uint)
       end
+      
+      Alea.param_check(max, :<=, 0, :max, :uint)
 
       __next_uint64 max.to_u64
     end
@@ -64,9 +64,6 @@ module Alea
 
     # Run-time argument sanitizer for `#uint`.
     private def __uint64(min : Number, max : Number) : UInt64
-      Alea.param_check(min, :>=, max, :min, :uint)
-      Alea.param_check(min, :<, 0, :min, :uint)
-
       if min.class < Float
         Alea.sanity_check(min, :min, :uint)
       end
@@ -74,6 +71,9 @@ module Alea
       if max.class < Float
         Alea.sanity_check(max, :max, :uint)
       end
+
+      Alea.param_check(min, :>=, max, :min, :uint)
+      Alea.param_check(min, :<, 0, :min, :uint)
 
       span = (max - min).to_u64
       __next_uint64(span) + min.to_u64
