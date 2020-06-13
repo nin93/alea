@@ -9,11 +9,5 @@ module Alea
 
     # Must return an uniform-distributed `UInt64`.
     abstract def next_u64 : UInt64
-
-    # Must return an uniform-distributed `Float32` in [0, 1).
-    abstract def next_f32 : Float32
-
-    # Must return an uniform-distributed `Float64` in [0, 1).
-    abstract def next_f64 : Float64
   end
 end
