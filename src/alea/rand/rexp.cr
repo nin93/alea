@@ -19,11 +19,11 @@ module Alea
 
     # Run-time argument sanitizer for `#exp`.
     private def __exp64(scale : Number) : Float64
-      Alea.param_check(scale, :<=, 0.0, :scale, :exp)
-
       if scale.class < Float
         Alea.sanity_check(scale, :scale, :exp)
       end
+
+      Alea.param_check(scale, :<=, 0.0, :scale, :exp)
 
       __next_exp64 * scale.to_f64
     end

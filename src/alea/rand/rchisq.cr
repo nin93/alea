@@ -18,11 +18,11 @@ module Alea
 
     # Run-time argument sanitizer for `#chisq`.
     private def __chisq64(df : Number) : Float64
-      Alea.param_check(df, :<=, 0.0, :df, :chisq)
-
       if df.class < Float
         Alea.sanity_check(df, :df, :chisq)
       end
+
+      Alea.param_check(df, :<=, 0.0, :df, :chisq)
 
       __next_chisq64 df.to_i32
     end

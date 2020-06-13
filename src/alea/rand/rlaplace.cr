@@ -20,8 +20,6 @@ module Alea
 
     # Run-time argument sanitizer for `#laplace`.
     private def __laplace64(loc : Number, scale : Number) : Float64
-      Alea.param_check(scale, :<=, 0.0, :scale, :laplace)
-
       if loc.class < Float
         Alea.sanity_check(loc, :loc, :laplace)
       end
@@ -29,6 +27,8 @@ module Alea
       if scale.class < Float
         Alea.sanity_check(scale, :scale, :laplace)
       end
+
+      Alea.param_check(scale, :<=, 0.0, :scale, :laplace)
 
       __next_laplace64 * scale.to_f64 + loc.to_f64
     end
@@ -97,8 +97,6 @@ module Alea
 
     # Run-time argument sanitizer for `#laplace32`.
     private def __laplace32(loc : Number, scale : Number) : Float32
-      Alea.param_check(scale, :<=, 0.0, :scale, :laplace32)
-
       if loc.class < Float
         Alea.sanity_check(loc, :loc, :laplace32)
       end
@@ -106,6 +104,8 @@ module Alea
       if scale.class < Float
         Alea.sanity_check(scale, :scale, :laplace32)
       end
+
+      Alea.param_check(scale, :<=, 0.0, :scale, :laplace32)
 
       __next_laplace32 * scale.to_f32 + loc.to_f32
     end

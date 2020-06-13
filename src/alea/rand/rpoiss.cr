@@ -19,11 +19,11 @@ module Alea
 
     # Run-time argument sanitizer for `#poisson`.
     private def __poisson64(lam : Number) : Int64
-      Alea.param_check(lam, :<=, 0.0, :lam, :poisson)
-
       if lam.class < Float
         Alea.sanity_check(lam, :lam, :poisson)
       end
+
+      Alea.param_check(lam, :<=, 0.0, :lam, :poisson)
 
       __next_poisson64 lam.to_f64
     end

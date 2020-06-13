@@ -22,9 +22,6 @@ module Alea
 
     # Run-time argument sanitizer for `#beta`.
     private def __beta64(a : Number, b : Number) : Float64
-      Alea.param_check(a, :<=, 0.0, :a, :beta)
-      Alea.param_check(b, :<=, 0.0, :b, :beta)
-
       if a.class < Float
         Alea.sanity_check(a, :a, :beta)
       end
@@ -32,6 +29,9 @@ module Alea
       if b.class < Float
         Alea.sanity_check(b, :b, :beta)
       end
+
+      Alea.param_check(a, :<=, 0.0, :a, :beta)
+      Alea.param_check(b, :<=, 0.0, :b, :beta)
 
       __next_beta64 a.to_f64, b.to_f64
     end

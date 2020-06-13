@@ -21,8 +21,6 @@ module Alea
 
     # Run-time argument sanitizer for `#normal32`.
     private def __normal32(loc : Number, sigma : Number) : Float32
-      Alea.param_check(sigma, :<=, 0.0, :sigma, :normal32)
-
       if loc.class < Float
         Alea.sanity_check(loc, :loc, :normal32)
       end
@@ -30,6 +28,8 @@ module Alea
       if sigma.class < Float
         Alea.sanity_check(sigma, :sigma, :normal32)
       end
+
+      Alea.param_check(sigma, :<=, 0.0, :sigma, :normal32)
 
       __next_normal32 * sigma.to_f32 + loc.to_f32
     end
@@ -52,8 +52,6 @@ module Alea
 
     # Run-time argument sanitizer for `#normal`.
     private def __normal64(loc : Number, sigma : Number) : Float64
-      Alea.param_check(sigma, :<=, 0.0, :sigma, :normal)
-
       if loc.class < Float
         Alea.sanity_check(loc, :loc, :normal)
       end
@@ -61,6 +59,8 @@ module Alea
       if sigma.class < Float
         Alea.sanity_check(sigma, :sigma, :normal)
       end
+
+      Alea.param_check(sigma, :<=, 0.0, :sigma, :normal)
 
       __next_normal64 * sigma.to_f64 + loc.to_f64
     end
