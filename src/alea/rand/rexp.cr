@@ -53,13 +53,13 @@ module Alea
       while true
         r = @prng.next_u64 >> 12
         idx = r & 0xff
-        x = r * Core::Exp::W[idx]
+        x = r * Core::Exp::W64[idx]
         # this returns 98.9% of the time on 1st try
-        r < Core::Exp::K[idx] && return x
-        idx == 0 && return Core::Exp::R - Math.log(@prng.next_f64)
+        r < Core::Exp::K64[idx] && return x
+        idx == 0 && return Core::Exp::R64 - Math.log(@prng.next_f64)
         # return from the triangular area
-        (Core::Exp::F[idx - 1] - Core::Exp::F[idx]) * @prng.next_f64 + \
-          Core::Exp::F[idx] < Math.exp(-x) && return x
+        (Core::Exp::F64[idx - 1] - Core::Exp::F64[idx]) * @prng.next_f64 + \
+          Core::Exp::F64[idx] < Math.exp(-x) && return x
       end
     end
   end
