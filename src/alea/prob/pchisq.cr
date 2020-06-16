@@ -36,4 +36,40 @@ module Alea::CDF
     x <= 0.0 && return 0.0
     Alea::Core::SpecFun::Gamma.incomplete_reg(df * 0.5, x * 0.5, :lower)
   end
+
+  # Calculate the cumulative distribution function evaluated at `x`.
+  #
+  # **@parameters**:
+  # * `x`: real-valued quantile of which estimate the cdf.
+  # * `df`: degrees of freedom of the distribution;
+  #   usually mentioned as **`k`**.
+  #
+  # **@exceptions**:
+  # * `Alea::NaNError` if any of the arguments is `NaN`.
+  # * `Alea::InfinityError` if any of the arguments is `Infinity`.
+  # * `Alea::UndefinedError` if `df` is negative or zero.
+  def self.chisq32(x, df) : Float32
+    __chisq32 x, df
+  end
+
+  # Run-time argument sanitizer for `#chisq32`.
+  private def self.__chisq32(x : Number, df : Number) : Float32
+    if x.class < Float
+      Alea.sanity_check(x, :x, :chisq32)
+    end
+
+    if df.class < Float
+      Alea.sanity_check(df, :df, :chisq32)
+    end
+
+    Alea.param_check(df, :<=, 0.0, :df, :chisq32)
+
+    __cdf_chisq32 x.to_f32, df.to_i32
+  end
+
+  # Unwrapped version of `#chisq32`.
+  private def self.__cdf_chisq32(x : Float32, df : Int32) : Float32
+    x <= 0.0f32 && return 0.0f32
+    Alea::Core::SpecFun::Gamma.incomplete_reg(df * 0.5f32, x * 0.5f32, :lower)
+  end
 end
