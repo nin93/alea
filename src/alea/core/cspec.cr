@@ -160,7 +160,7 @@ module Alea::Core::SpecFun
       #                    (x-a+3) - ---------------
       #                                (x-a+5) - ...
       # ```
-      private def self.continued_fractions_proc{{s}}(a : Float{{s}}, x : Float{{s}}) : Float{{s}}
+      private def self.continued_fractions_proc{{s}}(a : Float{{s}}, x : Float{{s}}) : Tuple(Proc(Int32, Float{{s}}), Proc(Int32, Float{{s}}))
         {
           ->(i : Int32) { (-i) * (i - a) },
           ->(i : Int32) { x - a + 1.0_f{{s}} + i + i },
