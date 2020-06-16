@@ -1,11 +1,10 @@
-require "../spec_helper"
+require "../../spec_helper"
 
 describe Alea do
   context "Gamma" do
     describe Alea::CDF do
       describe "#gamma" do
         arg_test("accepts any sized Int/UInt/Float as argument(s)",
-          pending: true,
           caller: Alea::CDF,
           method: :gamma,
           params: {x: 1.0, shape: 1.0, scale: 1.0},

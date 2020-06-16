@@ -13,7 +13,7 @@ describe Alea do
         rng2 = Alea::XSR{{size}}.new 93
 
         1_000_000.times do
-          rng1.next_u.should eq(rng2.next_u)
+          rng1.next_u64.should eq(rng2.next_u64)
         end
       end
 
@@ -22,20 +22,20 @@ describe Alea do
         rng2 = Alea::XSR{{size}}.new 193
 
         1_000_000.times do
-          rng1.next_u.should_not eq(rng2.next_u)
+          rng1.next_u64.should_not eq(rng2.next_u64)
         end
       end
 
       describe "#next_u" do
         it "returns a UInt64" do
           rng = Alea::XSR{{size}}.new
-          rnd = rng.next_u
+          rnd = rng.next_u64
           rnd.should be_a(UInt64)
         end
 
         it "returns a UInt64 with given initial state" do
           rng = Alea::XSR{{size}}.new 9377
-          rnd = rng.next_u
+          rnd = rng.next_u64
           rnd.should be_a(UInt64)
         end
 
@@ -44,7 +44,7 @@ describe Alea do
           ans = 0.0
 
           SpecNdata.times do
-            ran = SpecRng.next_u
+            ran = SpecRng.next_u64
             ans += ran
             ary << ran
           end
@@ -59,13 +59,13 @@ describe Alea do
       describe "#next_f" do
         it "generates a Float64" do
           rng = Alea::XSR{{size}}.new
-          rnd = rng.next_f
+          rnd = rng.next_f64
           rnd.should be_a(Float64)
         end
 
         it "generates a Float64 with given initial state" do
           rng = Alea::XSR{{size}}.new 9377
-          rnd = rng.next_f
+          rnd = rng.next_f64
           rnd.should be_a(Float64)
         end
 
@@ -74,7 +74,7 @@ describe Alea do
           ans = 0.0
 
           SpecNdata.times do
-            ran = SpecRng.next_f
+            ran = SpecRng.next_f64
             ans += ran
             ary << ran
           end

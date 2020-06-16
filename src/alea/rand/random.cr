@@ -30,18 +30,32 @@ module Alea
     # The PRNG in use by this struct.
     getter prng : Alea::PRNG
 
+    # Initializes the PRNG with initial seeds.
+    #
+    # **@parameters**:
+    # * `seed32`: value as input to init. the state of 32-bit generators of `prng`.
+    # * `seed64`: value as input to init. the state of 64-bit generators of `prng`.
+    # * `prng`: the PRNG in use by this instance.
+    #
+    # **@exceptions**:
+    # * `Alea::UndefinedError` if any of `seed32` or `seed64` is negative.
+    def initialize(seed32 : Int, seed64 : Int, prng : Alea::PRNG.class = DEFAULT)
+      @prng = prng.new seed32, seed64
+    end
+
     # Initializes the PRNG with initial seed.
     #
     # **@parameters**:
     # * `seed`: initial seed as input for generating the state of `prng`.
     # * `prng`: the PRNG in use by this instance.
     #
-    # **@references**: `Alea::Core::SplitMix64(N)#init_state`.
-    def initialize(seed : UInt64, prng : Alea::PRNG.class = DEFAULT)
+    # **@exceptions**:
+    # * `Alea::UndefinedError` if `seed` is negative.
+    def initialize(seed : Int, prng : Alea::PRNG.class = DEFAULT)
       @prng = prng.new seed
     end
 
-    # Initializes the PRNG with initial state readed from system resorces.
+    # Initializes the PRNG with initial state readed from system resources.
     #
     # **@parameters**:
     # * `prng`: the PRNG in use by this instance.
@@ -56,21 +70,24 @@ module Alea
     def initialize(@prng : Alea::PRNG)
     end
 
+    # Returns the next generated `UInt32`.
+    def next_u32 : UInt32
+      @prng.next_u32
+    end
+
     # Returns the next generated `UInt64`.
-    def next_u : UInt64
-      @prng.next_u
+    def next_u64 : UInt64
+      @prng.next_u64
+    end
+
+    # Returns the next generated `Float32`.
+    def next_f32 : Float32
+      @prng.next_f32
     end
 
     # Returns the next generated `Float64`.
-    def next_f : Float64
-      @prng.next_f
-    end
-
-    # Calls `jump` over inner `prng`.
-    #
-    # **@references**: `Alea::PRNG#jump`.
-    def jump : self
-      @prng.jump
+    def next_f64 : Float64
+      @prng.next_f64
     end
   end
 end
