@@ -63,7 +63,6 @@ module Alea
       end
     end
 
-
     # Generate a *exp-distributed*, pseudo-random `Float32`.
     #
     # **@parameters**:
