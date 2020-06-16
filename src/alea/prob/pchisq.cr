@@ -1,3 +1,5 @@
+require "../core/cspec"
+
 module Alea::CDF
   # Calculate the cumulative distribution function evaluated at `x`.
   #
@@ -32,6 +34,6 @@ module Alea::CDF
   # Unwrapped version of `#chisq`.
   private def self.__cdf_chisq64(x : Float64, df : Int32) : Float64
     x <= 0.0 && return 0.0
-    Alea::Core.inc_gamma_regular(df * 0.5, x * 0.5, :lower)
+    Alea::Core::SpecFun::Gamma.incomplete_reg(df * 0.5, x * 0.5, :lower)
   end
 end

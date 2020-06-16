@@ -1,3 +1,5 @@
+require "../core/cspec"
+
 module Alea::CDF
   # Calculate the cumulative distribution function evaluated at `x`.
   #
@@ -39,6 +41,6 @@ module Alea::CDF
   # Unwrapped version of `#gamma`.
   private def self.__cdf_gamma64(x : Float64, shape : Float64, scale : Float64) : Float64
     x <= 0.0 && return 0.0
-    Alea::Core.inc_gamma_regular(shape, x / scale, :lower)
+    Alea::Core::SpecFun::Gamma.incomplete_reg(shape, x / scale, :lower)
   end
 end
