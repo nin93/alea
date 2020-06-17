@@ -9,5 +9,5 @@ require "./alea/*"
 # Algorithms in this library are heavily derived from [NumPy](https://github.com/numpy/numpy) and
 # [Julia](https://github.com/JuliaLang/julia) lang. Disclaimer in LICENSE file.
 module Alea
-  VERSION = "0.2.3"
+  VERSION = "0.3.0"
 end
