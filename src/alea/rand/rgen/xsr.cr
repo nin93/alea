@@ -58,15 +58,6 @@ module Alea
       @state64 = Alea::Core::SplitMix64(STATE_STORAGE_64).init_state seed.to_u64
     end
 
-    # Initializes the PRNG with initial states.
-    #
-    # **@parameters**:
-    # * `state32`: array of values for state of 32-bit generators.
-    # * `state64`: array of values for state of 64-bit generators.
-    def initialize(@state32 : StaticArray(UInt32, STATE_STORAGE_32),
-                   @state64 : StaticArray(UInt64, STATE_STORAGE_64))
-    end
-
     # Initializes the PRNG with initial seeds readed from system resources.
     def self.new
       # Cryptographically secure PRNG
@@ -263,15 +254,6 @@ module Alea
       Alea.param_check(seed, :<, 0, :seed, :"XSR256.new")
       @state32 = Alea::Core::SplitMix64(STATE_STORAGE_64).init_state seed.to_u64
       @state64 = Alea::Core::SplitMix64(STATE_STORAGE_64).init_state seed.to_u64
-    end
-
-    # Initializes the PRNG with initial states.
-    #
-    # **@parameters**:
-    # * `state32`: array of values for state of 32-bit generators.
-    # * `state64`: array of values for state of 64-bit generators.
-    def initialize(@state32 : StaticArray(UInt64, STATE_STORAGE_64),
-                   @state64 : StaticArray(UInt64, STATE_STORAGE_64))
     end
 
     # Initializes the PRNG with initial seeds readed from system resources.
