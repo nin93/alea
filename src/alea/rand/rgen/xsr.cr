@@ -60,14 +60,7 @@ module Alea
 
     # Initializes the PRNG with initial seeds readed from system resources.
     def self.new
-      # Cryptographically secure PRNG
-      secure = ::Random::ISAAC.new
-      seed32 = secure.next_u
-      # Merge two 32-bit integers to obtain seed64
-      lt32 = secure.next_u
-      rt32 = secure.next_u
-      seed64 = ((0u64 | lt32) << 32) | rt32
-      new seed32, seed64
+      self.secure
     end
 
     # Generate a uniform-distributed random `UInt32`.
@@ -258,17 +251,7 @@ module Alea
 
     # Initializes the PRNG with initial seeds readed from system resources.
     def self.new
-      # Cryptographically secure PRNG
-      secure = ::Random::ISAAC.new
-      # Merge two 32-bit integers to obtain seed32
-      lt32 = secure.next_u
-      rt32 = secure.next_u
-      seed32 = ((0u64 | lt32) << 32) | rt32
-      # Merge two 32-bit integers to obtain seed64
-      lt32 = secure.next_u
-      rt32 = secure.next_u
-      seed64 = ((0u64 | lt32) << 32) | rt32
-      new seed32, seed64
+      self.secure
     end
 
     # Generate a uniform-distributed random `UInt32`.
