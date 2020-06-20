@@ -24,6 +24,15 @@ module Alea
       UInt64
     end
 
+    # Returns an instamce of this PRNG with initial seeds readed from system resources.
+    def self.secure
+      # Cryptographically secure PRNG
+      secure = ::Random::ISAAC.new
+      seed32 = secure.rand self.type_32
+      seed64 = secure.rand self.type_64
+      self.new seed32, seed64
+    end
+
     # Generate a uniform-distributed random `Int32` in range `Int32::MIN..Int32::MAX`.
     @[AlwaysInline]
     def next_i32 : Int32
