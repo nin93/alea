@@ -4,6 +4,9 @@ module Alea
   # Performance is comparable, but quality of generated `Float`s is much better.
   # Inherit this and implement `#next_u`, `#next_f` and `#jump` to build you own generator.
   abstract class PRNG
+    # Must initialize states from seeds.
+    abstract def initialize(seed32, seed64)
+
     # Must return an uniform-distributed `UInt32`.
     abstract def next_u32 : UInt32
 
