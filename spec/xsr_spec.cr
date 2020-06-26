@@ -3,9 +3,19 @@ require "./spec_helper"
 describe Alea do
   {% for size in ["128".id, "256".id] %}
     describe Alea::XSR{{size}} do
+      describe "Alea::XSR{{size}}.secure" do
+        it "returns a new instance from class" do
+          Alea::XSR{{size}}.secure.should be_a(Alea::XSR{{size}})
+        end
+      end
+
       it "returns a new instance from class" do
         Alea::XSR{{size}}.new.should be_a(Alea::XSR{{size}})
+      end
+
+      it "creates a new instance from seeds" do
         Alea::XSR{{size}}.new(12345).should be_a(Alea::XSR{{size}})
+        Alea::XSR{{size}}.new(12345, 54321).should be_a(Alea::XSR{{size}})
       end
 
       it "generates sames numbers from same initial state concurrently" do
