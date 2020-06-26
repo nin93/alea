@@ -22,6 +22,12 @@ module Alea
     # The state this PRNG refers to when called for generating `UInt64`s.
     @state64 : StaticArray(UInt64, STATE_STORAGE_64)
 
+    # The seed this PRNG received to initialize `@state32`.
+    @seed32 : UInt32
+
+    # The seed this PRNG received to initialize `@state64`.
+    @seed64 : UInt64
+
     # Initializes the PRNG with initial seeds.
     #
     # **@parameters**:
@@ -34,11 +40,9 @@ module Alea
     #
     # **@exceptions**:
     # * `Alea::UndefinedError` if any of `seed32` or `seed64` is negative.
-    def initialize(seed32 : Int, seed64 : Int)
-      Alea.param_check(seed32, :<, 0, :seed32, :"XSR128.new")
-      Alea.param_check(seed64, :<, 0, :seed64, :"XSR128.new")
-      @state32 = Alea::Core::Mulberry32(STATE_STORAGE_32).init_state seed32.to_u32
-      @state64 = Alea::Core::SplitMix64(STATE_STORAGE_64).init_state seed64.to_u64
+    def initialize(@seed32 : UInt32, @seed64 : UInt64)
+      @state32 = Alea::Core::Mulberry32(STATE_STORAGE_32).init_state @seed32
+      @state64 = Alea::Core::SplitMix64(STATE_STORAGE_64).init_state @seed64
     end
 
     # Initializes the PRNG with initial seed.
@@ -52,11 +56,10 @@ module Alea
     #
     # **@exceptions**:
     # * `Alea::UndefinedError` if `seed` is negative.
-    def initialize(seed : Int)
+		def self.new(seed : Int)
       Alea.param_check(seed, :<, 0, :seed, :"XSR128.new")
-      @state32 = Alea::Core::Mulberry32(STATE_STORAGE_32).init_state seed.to_u32
-      @state64 = Alea::Core::SplitMix64(STATE_STORAGE_64).init_state seed.to_u64
-    end
+			new seed.to_u32, seed.to_u64
+		end
 
     # Initializes the PRNG with initial seeds readed from system resources.
     def self.new
@@ -209,6 +212,12 @@ module Alea
     # The state this PRNG refers to when called for generating `UInt64`s.
     @state64 : StaticArray(UInt64, STATE_STORAGE_64)
 
+    # The seed this PRNG received to initialize `@state32`.
+    @seed32 : UInt64
+
+    # The seed this PRNG received to initialize `@state64`.
+    @seed64 : UInt64
+
     # Pending pseudo-random value discarded from partial generation to be reused.
     @pending : UInt32 | Nil
 
@@ -226,11 +235,9 @@ module Alea
     #
     # **@exceptions**:
     # * `Alea::UndefinedError` if any of `seed32` or `seed64` is negative.
-    def initialize(seed32 : Int, seed64 : Int)
-      Alea.param_check(seed32, :<, 0, :seed32, :"XSR256.new")
-      Alea.param_check(seed64, :<, 0, :seed64, :"XSR256.new")
-      @state32 = Alea::Core::SplitMix64(STATE_STORAGE_64).init_state seed32.to_u64
-      @state64 = Alea::Core::SplitMix64(STATE_STORAGE_64).init_state seed64.to_u64
+    def initialize(@seed32 : UInt64, @seed64 : UInt64)
+      @state32 = Alea::Core::SplitMix64(STATE_STORAGE_64).init_state @seed32
+      @state64 = Alea::Core::SplitMix64(STATE_STORAGE_64).init_state @seed64
     end
 
     # Initializes the PRNG with initial seed.
@@ -243,16 +250,20 @@ module Alea
     #
     # **@exceptions**:
     # * `Alea::UndefinedError` if `seed` is negative.
-    def initialize(seed : Int)
+		def self.new(seed : Int)
       Alea.param_check(seed, :<, 0, :seed, :"XSR256.new")
-      @state32 = Alea::Core::SplitMix64(STATE_STORAGE_64).init_state seed.to_u64
-      @state64 = Alea::Core::SplitMix64(STATE_STORAGE_64).init_state seed.to_u64
-    end
+			new seed.to_u64, seed.to_u64
+		end
 
     # Initializes the PRNG with initial seeds readed from system resources.
     def self.new
       self.secure
     end
+
+		# 
+		def self.type_32
+			UInt64
+		end
 
     # Generate a uniform-distributed random `UInt32`.
     #
