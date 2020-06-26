@@ -56,10 +56,10 @@ module Alea
     #
     # **@exceptions**:
     # * `Alea::UndefinedError` if `seed` is negative.
-		def self.new(seed : Int)
+    def self.new(seed : Int)
       Alea.param_check(seed, :<, 0, :seed, :"XSR128.new")
-			new seed.to_u32, seed.to_u64
-		end
+      new seed.to_u32, seed.to_u64
+    end
 
     # Initializes the PRNG with initial seeds readed from system resources.
     def self.new
@@ -250,20 +250,20 @@ module Alea
     #
     # **@exceptions**:
     # * `Alea::UndefinedError` if `seed` is negative.
-		def self.new(seed : Int)
+    def self.new(seed : Int)
       Alea.param_check(seed, :<, 0, :seed, :"XSR256.new")
-			new seed.to_u64, seed.to_u64
-		end
+      new seed.to_u64, seed.to_u64
+    end
 
     # Initializes the PRNG with initial seeds readed from system resources.
     def self.new
       self.secure
     end
 
-		# 
-		def self.type_32
-			UInt64
-		end
+    #
+    def self.type_32
+      UInt64
+    end
 
     # Generate a uniform-distributed random `UInt32`.
     #
