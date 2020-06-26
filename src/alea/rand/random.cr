@@ -1,3 +1,4 @@
+require "./rgen/prng"
 require "./*"
 
 module Alea
@@ -30,7 +31,14 @@ module Alea
     # The PRNG in use by this struct.
     getter prng : Alea::PRNG
 
-    # Initializes the PRNG with initial seeds.
+    # Initializes the PRNG with initial instance.
+    #
+    # **@parameters**:
+    # * `prng`: the PRNG instance itself.
+    def initialize(@prng : Alea::PRNG)
+		end
+		
+		# Initializes the PRNG with initial seeds.
     #
     # **@parameters**:
     # * `seed32`: value as input to init. the state of 32-bit generators of `prng`.
@@ -39,9 +47,14 @@ module Alea
     #
     # **@exceptions**:
     # * `Alea::UndefinedError` if any of `seed32` or `seed64` is negative.
-    def initialize(seed32 : Int, seed64 : Int, prng : Alea::PRNG.class = DEFAULT)
-      @prng = prng.new seed32, seed64
-    end
+		def self.new(seed32 : Int, seed64 : Int, prng : Alea::PRNG.class = DEFAULT)
+      Alea.param_check(seed32, :<, 0, :seed32, :"Random.new")
+      Alea.param_check(seed64, :<, 0, :seed64, :"Random.new")
+      # Cast seeds to type needed by underlying PRNG.
+      s32 = prng.type_32.new seed32
+      s64 = prng.type_64.new seed64
+      new prng.new(s32, s64)
+		end
 
     # Initializes the PRNG with initial seed.
     #
@@ -51,23 +64,20 @@ module Alea
     #
     # **@exceptions**:
     # * `Alea::UndefinedError` if `seed` is negative.
-    def initialize(seed : Int, prng : Alea::PRNG.class = DEFAULT)
-      @prng = prng.new seed
+		def self.new(seed : Int, prng : Alea::PRNG.class = DEFAULT)
+      Alea.param_check(seed, :<, 0, :seed, :"Random.new")
+      # Cast seeds to type needed by underlying PRNG.
+      s32 = prng.type_32.new seed
+      s64 = prng.type_64.new seed
+      new prng.new(s32, s64)
     end
 
     # Initializes the PRNG with initial state readed from system resources.
     #
     # **@parameters**:
     # * `prng`: the PRNG in use by this instance.
-    def initialize(prng : Alea::PRNG.class = DEFAULT)
-      @prng = prng.new
-    end
-
-    # Initializes the PRNG with initial instance.
-    #
-    # **@parameters**:
-    # * `prng`: the PRNG instance itself.
-    def initialize(@prng : Alea::PRNG)
+		def self.new(prng : Alea::PRNG.class = DEFAULT)
+			new prng.new
     end
 
     # Returns the next generated `UInt32`.
