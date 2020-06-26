@@ -13,14 +13,14 @@ module Alea
     # Must return an uniform-distributed `UInt64`.
     abstract def next_u64 : UInt64
 
-    # The type of values stored in 32-bit state. This is needed by `Alea::Random`
+    # Returns the type of values stored in 32-bit state. This is needed by `Alea::Random`
     # to detect the type of states and provide properly typed seeds to underlying PRNGs.
     # This should be overridden by PRNGs which need a type in state different from `UInt32`.
     def self.type_32
       UInt32
     end
 
-    # The type of values stored in 64-bit state. This is needed by `Alea::Random`
+    # Returns the type of values stored in 64-bit state. This is needed by `Alea::Random`
     # to detect the type of states and provide properly typed seeds to underlying PRNGs.
     # This should be overridden by PRNGs which need a type in state different from `UInt64`.
     def self.type_64
