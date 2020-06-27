@@ -77,7 +77,7 @@ module Alea
     # **@parameters**:
     # * `prng`: the PRNG in use by this instance.
     def self.new(prng : Alea::PRNG.class = DEFAULT)
-      new prng.new
+      new prng.secure
     end
 
     # Returns the next generated `UInt32`.
