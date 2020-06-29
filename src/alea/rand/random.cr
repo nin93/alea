@@ -2,27 +2,32 @@ require "./rgen/prng"
 require "./*"
 
 module Alea
-  # `Alea::Random` provides the interface for distribution sampling, using the
-  # **xoshiro** pseudo random number generators written by Sebastiano Vigna and David Blackman.
+  # `Alea::Random` provides the interface for pseudo-random generations and distribution sampling.
   #
   # ```
   # seed = 9377
   # random = Alea::Random.new(seed)
-  # random # => Alea::Random
+  # random       # => Alea::Random
+  # random.float # => 0.08153691876972058
   # ```
   #
-  # The default generator is `Alea::XSR128`, faster than `Alea::XSR256`, but less capable state.
-  # To use the 256-bits version call the constructor like this:
+  # The default generator is `Alea::XSR128`. To use any other PRNG in this library call the constructor
+  # passing its class name. Here is an example using `Alea::XSR256`, loaded with 256 bits of state:
   #
   # ```
   # seed = 12345
   # random = Alea::Random.new(seed, Alea::XSR256)
   # random.prng # => Alea::XSR256
+  #
+  # # Works with an instance as well:
+  # xsr = Alea::XSR256.new 9377, 2353
+  # random = Alea::Random.new xsr
+  # random.prng # => Alea::XSR256
   # ```
   #
-  # You can build your own custom PRNG by inheriting `Alea::PRNG` and implementing `#next_u`,
-  # `#next_f` and `#jump`, as they are needed by every other call (except for `#jump`);
-  # then create a new instance of `Alea::Random` passing you class by its name like above.
+  # `Alea::Random` can accept a custom PRNG as well: check `Alea::PRNG` and the
+  # [example](https://github.com/nin93/alea/blob/master/custom_prng.cr)
+	# provided to build your own.
   #
   # The following implementations are taken from **numpy**.
   struct Random
