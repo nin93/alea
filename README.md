@@ -58,29 +58,11 @@ Floats are obtained by `ldexp` (load exponent) operations upon generated unsigne
 
 More informations are detailed in: http://prng.di.unimi.it/.
 
+### Custom PRNG
+
 All PRNGs in this library inherit from `PRNG`. You are allowed to build your own custom
-PRNG by inheriting the above parent class and defining `#next_u32` and `#next_u64`,
-since all methods rely upon them to perform sampling:
-```crystal
-class MyGenerator < Alea::PRNG
-  @state32 : StaticArray(UInt32)
-  @state64 : StaticArray(UInt64)
-
-  # must be implemented
-  def next_u32 : UInt32
-    # extract 32-bit integer
-    # update @state32
-  end
-
-  # must be implemented
-  def next_u64 : UInt64
-    # extract 64-bit integer
-    # update @state64
-  end
-end
-```
-The above example is a rapresentation of how PRNGs are implemented and should be
-built in order to be wrapped correctly by `Random` and generate properly.
+PRNG by inheriting the above parent class and defining the methods needed by `Alea::Random`
+to generate properly, as described in this [example](https://github.com/nin93/alea/blob/master/custom_prng.cr).
 
 It is worth noting that in these implementations `#next_u32` and `#next_u64`
 depend on different states and thus they are independent from each other,
@@ -89,6 +71,7 @@ It is still fine, though, if both `#next_u32` and `#next_u64` rely on the same
 state, if you want. I choose not to, as it makes state advancements unpredictable.
 
 ## Sampling
+
 `Random` is the interface provided to perform sampling:
 ```crystal
 random = Alea::Random.new
