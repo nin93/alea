@@ -1,8 +1,6 @@
 module Alea
-  # `PRNG` is a replacement for the default `Random::PCG32` stdlib prng that implements
-  # the **xoshiro** algotithms to generate pseudo-random `UInt`s in 64-bits.
-  # Performance is comparable, but quality of generated `Float`s is much better.
-  # Inherit this and implement `#next_u`, `#next_f` and `#jump` to build you own generator.
+  # `Alea::PRNG` is the class all PRNGs iherit from. Use this class to build your own engine as described
+  # in the [example](https://github.com/nin93/alea/blob/master/custom_prng.cr) provided in the documentation.
   abstract class PRNG
     # Must initialize states from seeds.
     abstract def initialize(seed32, seed64)
