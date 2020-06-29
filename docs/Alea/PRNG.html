@@ -151,11 +151,6 @@
       
     </li>
   
-  <li class=" " data-id="alea/Alea/XSR" data-name="alea::xsr">
-      <a href="../Alea/XSR.html">XSR</a>
-      
-    </li>
-  
   <li class=" " data-id="alea/Alea/XSR128" data-name="alea::xsr128">
       <a href="../Alea/XSR128.html">XSR128</a>
       
@@ -199,10 +194,8 @@
     Overview
   </h2>
 
-  <p><code><a href="../Alea/PRNG.html">PRNG</a></code> is a replacement for the default <code>Random::PCG32</code> stdlib prng that implements
-the <strong>xoshiro</strong> algotithms to generate pseudo-random <code>UInt</code>s in 64-bits.
-Performance is comparable, but quality of generated <code>Float</code>s is much better.
-Inherit this and implement <code>#next_u</code>, <code>#next_f</code> and <code>#jump</code> to build you own generator.</p>
+  <p><code><a href="../Alea/PRNG.html">Alea::PRNG</a></code> is the class all PRNGs iherit from. Use this class to build your own engine as described
+in the <a href="https://github.com/nin93/alea/blob/master/custom_prng.cr" target="_blank">example</a> provided in the documentation.</p>
 
 
 
@@ -222,7 +215,9 @@ Inherit this and implement <code>#next_u</code>, <code>#next_f</code> and <code>
   </h2>
   <ul class="other-types-list">
     
-      <li class="other-type"><a href="../Alea/XSR.html">Alea::XSR</a></li>
+      <li class="other-type"><a href="../Alea/XSR128.html">Alea::XSR128</a></li>
+    
+      <li class="other-type"><a href="../Alea/XSR256.html">Alea::XSR256</a></li>
     
   </ul>
 
@@ -245,7 +240,59 @@ Inherit this and implement <code>#next_u</code>, <code>#next_f</code> and <code>
 
 
 
+  <h2>
+    <a id="constructors" class="anchor" href="#constructors">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Constructors
+  </h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#new(seed32,seed64)-class-method" class="signature"><strong>.new</strong>(seed32, seed64)</a>
+        
+          <div class="summary"><p>Must initialize states from seeds.</p></div>
+        
+      </li>
+    
+  </ul>
 
+
+
+  <h2>
+    <a id="class-method-summary" class="anchor" href="#class-method-summary">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Class Method Summary
+  </h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#secure-class-method" class="signature"><strong>.secure</strong></a>
+        
+          <div class="summary"><p>Returns an instamce of this PRNG with initial seeds readed from system resources.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#type_32-class-method" class="signature"><strong>.type_32</strong></a>
+        
+          <div class="summary"><p>Returns the type of values stored in 32-bit state.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#type_64-class-method" class="signature"><strong>.type_64</strong></a>
+        
+          <div class="summary"><p>Returns the type of values stored in 64-bit state.</p></div>
+        
+      </li>
+    
+  </ul>
 
 
 
@@ -332,7 +379,107 @@ Inherit this and implement <code>#next_u</code>, <code>#next_f</code> and <code>
 </div>
 
 
+  <h2>
+    <a id="constructor-detail" class="anchor" href="#constructor-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Constructor Detail
+  </h2>
+  
+    <div class="entry-detail" id="new(seed32,seed64)-class-method">
+      <div class="signature">
+        
+        def self.<strong>new</strong>(seed32, seed64)
 
+        <a class="method-permalink" href="#new(seed32,seed64)-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Must initialize states from seeds.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+
+
+
+  <h2>
+    <a id="class-method-detail" class="anchor" href="#class-method-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Class Method Detail
+  </h2>
+  
+    <div class="entry-detail" id="secure-class-method">
+      <div class="signature">
+        
+        def self.<strong>secure</strong>
+
+        <a class="method-permalink" href="#secure-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns an instamce of this PRNG with initial seeds readed from system resources.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="type_32-class-method">
+      <div class="signature">
+        
+        def self.<strong>type_32</strong>
+
+        <a class="method-permalink" href="#type_32-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the type of values stored in 32-bit state. This is needed by <code><a href="../Alea/Random.html">Alea::Random</a></code>
+to detect the type of states and provide properly typed seeds to underlying PRNGs.
+This should be overridden by PRNGs which need a type in state different from <code>UInt32</code>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="type_64-class-method">
+      <div class="signature">
+        
+        def self.<strong>type_64</strong>
+
+        <a class="method-permalink" href="#type_64-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the type of values stored in 64-bit state. This is needed by <code><a href="../Alea/Random.html">Alea::Random</a></code>
+to detect the type of states and provide properly typed seeds to underlying PRNGs.
+This should be overridden by PRNGs which need a type in state different from <code>UInt64</code>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
 
 
 

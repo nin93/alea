@@ -151,11 +151,6 @@
       
     </li>
   
-  <li class=" " data-id="alea/Alea/XSR" data-name="alea::xsr">
-      <a href="../Alea/XSR.html">XSR</a>
-      
-    </li>
-  
   <li class=" " data-id="alea/Alea/XSR128" data-name="alea::xsr128">
       <a href="../Alea/XSR128.html">XSR128</a>
       
@@ -185,7 +180,7 @@
 </h1>
 
 
-  <ul class="superclass-hierarchy"><li class="superclass"><a href="../Alea/XSR256.html">Alea::XSR256</a></li><li class="superclass"><a href="../Alea/XSR.html">Alea::XSR</a></li><li class="superclass"><a href="../Alea/PRNG.html">Alea::PRNG</a></li><li class="superclass">Reference</li><li class="superclass">Object</li></ul>
+  <ul class="superclass-hierarchy"><li class="superclass"><a href="../Alea/XSR256.html">Alea::XSR256</a></li><li class="superclass"><a href="../Alea/PRNG.html">Alea::PRNG</a></li><li class="superclass">Reference</li><li class="superclass">Object</li></ul>
 
 
 
@@ -272,16 +267,9 @@ As a result of this, double steps are needed and therefore performance is affect
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#new(seed32:Int,seed64:Int)-class-method" class="signature"><strong>.new</strong>(seed32 : Int, seed64 : Int)</a>
+        <a href="#new(seed32:UInt64,seed64:UInt64)-class-method" class="signature"><strong>.new</strong>(seed32 : UInt64, seed64 : UInt64)</a>
         
           <div class="summary"><p>Initializes the PRNG with initial seeds.</p></div>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#new(state32:StaticArray(UInt64,STATE_STORAGE_64),state64:StaticArray(UInt64,STATE_STORAGE_64))-class-method" class="signature"><strong>.new</strong>(state32 : StaticArray(UInt64, STATE_STORAGE_64), state64 : StaticArray(UInt64, STATE_STORAGE_64))</a>
-        
-          <div class="summary"><p>Initializes the PRNG with initial states.</p></div>
         
       </li>
     
@@ -302,6 +290,25 @@ As a result of this, double steps are needed and therefore performance is affect
   </ul>
 
 
+
+  <h2>
+    <a id="class-method-summary" class="anchor" href="#class-method-summary">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Class Method Summary
+  </h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#type_32-class-method" class="signature"><strong>.type_32</strong></a>
+        
+          <div class="summary"></div>
+        
+      </li>
+    
+  </ul>
 
 
 
@@ -353,16 +360,6 @@ As a result of this, double steps are needed and therefore performance is affect
   
     
 
-
-    
-
-
-    
-
-
-  
-    
-
   <h3>Instance methods inherited from class <code><a href="../Alea/PRNG.html">Alea::PRNG</a></code></h3>
   
   
@@ -400,8 +397,36 @@ As a result of this, double steps are needed and therefore performance is affect
 
     
 
+  <h3>Constructor methods inherited from class <code><a href="../Alea/PRNG.html">Alea::PRNG</a></code></h3>
+  
+  
+    <a href="../Alea/PRNG.html#new(seed32,seed64)-class-method" class="tooltip">
+      <span>new(seed32, seed64)</span>
+    new</a>
+    
+  
+
 
     
+
+  <h3>Class methods inherited from class <code><a href="../Alea/PRNG.html">Alea::PRNG</a></code></h3>
+  
+  
+    <a href="../Alea/PRNG.html#secure-class-method" class="tooltip">
+      <span>secure</span>
+    secure</a>, 
+    
+  
+    <a href="../Alea/PRNG.html#type_32-class-method" class="tooltip">
+      <span>type_32</span>
+    type_32</a>, 
+    
+  
+    <a href="../Alea/PRNG.html#type_64-class-method" class="tooltip">
+      <span>type_64</span>
+    type_64</a>
+    
+  
 
 
   
@@ -437,12 +462,12 @@ As a result of this, double steps are needed and therefore performance is affect
     Constructor Detail
   </h2>
   
-    <div class="entry-detail" id="new(seed32:Int,seed64:Int)-class-method">
+    <div class="entry-detail" id="new(seed32:UInt64,seed64:UInt64)-class-method">
       <div class="signature">
         
-        def self.<strong>new</strong>(seed32 : Int, seed64 : Int)
+        def self.<strong>new</strong>(seed32 : UInt64, seed64 : UInt64)
 
-        <a class="method-permalink" href="#new(seed32:Int,seed64:Int)-class-method">#</a>
+        <a class="method-permalink" href="#new(seed32:UInt64,seed64:UInt64)-class-method">#</a>
       </div>
       
         <div class="doc">
@@ -463,29 +488,6 @@ As a result of this, double steps are needed and therefore performance is affect
 <p><strong>@exceptions</strong>:</p>
 
 <ul><li><code><a href="../Alea/UndefinedError.html">Alea::UndefinedError</a></code> if any of <code>seed32</code> or <code>seed64</code> is negative.</li></ul>
-        </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="new(state32:StaticArray(UInt64,STATE_STORAGE_64),state64:StaticArray(UInt64,STATE_STORAGE_64))-class-method">
-      <div class="signature">
-        
-        def self.<strong>new</strong>(state32 : StaticArray(UInt64, <a href="../Alea/XSR256.html#STATE_STORAGE_64">STATE_STORAGE_64</a>), state64 : StaticArray(UInt64, <a href="../Alea/XSR256.html#STATE_STORAGE_64">STATE_STORAGE_64</a>))
-
-        <a class="method-permalink" href="#new(state32:StaticArray(UInt64,STATE_STORAGE_64),state64:StaticArray(UInt64,STATE_STORAGE_64))-class-method">#</a>
-      </div>
-      
-        <div class="doc">
-          
-          <p>Initializes the PRNG with initial states.</p>
-
-<p><strong>@parameters</strong>:</p>
-
-<ul><li><code>state32</code>: array of values for state of 32-bit generators.</li><li><code>state64</code>: array of values for state of 64-bit generators.</li></ul>
         </div>
       
       <br/>
@@ -546,6 +548,35 @@ As a result of this, double steps are needed and therefore performance is affect
   
 
 
+
+  <h2>
+    <a id="class-method-detail" class="anchor" href="#class-method-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Class Method Detail
+  </h2>
+  
+    <div class="entry-detail" id="type_32-class-method">
+      <div class="signature">
+        
+        def self.<strong>type_32</strong>
+
+        <a class="method-permalink" href="#type_32-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
 
 
 
