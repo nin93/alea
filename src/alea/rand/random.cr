@@ -27,7 +27,7 @@ module Alea
   #
   # `Alea::Random` can accept a custom PRNG as well: check `Alea::PRNG` and the
   # [example](https://github.com/nin93/alea/blob/master/custom_prng.cr)
-	# provided to build your own.
+  # provided to build your own.
   #
   # The following implementations are taken from **numpy**.
   struct Random
