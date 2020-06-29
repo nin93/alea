@@ -9,18 +9,59 @@
 Alea is a collection of utilities to work with most known probability distributions,
 written in pure Crystal.
 
-Features:
-* [PRNGs implementations](#prngs)
-* [Random sampling (single/double precision)](#sampling)
-* [Cumulative Distribution Functions (single/double precision)](#cumulative-distribution-functions)
-
 > **Note**: This project is in development state and many distributions are
   still missing, as well as cumulative distribution functions, so keep in mind that
   breaking changes may occur frequently.
 
 ## Why Crystal?
+
 Crystal compiles to really fast native code without sacrificing any of the modern
 programming languages standards providing a nice and clean interface.
+
+## Index
+
+* [Features](#features)
+	+ [Currently Available](#currently-available)
+	+ [Supported Distributions](#supported-distributions)
+	+ [Projects](#projects)
+* [Installation](#installation)
+* [Usage](#usage)
+	+ [Sampling](#sampling)
+	+ [Unsafe Methods](#unsafe-methods)
+	+ [Pseudo Random Number Generators](#prngs)
+	+ [Custom PRNG](#custom-prng)
+	+ [Cumulative Distribution Functions](#cumulative-distribution-functions)
+	+ [Documentation](#documentation)
+* [References](#references)
+* [Contributing](#contributing)
+* [Contributors](#contributors)
+
+## Features
+
+### Currently Available
+
+* PRNGs implementations
+* Random sampling (single/double precision)
+* Cumulative Distribution Functions (single/double precision)
+
+### Supported Distributions
+
+| Distribution  | Sampling (32 / 64)| CDF (32 / 64) |
+|:--------------|:-----------------:|:-------------:|
+| Beta          |        Y  Y       |      N  N     |
+| Chi-Square    |        Y  Y       |      Y  Y     |
+| Exponential   |        Y  Y       |      Y  Y     |
+| Gamma         |        Y  Y       |      Y  Y     |
+| Laplace       |        Y  Y       |      Y  Y     |
+| Log-Normal    |        Y  Y       |      Y  Y     |
+| Normal        |        Y  Y       |      Y  Y     |
+| Poisson       |        N  Y       |      N  Y     |
+| Uniform       |        Y  Y       |      Y  Y     |
+
+### Projects
+
+* Distribution and empirical data statistical properties
+* Quantile Functions
 
 ## Installation
 
@@ -34,55 +75,67 @@ programming languages standards providing a nice and clean interface.
 
 2. Run `shards install`
 
-## Usage
+3. Import the library:
 
 ```crystal
 require "alea"
 ```
 
-## PRNGs
+## Usage
 
-The algorithms in use for generating unsigned integers are from the
-[xoshiro](http://prng.di.unimi.it/) (XOR/shift/rotate) collection, designed by
-Sebastiano Vigna and David Blackman: really fast generators promising exquisite
-statistical properties as well.
+### Sampling
+
+`Random` is the interface provided to perform sampling:
+```crystal
+random = Alea::Random.new
+random.normal # => -0.36790519967553736 : Float64
+
+# Append '32' to call the single-precision version
+random.normal32 # => 0.19756398 : Float32
+```
+
+It also accepts an initial seed to reproduce the same seemingly random events across runs:
+```crystal
+seed = 9377
+random = Alea::Random.new(seed)
+random.exp # => 0.10203669577353723 : Float64
+```
+
+#### Unsafe Methods
+
+Plain sampling methods (such as `#normal`, `#gamma32`) performs checks 
+over arguments passed to prevent bad data generation or inner exceptions.
+In order to avoid checks (might be slow in a large data generation) you must use their
+unsafe version by prepending `next_` to them:
+```crystal
+random = Alea::Random.new
+random.normal(loc: 0, sigma: 0)      # raises Alea::UndefinedError: sigma is 0 or negative.
+random.next_normal(loc: 0, sigma: 0) # these might raise internal exceptions.
+```
+
+Timings are definitely comparable, though: see the 
+[benchmarks](https://github.com/nin93/alea/tree/master/benchmarks)
+for direct comparisons between these methods.
+
+### PRNGs
+
+`Random` is actually a wrapper over a well defined pseudo-random number generator.
+The basic generation of integers and floats comes from the underlying engine, more specifically
+from: `#next_u32`, returning a random `UInt32`, and `#next_u64`, returning a random `UInt64`.
+Floats are obtained by `ldexp` (load exponent) operations upon generated
+unsigned integers; signed integers are obtained by raw cast.
 
 Currently implemented engines:
 + `XSR128` backed by *xoroshiro128++* (32/64 bit)
 + `XSR256` backed by *xoshiro256++* (32/64 bit)
 
 The digits in the class name stand for the storage of their state in bits.
-Their period is thus `2^128 -1` for `XSR128` and `2^256 -1` for `XSR256`.
+Their period is `2^128 -1` for `XSR128` and `2^256 -1` for `XSR256`.
 
-Floats are obtained by `ldexp` (load exponent) operations upon generated unsigned integers.
+These engines are from the [xoshiro](http://prng.di.unimi.it/) (XOR/shift/rotate) collection,
+designed by Sebastiano Vigna and David Blackman: really fast generators promising
+exquisite statistical properties as well.
 
-More informations are detailed in: http://prng.di.unimi.it/.
-
-### Custom PRNG
-
-All PRNGs in this library inherit from `PRNG`. You are allowed to build your own custom
-PRNG by inheriting the above parent class and defining the methods needed by `Alea::Random`
-to generate properly, as described in this [example](https://github.com/nin93/alea/blob/master/custom_prng.cr).
-
-It is worth noting that in these implementations `#next_u32` and `#next_u64`
-depend on different states and thus they are independent from each other,
-as well as `#next_f32` and `#next_f64` or `#next_i32` and `#next_i64`.
-It is still fine, though, if both `#next_u32` and `#next_u64` rely on the same
-state, if you want. I choose not to, as it makes state advancements unpredictable.
-
-## Sampling
-
-`Random` is the interface provided to perform sampling:
-```crystal
-random = Alea::Random.new
-random.normal # => -0.36790519967553736 : Float64
-```
-It also accepts an initial seed to reproduce the same seemingly random events across runs:
-```crystal
-seed = 9377u64
-random = Alea::Random.new(seed)
-random.exp # => 0.10203669577353723 : Float64
-```
 By default, the PRNG in use by `Random` is `XSR128`. You can, though, pass the desired
 engine as an argument to the constructor. Here is an example using `XSR256`:
 ```crystal
@@ -90,51 +143,25 @@ random = Alea::Random.new(Alea::XSR256)
 random.float # => 0.6533582874035311 : Float64
 random.prng  # => Alea::XSR256
 
-# or seeded as well
+# Or seeded as well
 random = Alea::Random.new(193, Alea::XSR256)
 random.float # => 0.4507930323670787 : Float64
 ```
-Custom PRNGs can be used as well, assuming `#next_u32` and `#next_u64` generate uniformly
-distributed unsigned integers:
 
-```crystal
-# Using class from the example above
-random = Alea::Random.new(MyGenerator)
-random.uint 3...93            # => 73 : UInt64
-random.float32 -12.2...35.453 # => 34.033405 : Float32
-```
+#### Custom PRNG
 
-### Unsafe methods
+All PRNGs in this library inherit from `PRNG`. You are allowed to build your own custom
+PRNG by inheriting the above parent class and defining the methods needed by `Alea::Random`
+to ensure proper repeatability and sampling, as described in this 
+[example](https://github.com/nin93/alea/blob/master/custom_prng.cr).
 
-Plain sampling methods (such as `#normal`, `#gamma`) performs checks over arguments
-passed to prevent bad data generation or inner exceptions.
-In order to avoid them (checks might be slow) you must use their unsafe version by
-prepending `next_` to them:
+It is worth noting that in these implementations `#next_u32` and `#next_u64`
+depend on different states and thus they are independent from each other,
+as well as `#next_f32` and `#next_f64` or `#next_i32` and `#next_i64`.
+It is still fine, though, if both `#next_u32` and `#next_u64` rely on the same
+state, if you want. I choose not to, as it makes state advancements unpredictable.
 
-```crystal
-random = Alea::Random.new
-random.normal(loc: 0, sigma: 0)      # raises Alea::UndefinedError: sigma is 0 or negative.
-random.next_normal(loc: 0, sigma: 0) # these might raise internal exceptions.
-```
-
-Timings are definitely comparable, though. See the
-[benchmarks](https://github.com/nin93/alea/tree/master/benchmarks)
-for direct comparisons between those methods.
-
-### Supported Distributions
-
-Current sampling methods are implemented for the following distributions:
-  - Beta
-  - Chi-Square
-  - Exponential
-  - Gamma
-  - Laplace
-  - Log-Normal
-  - Normal
-  - Poisson
-  - Uniform
-
-## Cumulative Distribution Functions
+### Cumulative Distribution Functions
 
 `CDF` is the interface used to calculate the Cumulative Distribution Functions.
 Given *X* ~ *D* and a fixed quantile *x*, CDFs are defined as the functions that
@@ -143,7 +170,6 @@ distribution *D* will take a value less or equal to *x*.
 
 Arguments passed to `CDF` methods to shape the distributions are analogous to
 those used for sampling:
-
 ```crystal
 Alea::CDF.normal(0.0)                       # => 0.5 : Float64
 Alea::CDF.normal(2.0, loc: 1.0, sigma: 0.5) # => 0.9772498680518208 : Float64
@@ -151,19 +177,12 @@ Alea::CDF.chisq(5.279, df: 5.0)             # => 0.6172121213841358 : Float64
 Alea::CDF.chisq32(5.279, df: 5.0)           # => 0.61721206 : Float32
 ```
 
-### Supported Distributions
+### Documentation
 
-Current CDFs estimations are implemented for the following distributions:
-  - Chi-Square
-  - Exponential
-  - Gamma
-  - Laplace
-  - Log-Normal
-  - Normal
-  - Poisson
-  - Uniform
+Documentation is hosted on [GitHub Pages](https://nin93.github.io/alea/).
 
 ## References
+
 Fully listed in [LICENSE.md](https://github.com/nin93/alea/tree/master/LICENSE.md):
 * [Crystal](https://github.com/crystal-lang/crystal) `Random` module for uniform sampling
 * [NumPy](https://github.com/numpy/numpy) `random` module for pseudo-random sampling methods
@@ -181,3 +200,4 @@ Fully listed in [LICENSE.md](https://github.com/nin93/alea/tree/master/LICENSE.m
 ## Contributors
 
 - [Elia Franzella](https://github.com/nin93) - creator and maintainer
+
