@@ -34,7 +34,7 @@ describe Alea do
 
       describe "#next_t" do
         # mean  is:   0
-        # stdev is:   sqrt( 2k )
+        # stdev is:   sqrt ( df / (df - 2) )
 
         dist_test("generates t-student-distributed random values with fixed df 3.0 parameter",
           caller: SpecRng,
