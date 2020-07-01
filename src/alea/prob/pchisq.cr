@@ -28,11 +28,11 @@ module Alea::CDF
 
     Alea.param_check(df, :<=, 0.0, :df, :chisq)
 
-    __cdf_chisq64 x.to_f64, df.to_i32
+    __cdf_chisq64 x.to_f64, df.to_f64
   end
 
   # Unwrapped version of `#chisq`.
-  private def self.__cdf_chisq64(x : Float64, df : Int32) : Float64
+  private def self.__cdf_chisq64(x : Float64, df : Float64) : Float64
     x <= 0.0 && return 0.0
     Alea::Core::SpecFun::Gamma.incomplete_reg(df * 0.5, x * 0.5, :lower)
   end
@@ -64,11 +64,11 @@ module Alea::CDF
 
     Alea.param_check(df, :<=, 0.0, :df, :chisq32)
 
-    __cdf_chisq32 x.to_f32, df.to_i32
+    __cdf_chisq32 x.to_f32, df.to_f32
   end
 
   # Unwrapped version of `#chisq32`.
-  private def self.__cdf_chisq32(x : Float32, df : Int32) : Float32
+  private def self.__cdf_chisq32(x : Float32, df : Float32) : Float32
     x <= 0.0f32 && return 0.0f32
     Alea::Core::SpecFun::Gamma.incomplete_reg(df * 0.5f32, x * 0.5f32, :lower)
   end

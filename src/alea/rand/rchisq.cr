@@ -24,7 +24,7 @@ module Alea
 
       Alea.param_check(df, :<=, 0.0, :df, :chisq)
 
-      __next_chisq64 df.to_i32
+      __next_chisq64 df.to_f64
     end
 
     # Generate a *chi-square-distributed*, pseudo-random `Float64`.
@@ -33,13 +33,13 @@ module Alea
     # **@parameters**:
     # * `df`: degrees of freedom of the distribution;
     #   usually mentioned as **`k`**.
-    def next_chisq(df : Int32) : Float64
+    def next_chisq(df : Float64) : Float64
       __next_chisq64 df
     end
 
     # Generate a *chi-square-distributed*, pseudo-random `Float64`.
     # Unwrapped version of `chisq`.
-    private def __next_chisq64(df : Int32) : Float64
+    private def __next_chisq64(df : Float64) : Float64
       next_gamma(df / 2.0) * 2.0
     end
 
@@ -65,7 +65,7 @@ module Alea
 
       Alea.param_check(df, :<=, 0.0, :df, :chisq32)
 
-      __next_chisq32 df.to_i32
+      __next_chisq32 df.to_f32
     end
 
     # Generate a *chi-square-distributed*, pseudo-random `Float32`.
@@ -74,13 +74,13 @@ module Alea
     # **@parameters**:
     # * `df`: degrees of freedom of the distribution;
     #   usually mentioned as **`k`**.
-    def next_chisq32(df : Int32) : Float32
+    def next_chisq32(df : Float32) : Float32
       __next_chisq32 df
     end
 
     # Generate a *chi-square-distributed*, pseudo-random `Float32`.
     # Unwrapped version of `chisq32`.
-    private def __next_chisq32(df : Int32) : Float32
+    private def __next_chisq32(df : Float32) : Float32
       next_gamma32(df / 2.0f32) * 2.0f32
     end
   end
