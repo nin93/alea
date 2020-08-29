@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Crystal Docs 0.34.0">
+<meta name="generator" content="Crystal Docs 0.35.1">
 <meta name="crystal_docs.project_version" content="master-dev">
 <meta name="crystal_docs.project_name" content="alea">
 
@@ -188,10 +188,6 @@
 <p>Alea is a collection of utilities to work with most known probability distributions,
 written in pure Crystal.</p>
 
-<p>Features:</p>
-
-<ul><li><a href="#prngs" target="_blank">PRNGs implementations</a></li><li><a href="#sampling" target="_blank">Random sampling (single/double precision)</a></li><li><a href="#cumulative-distribution-functions" target="_blank">Cumulative Distribution Functions (single/double precision)</a></li></ul>
-
 <blockquote><strong>Note</strong>: This project is in development state and many distributions are
   still missing, as well as cumulative distribution functions, so keep in mind that
   breaking changes may occur frequently.</blockquote>
@@ -205,6 +201,64 @@ written in pure Crystal.</p>
 <p>Crystal compiles to really fast native code without sacrificing any of the modern
 programming languages standards providing a nice and clean interface.</p>
 
+<h2><a id="index" class="anchor" href="#index">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Index</h2>
+
+<ul><li><a href="#features" target="_blank">Features</a></li></ul>
+
+<ul><li><a href="#currently-available" target="_blank">Currently Available</a></li><li><a href="#supported-distributions" target="_blank">Supported Distributions</a></li><li><a href="#projects" target="_blank">Projects</a></li></ul>
+
+<ul><li><a href="#installation" target="_blank">Installation</a></li><li><a href="#usage" target="_blank">Usage</a></li></ul>
+
+<ul><li><a href="#sampling" target="_blank">Sampling</a></li><li><a href="#unsafe-methods" target="_blank">Unsafe Methods</a></li><li><a href="#prngs" target="_blank">Pseudo Random Number Generators</a></li><li><a href="#custom-prng" target="_blank">Custom PRNG</a></li><li><a href="#cumulative-distribution-functions" target="_blank">Cumulative Distribution Functions</a></li><li><a href="#documentation" target="_blank">Documentation</a></li></ul>
+
+<ul><li><a href="#references" target="_blank">References</a></li><li><a href="#contributing" target="_blank">Contributing</a></li><li><a href="#contributors" target="_blank">Contributors</a></li></ul>
+
+<h2><a id="features" class="anchor" href="#features">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Features</h2>
+
+<h3><a id="currently-available" class="anchor" href="#currently-available">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Currently Available</h3>
+
+<ul><li>PRNGs implementations</li><li>Random sampling (single/double precision)</li><li>Cumulative Distribution Functions (single/double precision)</li></ul>
+
+<h3><a id="supported-distributions" class="anchor" href="#supported-distributions">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Supported Distributions</h3>
+
+<p>| Distribution  | Sampling (32 / 64)| CDF (32 / 64) |
+|:--------------|:-----------------:|:-------------:|
+| Beta          |        Y  Y       |      N  N     |
+| Chi-Square    |        Y  Y       |      Y  Y     |
+| Exponential   |        Y  Y       |      Y  Y     |
+| F-Snedecor    |        Y  Y       |      N  N     |
+| Gamma         |        Y  Y       |      Y  Y     |
+| Laplace       |        Y  Y       |      Y  Y     |
+| Log-Normal    |        Y  Y       |      Y  Y     |
+| Normal        |        Y  Y       |      Y  Y     |
+| Poisson       |        N  Y       |      N  Y     |
+| T-Student     |        Y  Y       |      N  N     |
+| Uniform       |        Y  Y       |      Y  Y     |</p>
+
+<h3><a id="projects" class="anchor" href="#projects">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Projects</h3>
+
+<ul><li>Distribution and empirical data statistical properties</li><li>Quantile Functions</li></ul>
+
 <h2><a id="installation" class="anchor" href="#installation">
   <svg class="octicon-link" aria-hidden="true">
     <use href="#octicon-link"/>
@@ -213,11 +267,15 @@ programming languages standards providing a nice and clean interface.</p>
 
 <ol><li>Add the dependency to your <code>shard.yml</code>:</li></ol>
 
-<pre><code class="language-yaml">  dependencies:
-    alea:
-      github: nin93/alea</code></pre>
+<pre><code class="language-yaml">dependencies:
+  alea:
+    github: nin93/alea</code></pre>
 
 <ol><li>Run <code>shards install</code></li></ol>
+
+<ol><li>Import the library:</li></ol>
+
+<pre><code class="language-crystal"><span class="k">require</span> <span class="s">&quot;alea&quot;</span></code></pre>
 
 <h2><a id="usage" class="anchor" href="#usage">
   <svg class="octicon-link" aria-hidden="true">
@@ -225,62 +283,67 @@ programming languages standards providing a nice and clean interface.</p>
   </svg>
 </a>Usage</h2>
 
-<pre><code class="language-crystal"><span class="k">require</span> <span class="s">&quot;alea&quot;</span></code></pre>
-
-<h2><a id="prn-gs" class="anchor" href="#prn-gs">
+<h3><a id="sampling" class="anchor" href="#sampling">
   <svg class="octicon-link" aria-hidden="true">
     <use href="#octicon-link"/>
   </svg>
-</a>PRNGs</h2>
+</a>Sampling</h3>
 
-<p>The algorithms in use for generating unsigned integers are from the
-<a href="http://prng.di.unimi.it/" target="_blank">xoshiro</a> (XOR/shift/rotate) collection, designed by
-Sebastiano Vigna and David Blackman: really fast generators promising exquisite
-statistical properties as well.</p>
+<p><code>Random</code> is the interface provided to perform sampling:</p>
+
+<pre><code class="language-crystal">random <span class="o">=</span> <span class="t">Alea</span><span class="t">::</span><span class="t">Random</span>.<span class="k">new</span>
+random.normal <span class="c"># =&gt; -0.36790519967553736 : Float64</span>
+
+<span class="c"># Append &#39;32&#39; to call the single-precision version</span>
+random.normal32 <span class="c"># =&gt; 0.19756398 : Float32</span></code></pre>
+
+<p>It also accepts an initial seed to reproduce the same seemingly random events across runs:</p>
+
+<pre><code class="language-crystal">seed <span class="o">=</span> <span class="n">9377</span>
+random <span class="o">=</span> <span class="t">Alea</span><span class="t">::</span><span class="t">Random</span>.<span class="k">new</span>(seed)
+random.exp <span class="c"># =&gt; 0.10203669577353723 : Float64</span></code></pre>
+
+<h4><a id="unsafe-methods" class="anchor" href="#unsafe-methods">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Unsafe Methods</h4>
+
+<p>Plain sampling methods (such as <code>#normal</code>, <code>#gamma32</code>) performs checks 
+over arguments passed to prevent bad data generation or inner exceptions.
+In order to avoid checks (might be slow in a large data generation) you must use their
+unsafe version by prepending <code>next_</code> to them:</p>
+
+<pre><code class="language-crystal">random <span class="o">=</span> <span class="t">Alea</span><span class="t">::</span><span class="t">Random</span>.<span class="k">new</span>
+random.normal(loc: <span class="n">0</span>, sigma: <span class="n">0</span>)      <span class="c"># raises Alea::UndefinedError: sigma is 0 or negative.</span>
+random.next_normal(loc: <span class="n">0</span>, sigma: <span class="n">0</span>) <span class="c"># these might raise internal exceptions.</span></code></pre>
+
+<p>Timings are definitely comparable, though: see the 
+<a href="https://github.com/nin93/alea/tree/master/benchmarks" target="_blank">benchmarks</a>
+for direct comparisons between these methods.</p>
+
+<h3><a id="prn-gs" class="anchor" href="#prn-gs">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>PRNGs</h3>
+
+<p><code>Random</code> is actually a wrapper over a well defined pseudo-random number generator.
+The basic generation of integers and floats comes from the underlying engine, more specifically
+from: <code>#next_u32</code>, returning a random <code>UInt32</code>, and <code>#next_u64</code>, returning a random <code>UInt64</code>.
+Floats are obtained by <code>ldexp</code> (load exponent) operations upon generated
+unsigned integers; signed integers are obtained by raw cast.</p>
 
 <p>Currently implemented engines:</p>
 
 <ul><li><code>XSR128</code> backed by <em>xoroshiro128++</em> (32/64 bit)</li><li><code>XSR256</code> backed by <em>xoshiro256++</em> (32/64 bit)</li></ul>
 
 <p>The digits in the class name stand for the storage of their state in bits.
-Their period is thus <code>2^128 -1</code> for <code>XSR128</code> and <code>2^256 -1</code> for <code>XSR256</code>.</p>
+Their period is <code>2^128 -1</code> for <code>XSR128</code> and <code>2^256 -1</code> for <code>XSR256</code>.</p>
 
-<p>Floats are obtained by <code>ldexp</code> (load exponent) operations upon generated unsigned integers.</p>
-
-<p>More informations are detailed in: http://prng.di.unimi.it/.</p>
-
-<h3><a id="custom-prng" class="anchor" href="#custom-prng">
-  <svg class="octicon-link" aria-hidden="true">
-    <use href="#octicon-link"/>
-  </svg>
-</a>Custom PRNG</h3>
-
-<p>All PRNGs in this library inherit from <code>PRNG</code>. You are allowed to build your own custom
-PRNG by inheriting the above parent class and defining the methods needed by <code><a href="Alea/Random.html">Alea::Random</a></code>
-to generate properly, as described in this <a href="https://github.com/nin93/alea/blob/master/custom_prng.cr" target="_blank">example</a>.</p>
-
-<p>It is worth noting that in these implementations <code>#next_u32</code> and <code>#next_u64</code>
-depend on different states and thus they are independent from each other,
-as well as <code>#next_f32</code> and <code>#next_f64</code> or <code>#next_i32</code> and <code>#next_i64</code>.
-It is still fine, though, if both <code>#next_u32</code> and <code>#next_u64</code> rely on the same
-state, if you want. I choose not to, as it makes state advancements unpredictable.</p>
-
-<h2><a id="sampling" class="anchor" href="#sampling">
-  <svg class="octicon-link" aria-hidden="true">
-    <use href="#octicon-link"/>
-  </svg>
-</a>Sampling</h2>
-
-<p><code>Random</code> is the interface provided to perform sampling:</p>
-
-<pre><code class="language-crystal">random <span class="o">=</span> <span class="t">Alea</span><span class="t">::</span><span class="t">Random</span>.<span class="k">new</span>
-random.normal <span class="c"># =&gt; -0.36790519967553736 : Float64</span></code></pre>
-
-<p>It also accepts an initial seed to reproduce the same seemingly random events across runs:</p>
-
-<pre><code class="language-crystal">seed <span class="o">=</span> <span class="n">9377u64</span>
-random <span class="o">=</span> <span class="t">Alea</span><span class="t">::</span><span class="t">Random</span>.<span class="k">new</span>(seed)
-random.exp <span class="c"># =&gt; 0.10203669577353723 : Float64</span></code></pre>
+<p>These engines are from the <a href="http://prng.di.unimi.it/" target="_blank">xoshiro</a> (XOR/shift/rotate) collection,
+designed by Sebastiano Vigna and David Blackman: really fast generators promising
+exquisite statistical properties as well.</p>
 
 <p>By default, the PRNG in use by <code>Random</code> is <code>XSR128</code>. You can, though, pass the desired
 engine as an argument to the constructor. Here is an example using <code>XSR256</code>:</p>
@@ -289,52 +352,32 @@ engine as an argument to the constructor. Here is an example using <code>XSR256<
 random.float <span class="c"># =&gt; 0.6533582874035311 : Float64</span>
 random.prng  <span class="c"># =&gt; Alea::XSR256</span>
 
-<span class="c"># or seeded as well</span>
+<span class="c"># Or seeded as well</span>
 random <span class="o">=</span> <span class="t">Alea</span><span class="t">::</span><span class="t">Random</span>.<span class="k">new</span>(<span class="n">193</span>, <span class="t">Alea</span><span class="t">::</span><span class="t">XSR256</span>)
 random.float <span class="c"># =&gt; 0.4507930323670787 : Float64</span></code></pre>
 
-<p>Custom PRNGs can be used as well, assuming <code>#next_u32</code> and <code>#next_u64</code> generate uniformly
-distributed unsigned integers:</p>
-
-<pre><code class="language-crystal"><span class="c"># Using class from the example above</span>
-random <span class="o">=</span> <span class="t">Alea</span><span class="t">::</span><span class="t">Random</span>.<span class="k">new</span>(<span class="t">MyGenerator</span>)
-random.uint <span class="n">3</span>...<span class="n">93</span>            <span class="c"># =&gt; 73 : UInt64</span>
-random.float32 <span class="n">-12.2</span>...<span class="n">35.453</span> <span class="c"># =&gt; 34.033405 : Float32</span></code></pre>
-
-<h3><a id="unsafe-methods" class="anchor" href="#unsafe-methods">
+<h4><a id="custom-prng" class="anchor" href="#custom-prng">
   <svg class="octicon-link" aria-hidden="true">
     <use href="#octicon-link"/>
   </svg>
-</a>Unsafe methods</h3>
+</a>Custom PRNG</h4>
 
-<p>Plain sampling methods (such as <code>#normal</code>, <code>#gamma</code>) performs checks over arguments
-passed to prevent bad data generation or inner exceptions.
-In order to avoid them (checks might be slow) you must use their unsafe version by
-prepending <code>next_</code> to them:</p>
+<p>All PRNGs in this library inherit from <code>PRNG</code>. You are allowed to build your own custom
+PRNG by inheriting the above parent class and defining the methods needed by <code><a href="Alea/Random.html">Alea::Random</a></code>
+to ensure proper repeatability and sampling, as described in this 
+<a href="https://github.com/nin93/alea/blob/master/custom_prng.cr" target="_blank">example</a>.</p>
 
-<pre><code class="language-crystal">random <span class="o">=</span> <span class="t">Alea</span><span class="t">::</span><span class="t">Random</span>.<span class="k">new</span>
-random.normal(loc: <span class="n">0</span>, sigma: <span class="n">0</span>)      <span class="c"># raises Alea::UndefinedError: sigma is 0 or negative.</span>
-random.next_normal(loc: <span class="n">0</span>, sigma: <span class="n">0</span>) <span class="c"># these might raise internal exceptions.</span></code></pre>
+<p>It is worth noting that in these implementations <code>#next_u32</code> and <code>#next_u64</code>
+depend on different states and thus they are independent from each other,
+as well as <code>#next_f32</code> and <code>#next_f64</code> or <code>#next_i32</code> and <code>#next_i64</code>.
+It is still fine, though, if both <code>#next_u32</code> and <code>#next_u64</code> rely on the same
+state, if you want. I choose not to, as it makes state advancements unpredictable.</p>
 
-<p>Timings are definitely comparable, though. See the
-<a href="https://github.com/nin93/alea/tree/master/benchmarks" target="_blank">benchmarks</a>
-for direct comparisons between those methods.</p>
-
-<h3><a id="supported-distributions" class="anchor" href="#supported-distributions">
+<h3><a id="cumulative-distribution-functions" class="anchor" href="#cumulative-distribution-functions">
   <svg class="octicon-link" aria-hidden="true">
     <use href="#octicon-link"/>
   </svg>
-</a>Supported Distributions</h3>
-
-<p>Current sampling methods are implemented for the following distributions:</p>
-
-<ul><li>Beta</li><li>Chi-Square</li><li>Exponential</li><li>Gamma</li><li>Laplace</li><li>Log-Normal</li><li>Normal</li><li>Poisson</li><li>Uniform</li></ul></ul>
-
-<h2><a id="cumulative-distribution-functions" class="anchor" href="#cumulative-distribution-functions">
-  <svg class="octicon-link" aria-hidden="true">
-    <use href="#octicon-link"/>
-  </svg>
-</a>Cumulative Distribution Functions</h2>
+</a>Cumulative Distribution Functions</h3>
 
 <p><code>CDF</code> is the interface used to calculate the Cumulative Distribution Functions.
 Given <em>X</em> ~ <em>D</em> and a fixed quantile <em>x</em>, CDFs are defined as the functions that
@@ -349,15 +392,13 @@ those used for sampling:</p>
 <span class="t">Alea</span><span class="t">::</span><span class="t">CDF</span>.chisq(<span class="n">5.279</span>, df: <span class="n">5.0</span>)             <span class="c"># =&gt; 0.6172121213841358 : Float64</span>
 <span class="t">Alea</span><span class="t">::</span><span class="t">CDF</span>.chisq32(<span class="n">5.279</span>, df: <span class="n">5.0</span>)           <span class="c"># =&gt; 0.61721206 : Float32</span></code></pre>
 
-<h3><a id="supported-distributions" class="anchor" href="#supported-distributions">
+<h3><a id="documentation" class="anchor" href="#documentation">
   <svg class="octicon-link" aria-hidden="true">
     <use href="#octicon-link"/>
   </svg>
-</a>Supported Distributions</h3>
+</a>Documentation</h3>
 
-<p>Current CDFs estimations are implemented for the following distributions:</p>
-
-<ul><li>Chi-Square</li><li>Exponential</li><li>Gamma</li><li>Laplace</li><li>Log-Normal</li><li>Normal</li><li>Poisson</li><li>Uniform</li></ul></ul>
+<p>Documentation is hosted on <a href="https://nin93.github.io/alea/" target="_blank">GitHub Pages</a>.</p>
 
 <h2><a id="references" class="anchor" href="#references">
   <svg class="octicon-link" aria-hidden="true">
@@ -384,6 +425,8 @@ those used for sampling:</p>
 </a>Contributors</h2>
 
 <ul><li><a href="https://github.com/nin93" target="_blank">Elia Franzella</a> - creator and maintainer</li></ul>
+
+
 </div>
 </body>
 </html>

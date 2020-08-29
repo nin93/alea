@@ -51,11 +51,13 @@ programming languages standards providing a nice and clean interface.
 | Beta          |        Y  Y       |      N  N     |
 | Chi-Square    |        Y  Y       |      Y  Y     |
 | Exponential   |        Y  Y       |      Y  Y     |
+| F-Snedecor    |        Y  Y       |      N  N     |
 | Gamma         |        Y  Y       |      Y  Y     |
 | Laplace       |        Y  Y       |      Y  Y     |
 | Log-Normal    |        Y  Y       |      Y  Y     |
 | Normal        |        Y  Y       |      Y  Y     |
 | Poisson       |        N  Y       |      N  Y     |
+| T-Student     |        Y  Y       |      N  N     |
 | Uniform       |        Y  Y       |      Y  Y     |
 
 ### Projects
@@ -68,9 +70,9 @@ programming languages standards providing a nice and clean interface.
 1. Add the dependency to your `shard.yml`:
 
 ```yaml
-  dependencies:
-    alea:
-      github: nin93/alea
+dependencies:
+  alea:
+    github: nin93/alea
 ```
 
 2. Run `shards install`
