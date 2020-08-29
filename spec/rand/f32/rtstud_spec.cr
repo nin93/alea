@@ -44,7 +44,7 @@ describe Alea do
           real_mean: 0.0,
           real_stdev: 1.7320508075688772,
           mean_tol: 0.005,
-          stdev_tol: 0.01,
+          stdev_tol: 0.05,
         )
 
         dist_test("generates t-student-distributed random values with fixed df 10.0 parameter",
@@ -55,7 +55,7 @@ describe Alea do
           real_mean: 0.0,
           real_stdev: 1.118033988749895,
           mean_tol: 0.005,
-          stdev_tol: 0.01,
+          stdev_tol: 0.05,
         )
 
         dist_test("generates t-student-distributed random values with fixed df 100.0 parameter",
@@ -66,7 +66,7 @@ describe Alea do
           real_mean: 0.0,
           real_stdev: 1.0101525445522108,
           mean_tol: 0.005,
-          stdev_tol: 0.01,
+          stdev_tol: 0.05,
         )
 
         dist_test("generates t-student-distributed random values with fixed df 1_000.0 parameter",
@@ -77,7 +77,7 @@ describe Alea do
           real_mean: 0.0,
           real_stdev: 1.0010015025043828,
           mean_tol: 0.005,
-          stdev_tol: 0.01,
+          stdev_tol: 0.05,
         )
 
         dist_test("generates t-student-distributed random values with fixed df 10_000.0 parameter",
@@ -88,7 +88,7 @@ describe Alea do
           real_mean: 0.0,
           real_stdev: 1.0001000150025003,
           mean_tol: 0.005,
-          stdev_tol: 0.01,
+          stdev_tol: 0.05,
         )
       end
     end
