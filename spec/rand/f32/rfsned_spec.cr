@@ -44,7 +44,7 @@ describe Alea do
           real_mean: 1.6666666666666667,
           real_stdev: 3.3333333333333335,
           mean_tol: 0.005,
-          stdev_tol: 0.01,
+          stdev_tol: 0.1,
         )
 
         dist_test("generates f-snedecor-distributed random values with fixed a 10.0 and b 10.0 parameters",
@@ -55,7 +55,7 @@ describe Alea do
           real_mean: 1.25,
           real_stdev: 0.9682458365518543,
           mean_tol: 0.005,
-          stdev_tol: 0.01,
+          stdev_tol: 0.05,
         )
 
         dist_test("generates f-snedecor-distributed random values with fixed a 10.0 and b 100.0 parameters",
@@ -66,7 +66,7 @@ describe Alea do
           real_mean: 1.0204081632653061,
           real_stdev: 0.48402209084209885,
           mean_tol: 0.005,
-          stdev_tol: 0.01,
+          stdev_tol: 0.05,
         )
 
         dist_test("generates f-snedecor-distributed random values with fixed a 10.0 and b 1_000.0 parameters",
@@ -78,7 +78,7 @@ describe Alea do
           real_mean: 1.0002000400080016,
           real_stdev: 9.99800034994001e-5,
           mean_tol: 0.05,
-          stdev_tol: 0.01,
+          stdev_tol: 0.05,
         )
 
         dist_test("generates f-snedecor-distributed random values with fixed a 100.0 and b 10.0 parameters",
@@ -90,7 +90,7 @@ describe Alea do
           real_mean: 0.9900990099009901,
           real_stdev: 0.009803441019571034,
           mean_tol: 0.05,
-          stdev_tol: 0.01,
+          stdev_tol: 0.05,
         )
 
         dist_test("generates f-snedecor-distributed random values with fixed a 10_000.0 and b 10.0 parameters",
@@ -102,7 +102,7 @@ describe Alea do
           real_mean: 0.9999000099990001,
           real_stdev: 9.99800034994001e-5,
           mean_tol: 0.05,
-          stdev_tol: 0.01,
+          stdev_tol: 0.05,
         )
       end
     end
