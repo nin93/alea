@@ -18,7 +18,7 @@
 </svg>
 
   <meta id="repository-name" content="alea">
-  <title>Alea::PRNG - alea mersenne-twister-dev</title>
+  <title>Alea::MT19937 - alea mersenne-twister-dev</title>
   <script type="text/javascript">
     CrystalDocs.base_path = "../";
   </script>
@@ -131,7 +131,7 @@
       
     </li>
   
-  <li class=" " data-id="alea/Alea/MT19937" data-name="alea::mt19937">
+  <li class=" current" data-id="alea/Alea/MT19937" data-name="alea::mt19937">
       <a href="../Alea/MT19937.html">MT19937</a>
       
     </li>
@@ -146,7 +146,7 @@
       
     </li>
   
-  <li class=" current" data-id="alea/Alea/PRNG" data-name="alea::prng">
+  <li class=" " data-id="alea/Alea/PRNG" data-name="alea::prng">
       <a href="../Alea/PRNG.html">PRNG</a>
       
     </li>
@@ -185,12 +185,12 @@
 <div class="main-content">
 <h1 class="type-name">
 
-  <span class="kind">abstract class</span> Alea::PRNG
+  <span class="kind">class</span> Alea::MT19937
 
 </h1>
 
 
-  <ul class="superclass-hierarchy"><li class="superclass"><a href="../Alea/PRNG.html">Alea::PRNG</a></li><li class="superclass">Reference</li><li class="superclass">Object</li></ul>
+  <ul class="superclass-hierarchy"><li class="superclass"><a href="../Alea/MT19937.html">Alea::MT19937</a></li><li class="superclass"><a href="../Alea/PRNG.html">Alea::PRNG</a></li><li class="superclass">Reference</li><li class="superclass">Object</li></ul>
 
 
 
@@ -204,8 +204,12 @@
     Overview
   </h2>
 
-  <p><code><a href="../Alea/PRNG.html">Alea::PRNG</a></code> is the class all PRNGs iherit from. Use this class to build your own engine as described
-in the <a href="https://github.com/nin93/alea/blob/master/custom_prng.cr" target="_blank">example</a> provided in the documentation.</p>
+  <p><code><a href="../Alea/MT19937.html">MT19937</a></code> engine is an implementation of the famous
+<a href="http://www.math.sci.hiroshima-u.ac.jp/~m-mat/MT/emt.html" target="_blank">Mersenne Twister</a>, developed by Makoto
+Matsumoto and Takuji Nishimura: the most widely used PRNG passing most strict statistical tests.</p>
+
+<pre><code class="language-text"> - period: (2^19937)-1
+ - init:   `Alea::Core::Knuth32`</code></pre>
 
 
 
@@ -214,24 +218,6 @@ in the <a href="https://github.com/nin93/alea/blob/master/custom_prng.cr" target
 
 
 
-
-  <h2>
-    <a id="direct-known-subclasses" class="anchor" href="#direct-known-subclasses">
-  <svg class="octicon-link" aria-hidden="true">
-    <use href="#octicon-link"/>
-  </svg>
-</a>
-    Direct Known Subclasses
-  </h2>
-  <ul class="other-types-list">
-    
-      <li class="other-type"><a href="../Alea/MT19937.html">Alea::MT19937</a></li>
-    
-      <li class="other-type"><a href="../Alea/XSR128.html">Alea::XSR128</a></li>
-    
-      <li class="other-type"><a href="../Alea/XSR256.html">Alea::XSR256</a></li>
-    
-  </ul>
 
 
 
@@ -250,6 +236,55 @@ in the <a href="https://github.com/nin93/alea/blob/master/custom_prng.cr" target
 
 
 
+  
+    <h2>
+      <a id="constant-summary" class="anchor" href="#constant-summary">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+      Constant Summary
+    </h2>
+  
+  <dl>
+    
+      <dt class="entry-const" id="LOWER_MASK">
+        <strong>LOWER_MASK</strong> = <code><span class="n">2147483647_u64</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="MATRIX_A">
+        <strong>MATRIX_A</strong> = <code><span class="n">2567483615_u64</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="STATE_LEN_M">
+        <strong>STATE_LEN_M</strong> = <code><span class="n">397</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="STATE_LEN_N">
+        <strong>STATE_LEN_N</strong> = <code><span class="n">624</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="TEMPERING_B">
+        <strong>TEMPERING_B</strong> = <code><span class="n">2636928640_u64</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="TEMPERING_C">
+        <strong>TEMPERING_C</strong> = <code><span class="n">4022730752_u64</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="UPPER_MASK">
+        <strong>UPPER_MASK</strong> = <code><span class="n">2147483648_u64</span></code>
+      </dt>
+      
+    
+  </dl>
+
 
 
   <h2>
@@ -263,9 +298,23 @@ in the <a href="https://github.com/nin93/alea/blob/master/custom_prng.cr" target
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#new(seed32,seed64)-class-method" class="signature"><strong>.new</strong>(seed32, seed64)</a>
+        <a href="#new(seed32:UInt32,seed64:UInt32)-class-method" class="signature"><strong>.new</strong>(seed32 : UInt32, seed64 : UInt32)</a>
         
-          <div class="summary"><p>Must initialize states from seeds.</p></div>
+          <div class="summary"><p>Initializes the PRNG with initial seeds.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#new(seed:Int)-class-method" class="signature"><strong>.new</strong>(seed : Int)</a>
+        
+          <div class="summary"><p>Initializes the PRNG with initial seed.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#new-class-method" class="signature"><strong>.new</strong></a>
+        
+          <div class="summary"><p>Initializes the PRNG with initial seeds readed from system resources.</p></div>
         
       </li>
     
@@ -284,23 +333,9 @@ in the <a href="https://github.com/nin93/alea/blob/master/custom_prng.cr" target
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#secure-class-method" class="signature"><strong>.secure</strong></a>
-        
-          <div class="summary"><p>Returns an instamce of this PRNG with initial seeds readed from system resources.</p></div>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#type_32-class-method" class="signature"><strong>.type_32</strong></a>
-        
-          <div class="summary"><p>Returns the type of values stored in 32-bit state.</p></div>
-        
-      </li>
-    
-      <li class="entry-summary">
         <a href="#type_64-class-method" class="signature"><strong>.type_64</strong></a>
         
-          <div class="summary"><p>Returns the type of values stored in 64-bit state.</p></div>
+          <div class="summary"><p>Correct type for state64 for proper bindings with <code><a href="../Alea/Random.html">Random</a></code>.</p></div>
         
       </li>
     
@@ -319,44 +354,16 @@ in the <a href="https://github.com/nin93/alea/blob/master/custom_prng.cr" target
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#next_f32:Float32-instance-method" class="signature"><strong>#next_f32</strong> : Float32</a>
-        
-          <div class="summary"><p>Generate a uniform-distributed random <code>Float32</code> in <code>[0, 1)</code>.</p></div>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#next_f64:Float64-instance-method" class="signature"><strong>#next_f64</strong> : Float64</a>
-        
-          <div class="summary"><p>Generate a uniform-distributed random <code>Float64</code> in <code>[0, 1)</code>.</p></div>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#next_i32:Int32-instance-method" class="signature"><strong>#next_i32</strong> : Int32</a>
-        
-          <div class="summary"><p>Generate a uniform-distributed random <code>Int32</code> in range <code>Int32::MIN..Int32::MAX</code>.</p></div>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#next_i64:Int64-instance-method" class="signature"><strong>#next_i64</strong> : Int64</a>
-        
-          <div class="summary"><p>Generate a uniform-distributed random <code>Int64</code> in range <code>Int64::MIN..Int64::MAX</code>.</p></div>
-        
-      </li>
-    
-      <li class="entry-summary">
         <a href="#next_u32:UInt32-instance-method" class="signature"><strong>#next_u32</strong> : UInt32</a>
         
-          <div class="summary"><p>Must return an uniform-distributed <code>UInt32</code>.</p></div>
+          <div class="summary"><p>Generate a uniform-distributed random <code>UInt32</code>.</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#next_u64:UInt64-instance-method" class="signature"><strong>#next_u64</strong> : UInt64</a>
         
-          <div class="summary"><p>Must return an uniform-distributed <code>UInt64</code>.</p></div>
+          <div class="summary"><p>Generate a uniform-distributed random <code>UInt64</code>.</p></div>
         
       </li>
     
@@ -367,6 +374,78 @@ in the <a href="https://github.com/nin93/alea/blob/master/custom_prng.cr" target
 
 
 <div class="methods-inherited">
+  
+    
+
+  <h3>Instance methods inherited from class <code><a href="../Alea/PRNG.html">Alea::PRNG</a></code></h3>
+  
+  
+    <a href="../Alea/PRNG.html#next_f32:Float32-instance-method" class="tooltip">
+      <span>next_f32 : Float32</span>
+    next_f32</a>, 
+    
+  
+    <a href="../Alea/PRNG.html#next_f64:Float64-instance-method" class="tooltip">
+      <span>next_f64 : Float64</span>
+    next_f64</a>, 
+    
+  
+    <a href="../Alea/PRNG.html#next_i32:Int32-instance-method" class="tooltip">
+      <span>next_i32 : Int32</span>
+    next_i32</a>, 
+    
+  
+    <a href="../Alea/PRNG.html#next_i64:Int64-instance-method" class="tooltip">
+      <span>next_i64 : Int64</span>
+    next_i64</a>, 
+    
+  
+    <a href="../Alea/PRNG.html#next_u32:UInt32-instance-method" class="tooltip">
+      <span>next_u32 : UInt32</span>
+    next_u32</a>, 
+    
+  
+    <a href="../Alea/PRNG.html#next_u64:UInt64-instance-method" class="tooltip">
+      <span>next_u64 : UInt64</span>
+    next_u64</a>
+    
+  
+
+
+    
+
+  <h3>Constructor methods inherited from class <code><a href="../Alea/PRNG.html">Alea::PRNG</a></code></h3>
+  
+  
+    <a href="../Alea/PRNG.html#new(seed32,seed64)-class-method" class="tooltip">
+      <span>new(seed32, seed64)</span>
+    new</a>
+    
+  
+
+
+    
+
+  <h3>Class methods inherited from class <code><a href="../Alea/PRNG.html">Alea::PRNG</a></code></h3>
+  
+  
+    <a href="../Alea/PRNG.html#secure-class-method" class="tooltip">
+      <span>secure</span>
+    secure</a>, 
+    
+  
+    <a href="../Alea/PRNG.html#type_32-class-method" class="tooltip">
+      <span>type_32</span>
+    type_32</a>, 
+    
+  
+    <a href="../Alea/PRNG.html#type_64-class-method" class="tooltip">
+      <span>type_64</span>
+    type_64</a>
+    
+  
+
+
   
     
 
@@ -400,17 +479,79 @@ in the <a href="https://github.com/nin93/alea/blob/master/custom_prng.cr" target
     Constructor Detail
   </h2>
   
-    <div class="entry-detail" id="new(seed32,seed64)-class-method">
+    <div class="entry-detail" id="new(seed32:UInt32,seed64:UInt32)-class-method">
       <div class="signature">
         
-        def self.<strong>new</strong>(seed32, seed64)
+        def self.<strong>new</strong>(seed32 : UInt32, seed64 : UInt32)
 
-        <a class="method-permalink" href="#new(seed32,seed64)-class-method">#</a>
+        <a class="method-permalink" href="#new(seed32:UInt32,seed64:UInt32)-class-method">#</a>
       </div>
       
         <div class="doc">
           
-          <p>Must initialize states from seeds.</p>
+          <p>Initializes the PRNG with initial seeds.</p>
+
+<p><strong>@parameters</strong>:</p>
+
+<ul><li><code>seed32</code>: value as input to initialize the state of 32-bit generators.</li><li><code>seed64</code>: value as input to initialize the state of 64-bit generators.</li></ul>
+
+<p><strong>@references</strong>:</p>
+
+<ul><li><code><a href="../Alea/Core/Knuth32.html">Alea::Core::Knuth32</a>(624)#init_state</code>.</li></ul>
+
+<p><strong>@exceptions</strong>:</p>
+
+<ul><li><code><a href="../Alea/UndefinedError.html">Alea::UndefinedError</a></code> if any of <code>seed32</code> or <code>seed64</code> is negative.</li></ul>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="new(seed:Int)-class-method">
+      <div class="signature">
+        
+        def self.<strong>new</strong>(seed : Int)
+
+        <a class="method-permalink" href="#new(seed:Int)-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Initializes the PRNG with initial seed.</p>
+
+<p><strong>@parameters</strong>:</p>
+
+<ul><li><code>seed</code>: value as input to initialize the state of both 32-bit and 64-bit generators.</li></ul>
+
+<p><strong>@references</strong>:</p>
+
+<ul><li><code><a href="../Alea/Core/Knuth32.html">Alea::Core::Knuth32</a>(624)#init_state</code>.</li></ul>
+
+<p><strong>@exceptions</strong>:</p>
+
+<ul><li><code><a href="../Alea/UndefinedError.html">Alea::UndefinedError</a></code> if <code>seed</code> is negative.</li></ul>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="new-class-method">
+      <div class="signature">
+        
+        def self.<strong>new</strong>
+
+        <a class="method-permalink" href="#new-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Initializes the PRNG with initial seeds readed from system resources.</p>
         </div>
       
       <br/>
@@ -431,46 +572,6 @@ in the <a href="https://github.com/nin93/alea/blob/master/custom_prng.cr" target
     Class Method Detail
   </h2>
   
-    <div class="entry-detail" id="secure-class-method">
-      <div class="signature">
-        
-        def self.<strong>secure</strong>
-
-        <a class="method-permalink" href="#secure-class-method">#</a>
-      </div>
-      
-        <div class="doc">
-          
-          <p>Returns an instamce of this PRNG with initial seeds readed from system resources.</p>
-        </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="type_32-class-method">
-      <div class="signature">
-        
-        def self.<strong>type_32</strong>
-
-        <a class="method-permalink" href="#type_32-class-method">#</a>
-      </div>
-      
-        <div class="doc">
-          
-          <p>Returns the type of values stored in 32-bit state. This is needed by <code><a href="../Alea/Random.html">Alea::Random</a></code>
-to detect the type of states and provide properly typed seeds to underlying PRNGs.
-This should be overridden by PRNGs which need a type in state different from <code>UInt32</code>.</p>
-        </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
     <div class="entry-detail" id="type_64-class-method">
       <div class="signature">
         
@@ -481,9 +582,7 @@ This should be overridden by PRNGs which need a type in state different from <co
       
         <div class="doc">
           
-          <p>Returns the type of values stored in 64-bit state. This is needed by <code><a href="../Alea/Random.html">Alea::Random</a></code>
-to detect the type of states and provide properly typed seeds to underlying PRNGs.
-This should be overridden by PRNGs which need a type in state different from <code>UInt64</code>.</p>
+          <p>Correct type for state64 for proper bindings with <code><a href="../Alea/Random.html">Random</a></code>.</p>
         </div>
       
       <br/>
@@ -504,85 +603,9 @@ This should be overridden by PRNGs which need a type in state different from <co
     Instance Method Detail
   </h2>
   
-    <div class="entry-detail" id="next_f32:Float32-instance-method">
-      <div class="signature">
-        
-        def <strong>next_f32</strong> : Float32
-
-        <a class="method-permalink" href="#next_f32:Float32-instance-method">#</a>
-      </div>
-      
-        <div class="doc">
-          
-          <p>Generate a uniform-distributed random <code>Float32</code> in <code>[0, 1)</code>.</p>
-        </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="next_f64:Float64-instance-method">
-      <div class="signature">
-        
-        def <strong>next_f64</strong> : Float64
-
-        <a class="method-permalink" href="#next_f64:Float64-instance-method">#</a>
-      </div>
-      
-        <div class="doc">
-          
-          <p>Generate a uniform-distributed random <code>Float64</code> in <code>[0, 1)</code>.</p>
-        </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="next_i32:Int32-instance-method">
-      <div class="signature">
-        
-        def <strong>next_i32</strong> : Int32
-
-        <a class="method-permalink" href="#next_i32:Int32-instance-method">#</a>
-      </div>
-      
-        <div class="doc">
-          
-          <p>Generate a uniform-distributed random <code>Int32</code> in range <code>Int32::MIN..Int32::MAX</code>.</p>
-        </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="next_i64:Int64-instance-method">
-      <div class="signature">
-        
-        def <strong>next_i64</strong> : Int64
-
-        <a class="method-permalink" href="#next_i64:Int64-instance-method">#</a>
-      </div>
-      
-        <div class="doc">
-          
-          <p>Generate a uniform-distributed random <code>Int64</code> in range <code>Int64::MIN..Int64::MAX</code>.</p>
-        </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
     <div class="entry-detail" id="next_u32:UInt32-instance-method">
       <div class="signature">
-        abstract 
+        
         def <strong>next_u32</strong> : UInt32
 
         <a class="method-permalink" href="#next_u32:UInt32-instance-method">#</a>
@@ -590,7 +613,12 @@ This should be overridden by PRNGs which need a type in state different from <co
       
         <div class="doc">
           
-          <p>Must return an uniform-distributed <code>UInt32</code>.</p>
+          <p>Generate a uniform-distributed random <code>UInt32</code>.</p>
+
+<p><strong>@examples</strong>:</p>
+
+<pre><code>rng <span class="o">=</span> <span class="t">Alea</span><span class="t">::</span><span class="t">MT19937</span>.<span class="k">new</span>
+rng.next_u32 <span class="c"># =&gt; 2604272037</span></code></pre>
         </div>
       
       <br/>
@@ -601,7 +629,7 @@ This should be overridden by PRNGs which need a type in state different from <co
   
     <div class="entry-detail" id="next_u64:UInt64-instance-method">
       <div class="signature">
-        abstract 
+        
         def <strong>next_u64</strong> : UInt64
 
         <a class="method-permalink" href="#next_u64:UInt64-instance-method">#</a>
@@ -609,7 +637,12 @@ This should be overridden by PRNGs which need a type in state different from <co
       
         <div class="doc">
           
-          <p>Must return an uniform-distributed <code>UInt64</code>.</p>
+          <p>Generate a uniform-distributed random <code>UInt64</code>.</p>
+
+<p><strong>@examples</strong>:</p>
+
+<pre><code>rng <span class="o">=</span> <span class="t">Alea</span><span class="t">::</span><span class="t">MT19937</span>.<span class="k">new</span>
+rng.next_u64 <span class="c"># =&gt; 11185263231290389851</span></code></pre>
         </div>
       
       <br/>

@@ -128,15 +128,20 @@ Floats are obtained by `ldexp` (load exponent) operations upon generated
 unsigned integers; signed integers are obtained by raw cast.
 
 Currently implemented engines:
-+ `XSR128` backed by *xoroshiro128++* (32/64 bit)
-+ `XSR256` backed by *xoshiro256++* (32/64 bit)
++ `XSR128`  backed by *xoroshiro128++*   (32/64 bit)
++ `XSR256`  backed by *xoshiro256++*     (32/64 bit)
++ `MT19937` backed by *mersenne twister* (32/64 bit)
 
-The digits in the class name stand for the storage of their state in bits.
-Their period is `2^128 -1` for `XSR128` and `2^256 -1` for `XSR256`.
+The digits in the class name stand for the overall period of the PRNG as a power of 2:
+`(2^N) - 1`, where `N` is the said number.
 
-These engines are from the [xoshiro](http://prng.di.unimi.it/) (XOR/shift/rotate) collection,
-designed by Sebastiano Vigna and David Blackman: really fast generators promising
+`XSR256` and `XSR128` engines are from the [xoshiro](http://prng.di.unimi.it/) (XOR/shift/rotate)
+collection, designed by Sebastiano Vigna and David Blackman: really fast generators promising
 exquisite statistical properties as well.
+
+`MT19937` engine is an implementation of the famous
+[Mersenne Twister](http://www.math.sci.hiroshima-u.ac.jp/~m-mat/MT/emt.html), developed by Makoto
+Matsumoto and Takuji Nishimura: the most widely used PRNG passing most strict statistical tests.
 
 By default, the PRNG in use by `Random` is `XSR128`. You can, though, pass the desired
 engine as an argument to the constructor. Here is an example using `XSR256`:
@@ -183,11 +188,12 @@ Alea::CDF.chisq32(5.279, df: 5.0)           # => 0.61721206 : Float32
 
 Documentation is hosted on [GitHub Pages](https://nin93.github.io/alea/).
 
-## References
+## Aknowledgments
 
 Fully listed in [LICENSE.md](https://github.com/nin93/alea/tree/master/LICENSE.md):
 * [Crystal](https://github.com/crystal-lang/crystal) `Random` module for uniform sampling
 * [NumPy](https://github.com/numpy/numpy) `random` module for pseudo-random sampling methods
+* [NumPy](https://github.com/numpy/numpy) `mt19937` prng implementation
 * [JuliaLang](https://github.com/JuliaLang/julia) `random` module for ziggurat methods
 * [IncGammaBeta.jl](https://github.com/jkovacic/IncGammaBeta.jl) for incomplete gamma functions
 
