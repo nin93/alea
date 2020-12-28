@@ -11,7 +11,9 @@ module Alea
   #  - period: (2^19937)-1
   #  - init:   `Alea::Core::Knuth32`
   # ```
-  class MT19937 < Alea::PRNG
+  class MT19937
+    include Alea::PRNG(UInt32, UInt32)
+
     STATE_LEN_N = 624
     STATE_LEN_M = 397
 
@@ -57,31 +59,6 @@ module Alea
       @state64 = Alea::Core::Knuth32(STATE_LEN_N).init_state @seed64
       @pos32 = STATE_LEN_N
       @pos64 = STATE_LEN_N
-    end
-
-    # Initializes the PRNG with initial seed.
-    #
-    # **@parameters**:
-    # * `seed`: value as input to initialize the state of both 32-bit and 64-bit generators.
-    #
-    # **@references**:
-    # * `Alea::Core::Knuth32(624)#init_state`.
-    #
-    # **@exceptions**:
-    # * `Alea::UndefinedError` if `seed` is negative.
-    def self.new(seed : Int)
-      Alea.param_check(seed, :<, 0, :seed, :"MT19937.new")
-      new seed.to_u32, seed.to_u32
-    end
-
-    # Initializes the PRNG with initial seeds readed from system resources.
-    def self.new
-      self.secure
-    end
-
-    # Correct type for state64 for proper bindings with `Random`.
-    def self.type_64
-      UInt32
     end
 
     # Generate a uniform-distributed random `UInt32`.

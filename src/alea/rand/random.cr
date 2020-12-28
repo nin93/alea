@@ -6,13 +6,15 @@ module Alea
   #
   # ```
   # seed = 9377
-  # random = Alea::Random.new(seed)
-  # random       # => Alea::Random
+  # random = Alea::Random(Alea::XSR128).new(seed)
   # random.float # => 0.08153691876972058
   # ```
   #
   # The default generator is `Alea::XSR128`. To use any other PRNG in this library call the constructor
   # passing its class name. Here is an example using `Alea::XSR256`, loaded with 256 bits of state:
+  #
+  # NOTE: due to https://github.com/crystal-lang/crystal/issues/4678 , you still need
+  # to explicitly pass the generator as the generic type even if it defaults to `Alea::Random::XSR128`.
   #
   # ```
   # seed = 12345
@@ -30,59 +32,57 @@ module Alea
   # provided to build your own.
   #
   # The following implementations are taken from **numpy**.
-  struct Random
+  struct Random(G)
     DEFAULT = Alea::XSR128
 
     # The PRNG in use by this struct.
-    getter prng : Alea::PRNG
+    getter prng : G
 
     # Initializes the PRNG with initial instance.
     #
+    # NOTE: due to https://github.com/crystal-lang/crystal/issues/4678 , you still need
+    # to explicitly pass the generator as the generic type even if it defaults to `Alea::Random::DEFAULT`.
+    #
     # **@parameters**:
     # * `prng`: the PRNG instance itself.
-    def initialize(@prng : Alea::PRNG)
+    def initialize(@prng : G = Alea::XSR128.new)
     end
 
     # Initializes the PRNG with initial seeds.
     #
+    # NOTE: due to https://github.com/crystal-lang/crystal/issues/4678 , you still need
+    # to explicitly pass the generator as the generic type even if it defaults to `Alea::Random::DEFAULT`.
+    #
     # **@parameters**:
     # * `seed32`: value as input to init. the state of 32-bit generators of `prng`.
     # * `seed64`: value as input to init. the state of 64-bit generators of `prng`.
-    # * `prng`: the PRNG in use by this instance.
     #
     # **@exceptions**:
     # * `Alea::UndefinedError` if any of `seed32` or `seed64` is negative.
-    def self.new(seed32 : Int, seed64 : Int, prng : Alea::PRNG.class = DEFAULT)
+    def self.new(seed32 : Int, seed64 : Int)
       Alea.param_check(seed32, :<, 0, :seed32, :"Random.new")
       Alea.param_check(seed64, :<, 0, :seed64, :"Random.new")
-      # Cast seeds to type needed by underlying PRNG.
-      s32 = prng.type_32.new seed32
-      s64 = prng.type_64.new seed64
-      new prng.new(s32, s64)
+      new G.new(seed32, seed64)
     end
 
     # Initializes the PRNG with initial seed.
     #
+    # NOTE: due to https://github.com/crystal-lang/crystal/issues/4678 , you still need
+    # to explicitly pass the generator as the generic type even if it defaults to `Alea::Random::DEFAULT`.
+    #
     # **@parameters**:
     # * `seed`: initial seed as input for generating the state of `prng`.
-    # * `prng`: the PRNG in use by this instance.
     #
     # **@exceptions**:
     # * `Alea::UndefinedError` if `seed` is negative.
-    def self.new(seed : Int, prng : Alea::PRNG.class = DEFAULT)
+    def self.new(seed : Int)
       Alea.param_check(seed, :<, 0, :seed, :"Random.new")
-      # Cast seeds to type needed by underlying PRNG.
-      s32 = prng.type_32.new seed
-      s64 = prng.type_64.new seed
-      new prng.new(s32, s64)
+      new G.new(seed, seed)
     end
 
     # Initializes the PRNG with initial state readed from system resources.
-    #
-    # **@parameters**:
-    # * `prng`: the PRNG in use by this instance.
-    def self.new(prng : Alea::PRNG.class = DEFAULT)
-      new prng.secure
+    def self.new
+      new G.secure
     end
 
     # Returns the next generated `UInt32`.
