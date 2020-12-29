@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="generator" content="Crystal Docs 0.35.1">
-<meta name="crystal_docs.project_version" content="master-dev">
+<meta name="crystal_docs.project_version" content="prng-module-dev">
 <meta name="crystal_docs.project_name" content="alea">
 
 
@@ -18,7 +18,7 @@
 </svg>
 
   <meta id="repository-name" content="alea">
-  <title>Alea::XSR128 - alea master-dev</title>
+  <title>Alea::XSR128 - alea prng-module-dev</title>
   <script type="text/javascript">
     CrystalDocs.base_path = "../";
   </script>
@@ -39,7 +39,7 @@
       </h1>
 
       <span class="project-version">
-        master-dev
+        prng-module-dev
       </span>
     </div>
   </div>
@@ -65,6 +65,11 @@
       <a href="../Alea/Core.html">Core</a>
       
         <ul>
+  
+  <li class=" " data-id="alea/Alea/Core/Knuth32" data-name="alea::core::knuth32(n)">
+      <a href="../Alea/Core/Knuth32.html">Knuth32</a>
+      
+    </li>
   
   <li class=" " data-id="alea/Alea/Core/Limits" data-name="alea::core::limits">
       <a href="../Alea/Core/Limits.html">Limits</a>
@@ -126,6 +131,11 @@
       
     </li>
   
+  <li class=" " data-id="alea/Alea/MT19937" data-name="alea::mt19937">
+      <a href="../Alea/MT19937.html">MT19937</a>
+      
+    </li>
+  
   <li class=" " data-id="alea/Alea/NaNError" data-name="alea::nanerror">
       <a href="../Alea/NaNError.html">NaNError</a>
       
@@ -136,12 +146,12 @@
       
     </li>
   
-  <li class=" " data-id="alea/Alea/PRNG" data-name="alea::prng">
+  <li class=" " data-id="alea/Alea/PRNG" data-name="alea::prng(s32, s64)">
       <a href="../Alea/PRNG.html">PRNG</a>
       
     </li>
   
-  <li class=" " data-id="alea/Alea/Random" data-name="alea::random">
+  <li class=" " data-id="alea/Alea/Random" data-name="alea::random(g)">
       <a href="../Alea/Random.html">Random</a>
       
     </li>
@@ -180,7 +190,7 @@
 </h1>
 
 
-  <ul class="superclass-hierarchy"><li class="superclass"><a href="../Alea/XSR128.html">Alea::XSR128</a></li><li class="superclass"><a href="../Alea/PRNG.html">Alea::PRNG</a></li><li class="superclass">Reference</li><li class="superclass">Object</li></ul>
+  <ul class="superclass-hierarchy"><li class="superclass"><a href="../Alea/XSR128.html">Alea::XSR128</a></li><li class="superclass">Reference</li><li class="superclass">Object</li></ul>
 
 
 
@@ -194,16 +204,27 @@
     Overview
   </h2>
 
-  <p><code><a href="../Alea/XSR128.html">Alea::XSR128</a></code> is the default pseudo-random number generator, with a state of 128 bits, and therefore
-a period of 2^64 -1. It is as fast as <code>Random::PCG32</code>, but yielding a 64-bit unsigned integer.
-If more state is needed, check <code><a href="../Alea/XSR256.html">Alea::XSR256</a></code>.</p>
-
-<pre><code class="language-text"> - period:     2^128 -1
- - state type: UInt64</code></pre>
+  <p><code><a href="../Alea/XSR128.html">Alea::XSR128</a></code>, pseudo-random number generator loaded with a state of 128 bits
+and therefore a period of 2^128 -1. It is as fast as <code>Random::PCG32</code>.
+If more period is needed, check out <code><a href="../Alea/XSR256.html">Alea::XSR256</a></code>.</p>
 
 
 
 
+
+  <h2>
+    <a id="included-modules" class="anchor" href="#included-modules">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Included Modules
+  </h2>
+  <ul class="other-types-list">
+    
+      <li class="other-type"><a href="../Alea/PRNG.html">Alea::PRNG(UInt32, UInt64)</a></li>
+    
+  </ul>
 
 
 
@@ -290,6 +311,13 @@ If more state is needed, check <code><a href="../Alea/XSR256.html">Alea::XSR256<
       </li>
     
       <li class="entry-summary">
+        <a href="#new(seed32:Int,seed64:Int)-class-method" class="signature"><strong>.new</strong>(seed32 : Int, seed64 : Int)</a>
+        
+          <div class="summary"><p>Initializes the PRNG with initial seeds.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
         <a href="#new(seed:Int)-class-method" class="signature"><strong>.new</strong>(seed : Int)</a>
         
           <div class="summary"><p>Initializes the PRNG with initial seed.</p></div>
@@ -306,6 +334,25 @@ If more state is needed, check <code><a href="../Alea/XSR256.html">Alea::XSR256<
   </ul>
 
 
+
+  <h2>
+    <a id="class-method-summary" class="anchor" href="#class-method-summary">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Class Method Summary
+  </h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#secure-class-method" class="signature"><strong>.secure</strong></a>
+        
+          <div class="summary"><p>Returns an instamce of this PRNG with initial seeds readed from system resources.</p></div>
+        
+      </li>
+    
+  </ul>
 
 
 
@@ -357,7 +404,7 @@ If more state is needed, check <code><a href="../Alea/XSR256.html">Alea::XSR256<
   
     
 
-  <h3>Instance methods inherited from class <code><a href="../Alea/PRNG.html">Alea::PRNG</a></code></h3>
+  <h3>Instance methods inherited from module <code><a href="../Alea/PRNG.html">Alea::PRNG(UInt32, UInt64)</a></code></h3>
   
   
     <a href="../Alea/PRNG.html#next_f32:Float32-instance-method" class="tooltip">
@@ -394,36 +441,17 @@ If more state is needed, check <code><a href="../Alea/XSR256.html">Alea::XSR256<
 
     
 
-  <h3>Constructor methods inherited from class <code><a href="../Alea/PRNG.html">Alea::PRNG</a></code></h3>
+  <h3>Constructor methods inherited from module <code><a href="../Alea/PRNG.html">Alea::PRNG(UInt32, UInt64)</a></code></h3>
   
   
-    <a href="../Alea/PRNG.html#new(seed32,seed64)-class-method" class="tooltip">
-      <span>new(seed32, seed64)</span>
+    <a href="../Alea/PRNG.html#new(seed32:S32,seed64:S64)-class-method" class="tooltip">
+      <span>new(seed32 : S32, seed64 : S64)</span>
     new</a>
     
   
 
 
     
-
-  <h3>Class methods inherited from class <code><a href="../Alea/PRNG.html">Alea::PRNG</a></code></h3>
-  
-  
-    <a href="../Alea/PRNG.html#secure-class-method" class="tooltip">
-      <span>secure</span>
-    secure</a>, 
-    
-  
-    <a href="../Alea/PRNG.html#type_32-class-method" class="tooltip">
-      <span>type_32</span>
-    type_32</a>, 
-    
-  
-    <a href="../Alea/PRNG.html#type_64-class-method" class="tooltip">
-      <span>type_64</span>
-    type_64</a>
-    
-  
 
 
   
@@ -490,6 +518,29 @@ If more state is needed, check <code><a href="../Alea/XSR256.html">Alea::XSR256<
       </div>
     </div>
   
+    <div class="entry-detail" id="new(seed32:Int,seed64:Int)-class-method">
+      <div class="signature">
+        
+        def self.<strong>new</strong>(seed32 : Int, seed64 : Int)
+
+        <a class="method-permalink" href="#new(seed32:Int,seed64:Int)-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Initializes the PRNG with initial seeds.</p>
+
+<p><strong>@parameters</strong>:</p>
+
+<ul><li><code>seed32</code>: value as input to init. the state of 32-bit generators of <code>prng</code>.</li><li><code>seed64</code>: value as input to init. the state of 64-bit generators of <code>prng</code>.</li></ul>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
     <div class="entry-detail" id="new(seed:Int)-class-method">
       <div class="signature">
         
@@ -504,15 +555,7 @@ If more state is needed, check <code><a href="../Alea/XSR256.html">Alea::XSR256<
 
 <p><strong>@parameters</strong>:</p>
 
-<ul><li><code>seed</code>: value as input to init. the state of both 32-bit and 64-bit generators.</li></ul>
-
-<p><strong>@references</strong>:</p>
-
-<ul><li><code><a href="../Alea/Core/Mulberry32.html">Alea::Core::Mulberry32</a>(4)#init_state</code>.</li><li><code><a href="../Alea/Core/SplitMix64.html">Alea::Core::SplitMix64</a>(2)#init_state</code>.</li></ul>
-
-<p><strong>@exceptions</strong>:</p>
-
-<ul><li><code><a href="../Alea/UndefinedError.html">Alea::UndefinedError</a></code> if <code>seed</code> is negative.</li></ul>
+<ul><li><code>seed</code>: initial seed as input for generating the state of <code>prng</code>.</li></ul>
         </div>
       
       <br/>
@@ -542,6 +585,35 @@ If more state is needed, check <code><a href="../Alea/XSR256.html">Alea::XSR256<
   
 
 
+
+  <h2>
+    <a id="class-method-detail" class="anchor" href="#class-method-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Class Method Detail
+  </h2>
+  
+    <div class="entry-detail" id="secure-class-method">
+      <div class="signature">
+        
+        def self.<strong>secure</strong>
+
+        <a class="method-permalink" href="#secure-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns an instamce of this PRNG with initial seeds readed from system resources.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
 
 
 

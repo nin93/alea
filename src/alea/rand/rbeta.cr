@@ -1,7 +1,7 @@
 require "./rgamma"
 
 module Alea
-  struct Random
+  struct Random(G)
     # Generate a *beta-distributed*, pseudo-random `Float64` in range `[0, 1)`.
     #
     # **@note**: named arguments are mandatory to prevent ambiguity.

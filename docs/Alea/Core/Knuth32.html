@@ -18,7 +18,7 @@
 </svg>
 
   <meta id="repository-name" content="alea">
-  <title>Alea::Core::Limits - alea prng-module-dev</title>
+  <title>Alea::Core::Knuth32(N) - alea prng-module-dev</title>
   <script type="text/javascript">
     CrystalDocs.base_path = "../../";
   </script>
@@ -66,12 +66,12 @@
       
         <ul>
   
-  <li class=" " data-id="alea/Alea/Core/Knuth32" data-name="alea::core::knuth32(n)">
+  <li class=" current" data-id="alea/Alea/Core/Knuth32" data-name="alea::core::knuth32(n)">
       <a href="../../Alea/Core/Knuth32.html">Knuth32</a>
       
     </li>
   
-  <li class=" current" data-id="alea/Alea/Core/Limits" data-name="alea::core::limits">
+  <li class=" " data-id="alea/Alea/Core/Limits" data-name="alea::core::limits">
       <a href="../../Alea/Core/Limits.html">Limits</a>
       
     </li>
@@ -185,13 +185,33 @@
 <div class="main-content">
 <h1 class="type-name">
 
-  <span class="kind">module</span> Alea::Core::Limits
+  <span class="kind">struct</span> Alea::Core::Knuth32(N)
 
 </h1>
 
 
+  <ul class="superclass-hierarchy"><li class="superclass"><a href="../../Alea/Core/Knuth32.html">Alea::Core::Knuth32(N)</a></li><li class="superclass">Struct</li><li class="superclass">Value</li><li class="superclass">Object</li></ul>
 
 
+
+
+  <h2>
+    <a id="overview" class="anchor" href="#overview">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Overview
+  </h2>
+
+  <p>Knuth32(N)` generator to initialize a <code>N</code> sized state for the pseudo-random number generators.</p>
+
+<p><span class="flag purple">NOTE</span>  <code>N</code> refers to the size in bits of the state divided by 32.</p>
+
+<p>The algorithm comes from https://github.com/numpy/numpy/blob/master/numpy/random/src/mt19937/mt19937.c.</p>
+
+<pre><code>state <span class="o">=</span> <span class="t">Alea</span><span class="t">::</span><span class="t">Core</span><span class="t">::</span><span class="t">Knuth32</span>(<span class="n">4</span>).init_state <span class="n">93u32</span>
+state <span class="c"># =&gt; StaticArray[93, 1052567986, 1433826620, 220522004]</span></code></pre>
 
 
 
@@ -218,97 +238,45 @@
 
 
 
-  
-    <h2>
-      <a id="constant-summary" class="anchor" href="#constant-summary">
+
+
+  <h2>
+    <a id="constructors" class="anchor" href="#constructors">
   <svg class="octicon-link" aria-hidden="true">
     <use href="#octicon-link"/>
   </svg>
 </a>
-      Constant Summary
-    </h2>
-  
-  <dl>
+    Constructors
+  </h2>
+  <ul class="list-summary">
     
-      <dt class="entry-const" id="OVERFLOW_MATH_EXP32">
-        <strong>OVERFLOW_MATH_EXP32</strong> = <code><span class="n">8.8722835540771484374e+01</span></code>
-      </dt>
-      
-      <dd class="entry-const-doc">
-        <p>Max value within which <code>Math.exp : Float32</code> returns non-<code>Infinity</code>.</p>
-      </dd>
-      
+      <li class="entry-summary">
+        <a href="#new-class-method" class="signature"><strong>.new</strong></a>
+        
+      </li>
     
-      <dt class="entry-const" id="OVERFLOW_MATH_EXP64">
-        <strong>OVERFLOW_MATH_EXP64</strong> = <code><span class="n">7.0978271289338402993e+02</span></code>
-      </dt>
-      
-      <dd class="entry-const-doc">
-        <p>Max value within which <code>Math.exp : Float64</code> returns non-<code>Infinity</code>.</p>
-      </dd>
-      
-    
-      <dt class="entry-const" id="OVERFLOW_MATH_GAMMA32">
-        <strong>OVERFLOW_MATH_GAMMA32</strong> = <code><span class="n">3.504009819030761e+01</span></code>
-      </dt>
-      
-      <dd class="entry-const-doc">
-        <p>Max value within which <code>Math.gamma : Float32</code> returns non-<code>Infinity</code>.</p>
-      </dd>
-      
-    
-      <dt class="entry-const" id="OVERFLOW_MATH_GAMMA64">
-        <strong>OVERFLOW_MATH_GAMMA64</strong> = <code><span class="n">1.716243769563027e+02</span></code>
-      </dt>
-      
-      <dd class="entry-const-doc">
-        <p>Max value within which <code>Math.gamma : Float64</code> returns non-<code>Infinity</code>.</p>
-      </dd>
-      
-    
-      <dt class="entry-const" id="UNDERFLOW_MATH_EXP32">
-        <strong>UNDERFLOW_MATH_EXP32</strong> = <code><span class="n">0.0e+00</span></code>
-      </dt>
-      
-      <dd class="entry-const-doc">
-        <p><span class="flag orange">TODO</span> 
-Min value within which <code>Math.exp : Float32</code> returns non-<code>Infinity</code>.</p>
-      </dd>
-      
-    
-      <dt class="entry-const" id="UNDERFLOW_MATH_EXP64">
-        <strong>UNDERFLOW_MATH_EXP64</strong> = <code><span class="n">0.0e+00</span></code>
-      </dt>
-      
-      <dd class="entry-const-doc">
-        <p><span class="flag orange">TODO</span> 
-Min value within which <code>Math.exp : Float64</code> returns non-<code>Infinity</code>.</p>
-      </dd>
-      
-    
-      <dt class="entry-const" id="UNDERFLOW_MATH_GAMMA32">
-        <strong>UNDERFLOW_MATH_GAMMA32</strong> = <code><span class="n">2.9387365777049509324e-39_f32</span></code>
-      </dt>
-      
-      <dd class="entry-const-doc">
-        <p>Min value within which <code>Math.gamma : Float32</code> returns non-<code>Infinity</code>.</p>
-      </dd>
-      
-    
-      <dt class="entry-const" id="UNDERFLOW_MATH_GAMMA64">
-        <strong>UNDERFLOW_MATH_GAMMA64</strong> = <code><span class="n">5.5626846462680059280e-309</span></code>
-      </dt>
-      
-      <dd class="entry-const-doc">
-        <p>Min value within which <code>Math.gamma : Float64</code> returns non-<code>Infinity</code>.</p>
-      </dd>
-      
-    
-  </dl>
+  </ul>
 
 
 
-
+  <h2>
+    <a id="class-method-summary" class="anchor" href="#class-method-summary">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Class Method Summary
+  </h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#init_state(seed:UInt32)-class-method" class="signature"><strong>.init_state</strong>(seed : UInt32)</a>
+        
+          <div class="summary"><p>Generate a state to be used by PRNGs as a <code>StaticArray(UInt32, N)</code>.</p></div>
+        
+      </li>
+    
+  </ul>
 
 
 
@@ -318,10 +286,97 @@ Min value within which <code>Math.exp : Float64</code> returns non-<code>Infinit
 
 <div class="methods-inherited">
   
+    
+
+
+    
+
+
+    
+
+
+  
+    
+
+
+    
+
+
+    
+
+
+  
+    
+
+
+    
+
+
+    
+
+
+  
 </div>
 
 
+  <h2>
+    <a id="constructor-detail" class="anchor" href="#constructor-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Constructor Detail
+  </h2>
+  
+    <div class="entry-detail" id="new-class-method">
+      <div class="signature">
+        
+        def self.<strong>new</strong>
 
+        <a class="method-permalink" href="#new-class-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+
+
+
+  <h2>
+    <a id="class-method-detail" class="anchor" href="#class-method-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Class Method Detail
+  </h2>
+  
+    <div class="entry-detail" id="init_state(seed:UInt32)-class-method">
+      <div class="signature">
+        
+        def self.<strong>init_state</strong>(seed : UInt32)
+
+        <a class="method-permalink" href="#init_state(seed:UInt32)-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Generate a state to be used by PRNGs as a <code>StaticArray(UInt32, N)</code>.</p>
+
+<p><strong>@parameters</strong>:</p>
+
+<ul><li><code>seed</code>: initial seed; it must be an <code>UInt32</code>.</li></ul>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
 
 
 

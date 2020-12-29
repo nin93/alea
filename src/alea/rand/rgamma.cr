@@ -3,7 +3,7 @@ require "./rnorm"
 require "./rexp"
 
 module Alea
-  struct Random
+  struct Random(G)
     # Generate a *gamma-distributed*, pseudo-random `Float64`.
     #
     # **@parameters**:

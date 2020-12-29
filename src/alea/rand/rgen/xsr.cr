@@ -4,15 +4,12 @@ require "../../core/cgen"
 require "./prng"
 
 module Alea
-  # `Alea::XSR128` is the default pseudo-random number generator, with a state of 128 bits, and therefore
-  # a period of 2^64 -1. It is as fast as `Random::PCG32`, but yielding a 64-bit unsigned integer.
-  # If more state is needed, check `Alea::XSR256`.
-  #
-  # ```text
-  #  - period:     2^128 -1
-  #  - state type: UInt64
-  # ```
-  class XSR128 < Alea::PRNG
+  # `Alea::XSR128`, pseudo-random number generator loaded with a state of 128 bits
+  # and therefore a period of 2^128 -1. It is as fast as `Random::PCG32`.
+  # If more period is needed, check out `Alea::XSR256`.
+  class XSR128
+    include Alea::PRNG(UInt32, UInt64)
+
     STATE_STORAGE_32 = 4
     STATE_STORAGE_64 = 2
 
@@ -43,27 +40,6 @@ module Alea
     def initialize(@seed32 : UInt32, @seed64 : UInt64)
       @state32 = Alea::Core::Mulberry32(STATE_STORAGE_32).init_state @seed32
       @state64 = Alea::Core::SplitMix64(STATE_STORAGE_64).init_state @seed64
-    end
-
-    # Initializes the PRNG with initial seed.
-    #
-    # **@parameters**:
-    # * `seed`: value as input to init. the state of both 32-bit and 64-bit generators.
-    #
-    # **@references**:
-    # * `Alea::Core::Mulberry32(4)#init_state`.
-    # * `Alea::Core::SplitMix64(2)#init_state`.
-    #
-    # **@exceptions**:
-    # * `Alea::UndefinedError` if `seed` is negative.
-    def self.new(seed : Int)
-      Alea.param_check(seed, :<, 0, :seed, :"XSR128.new")
-      new seed.to_u32, seed.to_u64
-    end
-
-    # Initializes the PRNG with initial seeds readed from system resources.
-    def self.new
-      self.secure
     end
 
     # Generate a uniform-distributed random `UInt32`.
@@ -196,14 +172,12 @@ module Alea
     end
   end
 
-  # `Alea::XSR256` is the alternative PRNG loaded with 256 bits of state.
-  # As a result of this, double steps are needed and therefore performance is affected.
-  #
-  # ```text
-  #  - period:     2^256 -1
-  #  - state type: UInt64
-  # ```
-  class XSR256 < Alea::PRNG
+  # `Alea::XSR256`, pseudo-random number generator loaded with 256 bits of state
+  # and therefore a period of 2^256 -1. It is slower (2x) than `Alea::XSR128`.
+  # If more period is needed, check out `Alea::MT19937`.
+  class XSR256
+    include Alea::PRNG(UInt64, UInt64)
+
     STATE_STORAGE_64 = 4
 
     # The state this PRNG refers to when called for generating `UInt32`s.
@@ -238,31 +212,6 @@ module Alea
     def initialize(@seed32 : UInt64, @seed64 : UInt64)
       @state32 = Alea::Core::SplitMix64(STATE_STORAGE_64).init_state @seed32
       @state64 = Alea::Core::SplitMix64(STATE_STORAGE_64).init_state @seed64
-    end
-
-    # Initializes the PRNG with initial seed.
-    #
-    # **@parameters**:
-    # * `seed`: value as input to init. the state of both 32-bit and 64-bit generators.
-    #
-    # **@references**:
-    # * `Alea::Core::SplitMix64(4)#init_state`.
-    #
-    # **@exceptions**:
-    # * `Alea::UndefinedError` if `seed` is negative.
-    def self.new(seed : Int)
-      Alea.param_check(seed, :<, 0, :seed, :"XSR256.new")
-      new seed.to_u64, seed.to_u64
-    end
-
-    # Initializes the PRNG with initial seeds readed from system resources.
-    def self.new
-      self.secure
-    end
-
-    #
-    def self.type_32
-      UInt64
     end
 
     # Generate a uniform-distributed random `UInt32`.

@@ -2,7 +2,7 @@ require "../core/cpois"
 require "../core/cerr"
 
 module Alea
-  struct Random
+  struct Random(G)
     # Generate a *poisson-distributed*, pseudo-random `Int64`.
     #
     # **@parameters**:

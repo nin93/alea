@@ -18,7 +18,7 @@
 </svg>
 
   <meta id="repository-name" content="alea">
-  <title>Alea::XSR256 - alea prng-module-dev</title>
+  <title>Alea::MT19937 - alea prng-module-dev</title>
   <script type="text/javascript">
     CrystalDocs.base_path = "../";
   </script>
@@ -131,7 +131,7 @@
       
     </li>
   
-  <li class=" " data-id="alea/Alea/MT19937" data-name="alea::mt19937">
+  <li class=" current" data-id="alea/Alea/MT19937" data-name="alea::mt19937">
       <a href="../Alea/MT19937.html">MT19937</a>
       
     </li>
@@ -166,7 +166,7 @@
       
     </li>
   
-  <li class=" current" data-id="alea/Alea/XSR256" data-name="alea::xsr256">
+  <li class=" " data-id="alea/Alea/XSR256" data-name="alea::xsr256">
       <a href="../Alea/XSR256.html">XSR256</a>
       
     </li>
@@ -185,12 +185,12 @@
 <div class="main-content">
 <h1 class="type-name">
 
-  <span class="kind">class</span> Alea::XSR256
+  <span class="kind">class</span> Alea::MT19937
 
 </h1>
 
 
-  <ul class="superclass-hierarchy"><li class="superclass"><a href="../Alea/XSR256.html">Alea::XSR256</a></li><li class="superclass">Reference</li><li class="superclass">Object</li></ul>
+  <ul class="superclass-hierarchy"><li class="superclass"><a href="../Alea/MT19937.html">Alea::MT19937</a></li><li class="superclass">Reference</li><li class="superclass">Object</li></ul>
 
 
 
@@ -204,9 +204,12 @@
     Overview
   </h2>
 
-  <p><code><a href="../Alea/XSR256.html">Alea::XSR256</a></code>, pseudo-random number generator loaded with 256 bits of state
-and therefore a period of 2^256 -1. It is slower (2x) than <code><a href="../Alea/XSR128.html">Alea::XSR128</a></code>.
-If more period is needed, check out <code><a href="../Alea/MT19937.html">Alea::MT19937</a></code>.</p>
+  <p><code><a href="../Alea/MT19937.html">MT19937</a></code> engine is an implementation of the famous
+<a href="http://www.math.sci.hiroshima-u.ac.jp/~m-mat/MT/emt.html" target="_blank">Mersenne Twister</a>, developed by Makoto
+Matsumoto and Takuji Nishimura: the most widely used PRNG passing most strict statistical tests.</p>
+
+<pre><code class="language-text"> - period: (2^19937)-1
+ - init:   `Alea::Core::Knuth32`</code></pre>
 
 
 
@@ -222,7 +225,7 @@ If more period is needed, check out <code><a href="../Alea/MT19937.html">Alea::M
   </h2>
   <ul class="other-types-list">
     
-      <li class="other-type"><a href="../Alea/PRNG.html">Alea::PRNG(UInt64, UInt64)</a></li>
+      <li class="other-type"><a href="../Alea/PRNG.html">Alea::PRNG(UInt32, UInt32)</a></li>
     
   </ul>
 
@@ -259,18 +262,38 @@ If more period is needed, check out <code><a href="../Alea/MT19937.html">Alea::M
   
   <dl>
     
-      <dt class="entry-const" id="JUMP_64B_128">
-        <strong>JUMP_64B_128</strong> = <code><span class="t">StaticArray</span>[<span class="n">1733541517147835066_u64</span>, <span class="n">15395012609548302636_u64</span>, <span class="n">12202545078643706282_u64</span>, <span class="n">4155657270789760540_u64</span>]</code>
+      <dt class="entry-const" id="LOWER_MASK">
+        <strong>LOWER_MASK</strong> = <code><span class="n">2147483647_u64</span></code>
       </dt>
       
     
-      <dt class="entry-const" id="JUMP_64B_192">
-        <strong>JUMP_64B_192</strong> = <code><span class="t">StaticArray</span>[<span class="n">8566230491382795199_u64</span>, <span class="n">14195432079911694259_u64</span>, <span class="n">8606660816089834049_u64</span>, <span class="n">4111957640723818037_u64</span>]</code>
+      <dt class="entry-const" id="MATRIX_A">
+        <strong>MATRIX_A</strong> = <code><span class="n">2567483615_u64</span></code>
       </dt>
       
     
-      <dt class="entry-const" id="STATE_STORAGE_64">
-        <strong>STATE_STORAGE_64</strong> = <code><span class="n">4</span></code>
+      <dt class="entry-const" id="STATE_LEN_M">
+        <strong>STATE_LEN_M</strong> = <code><span class="n">397</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="STATE_LEN_N">
+        <strong>STATE_LEN_N</strong> = <code><span class="n">624</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="TEMPERING_B">
+        <strong>TEMPERING_B</strong> = <code><span class="n">2636928640_u64</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="TEMPERING_C">
+        <strong>TEMPERING_C</strong> = <code><span class="n">4022730752_u64</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="UPPER_MASK">
+        <strong>UPPER_MASK</strong> = <code><span class="n">2147483648_u64</span></code>
       </dt>
       
     
@@ -289,7 +312,7 @@ If more period is needed, check out <code><a href="../Alea/MT19937.html">Alea::M
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#new(seed32:UInt64,seed64:UInt64)-class-method" class="signature"><strong>.new</strong>(seed32 : UInt64, seed64 : UInt64)</a>
+        <a href="#new(seed32:UInt32,seed64:UInt32)-class-method" class="signature"><strong>.new</strong>(seed32 : UInt32, seed64 : UInt32)</a>
         
           <div class="summary"><p>Initializes the PRNG with initial seeds.</p></div>
         
@@ -352,20 +375,6 @@ If more period is needed, check out <code><a href="../Alea/MT19937.html">Alea::M
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#jump_32(long:Bool=false):self-instance-method" class="signature"><strong>#jump_32</strong>(long : Bool = <span class="n">false</span>) : <span class="k">self</span></a>
-        
-          <div class="summary"><p>Performs an advance over the 32-bit state.</p></div>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#jump_64(long:Bool=false):self-instance-method" class="signature"><strong>#jump_64</strong>(long : Bool = <span class="n">false</span>) : <span class="k">self</span></a>
-        
-          <div class="summary"><p>Performs an advance over the 32-bit state.</p></div>
-        
-      </li>
-    
-      <li class="entry-summary">
         <a href="#next_u32:UInt32-instance-method" class="signature"><strong>#next_u32</strong> : UInt32</a>
         
           <div class="summary"><p>Generate a uniform-distributed random <code>UInt32</code>.</p></div>
@@ -389,7 +398,7 @@ If more period is needed, check out <code><a href="../Alea/MT19937.html">Alea::M
   
     
 
-  <h3>Instance methods inherited from module <code><a href="../Alea/PRNG.html">Alea::PRNG(UInt64, UInt64)</a></code></h3>
+  <h3>Instance methods inherited from module <code><a href="../Alea/PRNG.html">Alea::PRNG(UInt32, UInt32)</a></code></h3>
   
   
     <a href="../Alea/PRNG.html#next_f32:Float32-instance-method" class="tooltip">
@@ -426,7 +435,7 @@ If more period is needed, check out <code><a href="../Alea/MT19937.html">Alea::M
 
     
 
-  <h3>Constructor methods inherited from module <code><a href="../Alea/PRNG.html">Alea::PRNG(UInt64, UInt64)</a></code></h3>
+  <h3>Constructor methods inherited from module <code><a href="../Alea/PRNG.html">Alea::PRNG(UInt32, UInt32)</a></code></h3>
   
   
     <a href="../Alea/PRNG.html#new(seed32:S32,seed64:S64)-class-method" class="tooltip">
@@ -472,12 +481,12 @@ If more period is needed, check out <code><a href="../Alea/MT19937.html">Alea::M
     Constructor Detail
   </h2>
   
-    <div class="entry-detail" id="new(seed32:UInt64,seed64:UInt64)-class-method">
+    <div class="entry-detail" id="new(seed32:UInt32,seed64:UInt32)-class-method">
       <div class="signature">
         
-        def self.<strong>new</strong>(seed32 : UInt64, seed64 : UInt64)
+        def self.<strong>new</strong>(seed32 : UInt32, seed64 : UInt32)
 
-        <a class="method-permalink" href="#new(seed32:UInt64,seed64:UInt64)-class-method">#</a>
+        <a class="method-permalink" href="#new(seed32:UInt32,seed64:UInt32)-class-method">#</a>
       </div>
       
         <div class="doc">
@@ -486,14 +495,11 @@ If more period is needed, check out <code><a href="../Alea/MT19937.html">Alea::M
 
 <p><strong>@parameters</strong>:</p>
 
-<ul><li><code>seed32</code>: value as input to init. the state of 32-bit generators.</li><li><code>seed64</code>: value as input to init. the state of 64-bit generators.</li></ul>
-
-<p><strong>@note</strong>: both 32-bit and 64-bit states are internally processed
-  as arrays of <code>UInt64</code>, and so is the type of seeds.</p>
+<ul><li><code>seed32</code>: value as input to initialize the state of 32-bit generators.</li><li><code>seed64</code>: value as input to initialize the state of 64-bit generators.</li></ul>
 
 <p><strong>@references</strong>:</p>
 
-<ul><li><code><a href="../Alea/Core/SplitMix64.html">Alea::Core::SplitMix64</a>(4)#init_state</code>.</li></ul>
+<ul><li><code><a href="../Alea/Core/Knuth32.html">Alea::Core::Knuth32</a>(624)#init_state</code>.</li></ul>
 
 <p><strong>@exceptions</strong>:</p>
 
@@ -614,54 +620,6 @@ If more period is needed, check out <code><a href="../Alea/MT19937.html">Alea::M
     Instance Method Detail
   </h2>
   
-    <div class="entry-detail" id="jump_32(long:Bool=false):self-instance-method">
-      <div class="signature">
-        
-        def <strong>jump_32</strong>(long : Bool = <span class="n">false</span>) : <span class="k">self</span>
-
-        <a class="method-permalink" href="#jump_32(long:Bool=false):self-instance-method">#</a>
-      </div>
-      
-        <div class="doc">
-          
-          <p>Performs an advance over the 32-bit state.
-This is the equivalent of <code>2^128</code> calls to <code><a href="../Alea/XSR256.html#next_u32:UInt32-instance-method">#next_u32</a></code>.</p>
-
-<p><strong>@parameters</strong>:</p>
-
-<ul><li><code>long</code>: flag to advance the state by <code>2^192</code> calls.</li></ul>
-        </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="jump_64(long:Bool=false):self-instance-method">
-      <div class="signature">
-        
-        def <strong>jump_64</strong>(long : Bool = <span class="n">false</span>) : <span class="k">self</span>
-
-        <a class="method-permalink" href="#jump_64(long:Bool=false):self-instance-method">#</a>
-      </div>
-      
-        <div class="doc">
-          
-          <p>Performs an advance over the 32-bit state.
-This is the equivalent of <code>2^128</code> calls to <code><a href="../Alea/XSR256.html#next_u32:UInt32-instance-method">#next_u32</a></code>.</p>
-
-<p><strong>@parameters</strong>:</p>
-
-<ul><li><code>long</code>: flag to advance the state by <code>2^192</code> calls.</li></ul>
-        </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
     <div class="entry-detail" id="next_u32:UInt32-instance-method">
       <div class="signature">
         
@@ -676,8 +634,8 @@ This is the equivalent of <code>2^128</code> calls to <code><a href="../Alea/XSR
 
 <p><strong>@examples</strong>:</p>
 
-<pre><code>rng <span class="o">=</span> <span class="t">Alea</span><span class="t">::</span><span class="t">XSR128</span>.<span class="k">new</span>
-rng.next_u32 <span class="c"># =&gt; 1767702788</span></code></pre>
+<pre><code>rng <span class="o">=</span> <span class="t">Alea</span><span class="t">::</span><span class="t">MT19937</span>.<span class="k">new</span>
+rng.next_u32 <span class="c"># =&gt; 2604272037</span></code></pre>
         </div>
       
       <br/>
@@ -700,8 +658,8 @@ rng.next_u32 <span class="c"># =&gt; 1767702788</span></code></pre>
 
 <p><strong>@examples</strong>:</p>
 
-<pre><code>rng <span class="o">=</span> <span class="t">Alea</span><span class="t">::</span><span class="t">XSR256</span>.<span class="k">new</span>
-rng.next_u <span class="c"># =&gt; 9136120204379184874</span></code></pre>
+<pre><code>rng <span class="o">=</span> <span class="t">Alea</span><span class="t">::</span><span class="t">MT19937</span>.<span class="k">new</span>
+rng.next_u64 <span class="c"># =&gt; 11185263231290389851</span></code></pre>
         </div>
       
       <br/>

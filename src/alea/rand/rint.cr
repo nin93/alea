@@ -1,5 +1,5 @@
 module Alea
-  struct Random
+  struct Random(G)
     # Generate a *uniform-distributed*, pseudo-random `UInt64`.
     #
     # **@references**: `#next_u64`.
