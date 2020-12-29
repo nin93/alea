@@ -1,8 +1,13 @@
 require "./src/alea"
 
-# This is an example of custom PRNG, provide the following features to
-# make it a valid extension of `Alea::Random`.
-class CustomEngine < Alea::PRNG
+# This is an example of custom PRNG; provide the following features to
+# make it a valid extension for `Alea::Random`.
+class CustomEngine
+  # Include the module that provides methods and constructors: `Alea::PRNG(S32, S64)`,
+  # where `S32` and `S64` will be targeted as the types of seeds and internal
+  # elements of the states.
+  include Alea::PRNG(UInt64, UInt64)
+
   # Define both your 32 and 64 bits seeds variables.
   @seed32 : UInt64
   @seed64 : UInt64
@@ -12,14 +17,15 @@ class CustomEngine < Alea::PRNG
   @state32 : StaticArray(UInt64, 4)
   @state64 : StaticArray(UInt64, 4)
 
+  # A constructor which take both seeds as arguments is needed
   def initialize(@seed32 : UInt64, @seed64 : UInt64)
     # It is recommended to use `Alea::Core::SplitMix64` and `Alea::Core::Mulberry32`
     # to initialize 64 and 32 state bits, respectively; use `self.init_state` to
     # obtain the generated state. If you want to use them as initializers,
     # remember that they actually return `StaticArray` of unsigned integers.
 
-    # Here @state32, although is meant to generate 32-bit unsigned
-    # integers, stores 64-bit unsigned integers internally.
+    # Although @state32 is meant to generate 32-bit unsigned
+    # integers, it stores 64-bit unsigned integers internally.
     # 4 is the number of integers stored: this means that this state is
     # loaded with 256 bits.
     @state32 = Alea::Core::SplitMix64(4).init_state @seed32
@@ -37,16 +43,6 @@ class CustomEngine < Alea::PRNG
   def next_u64 : UInt64
     # ...
   end
-
-  # In order for `Alea::Random` to wrap properly your generator,
-  # it should know what type your seeds (and thus states) are.
-  # This is achieved by asking defined class method for them:
-  # `self.type_32` and `self.type_64`.
-  # They are already defined in `PRNG`, but since our @state32 does not match
-  # the standard value of `PRNG.type_32` (`UInt32`), we need to override it.
-  def self.type_32
-    UInt64
-  end
 end
 
 # Cryptographically secure PRNG seeded with system resources.
@@ -57,7 +53,7 @@ seeded = CustomEngine.new 12345, 54321
 
 # Now we are able to bind your generator to `Alea::Random` and
 # make proper calls to constructors:
-Alea::Random.new CustomEngine
+Alea::Random(CustomEngine).new
 
 # (Or from an already initialized instance of a PRNG):
 Alea::Random.new prng: CustomEngine.new(12345, 54321)

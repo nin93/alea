@@ -89,7 +89,7 @@ require "alea"
 
 `Random` is the interface provided to perform sampling:
 ```crystal
-random = Alea::Random.new
+random = Alea::Random(Alea::XSR128).new
 random.normal # => -0.36790519967553736 : Float64
 
 # Append '32' to call the single-precision version
@@ -99,7 +99,7 @@ random.normal32 # => 0.19756398 : Float32
 It also accepts an initial seed to reproduce the same seemingly random events across runs:
 ```crystal
 seed = 9377
-random = Alea::Random.new(seed)
+random = Alea::Random(Alea::XSR128).new(seed)
 random.exp # => 0.10203669577353723 : Float64
 ```
 
@@ -110,7 +110,7 @@ over arguments passed to prevent bad data generation or inner exceptions.
 In order to avoid checks (might be slow in a large data generation) you must use their
 unsafe version by prepending `next_` to them:
 ```crystal
-random = Alea::Random.new
+random = Alea::Random(Alea::XSR128).new
 random.normal(loc: 0, sigma: 0)      # raises Alea::UndefinedError: sigma is 0 or negative.
 random.next_normal(loc: 0, sigma: 0) # these might raise internal exceptions.
 ```
@@ -143,23 +143,11 @@ exquisite statistical properties as well.
 [Mersenne Twister](http://www.math.sci.hiroshima-u.ac.jp/~m-mat/MT/emt.html), developed by Makoto
 Matsumoto and Takuji Nishimura: the most widely used PRNG passing most strict statistical tests.
 
-By default, the PRNG in use by `Random` is `XSR128`. You can, though, pass the desired
-engine as an argument to the constructor. Here is an example using `XSR256`:
-```crystal
-random = Alea::Random.new(Alea::XSR256)
-random.float # => 0.6533582874035311 : Float64
-random.prng  # => Alea::XSR256
-
-# Or seeded as well
-random = Alea::Random.new(193, Alea::XSR256)
-random.float # => 0.4507930323670787 : Float64
-```
-
 #### Custom PRNG
 
-All PRNGs in this library inherit from `PRNG`. You are allowed to build your own custom
-PRNG by inheriting the above parent class and defining the methods needed by `Alea::Random`
-to ensure proper repeatability and sampling, as described in this 
+All PRNGs in this library inherit from a module: `PRNG`. You are allowed to build
+your own custom PRNG by including the module and defining the methods needed by
+`Alea::Random` to ensure proper repeatability and sampling, as described in this 
 [example](https://github.com/nin93/alea/blob/master/custom_prng.cr).
 
 It is worth noting that in these implementations `#next_u32` and `#next_u64`

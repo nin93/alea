@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="generator" content="Crystal Docs 0.35.1">
-<meta name="crystal_docs.project_version" content="mersenne-twister-dev">
+<meta name="crystal_docs.project_version" content="prng-module-dev">
 <meta name="crystal_docs.project_name" content="alea">
 
 
@@ -18,7 +18,7 @@
 </svg>
 
   <meta id="repository-name" content="alea">
-  <title>alea mersenne-twister-dev</title>
+  <title>alea prng-module-dev</title>
   <script type="text/javascript">
   CrystalDocs.base_path = "";
   </script>
@@ -39,7 +39,7 @@
       </h1>
 
       <span class="project-version">
-        mersenne-twister-dev
+        prng-module-dev
       </span>
     </div>
   </div>
@@ -146,12 +146,12 @@
       
     </li>
   
-  <li class=" " data-id="alea/Alea/PRNG" data-name="alea::prng">
+  <li class=" " data-id="alea/Alea/PRNG" data-name="alea::prng(s32, s64)">
       <a href="Alea/PRNG.html">PRNG</a>
       
     </li>
   
-  <li class=" " data-id="alea/Alea/Random" data-name="alea::random">
+  <li class=" " data-id="alea/Alea/Random" data-name="alea::random(g)">
       <a href="Alea/Random.html">Random</a>
       
     </li>
@@ -301,7 +301,7 @@ programming languages standards providing a nice and clean interface.</p>
 
 <p><code>Random</code> is the interface provided to perform sampling:</p>
 
-<pre><code class="language-crystal">random <span class="o">=</span> <span class="t">Alea</span><span class="t">::</span><span class="t">Random</span>.<span class="k">new</span>
+<pre><code class="language-crystal">random <span class="o">=</span> <span class="t">Alea</span><span class="t">::</span><span class="t">Random</span>(<span class="t">Alea</span><span class="t">::</span><span class="t">XSR128</span>).<span class="k">new</span>
 random.normal <span class="c"># =&gt; -0.36790519967553736 : Float64</span>
 
 <span class="c"># Append &#39;32&#39; to call the single-precision version</span>
@@ -310,7 +310,7 @@ random.normal32 <span class="c"># =&gt; 0.19756398 : Float32</span></code></pre>
 <p>It also accepts an initial seed to reproduce the same seemingly random events across runs:</p>
 
 <pre><code class="language-crystal">seed <span class="o">=</span> <span class="n">9377</span>
-random <span class="o">=</span> <span class="t">Alea</span><span class="t">::</span><span class="t">Random</span>.<span class="k">new</span>(seed)
+random <span class="o">=</span> <span class="t">Alea</span><span class="t">::</span><span class="t">Random</span>(<span class="t">Alea</span><span class="t">::</span><span class="t">XSR128</span>).<span class="k">new</span>(seed)
 random.exp <span class="c"># =&gt; 0.10203669577353723 : Float64</span></code></pre>
 
 <h4><a id="unsafe-methods" class="anchor" href="#unsafe-methods">
@@ -324,7 +324,7 @@ over arguments passed to prevent bad data generation or inner exceptions.
 In order to avoid checks (might be slow in a large data generation) you must use their
 unsafe version by prepending <code>next_</code> to them:</p>
 
-<pre><code class="language-crystal">random <span class="o">=</span> <span class="t">Alea</span><span class="t">::</span><span class="t">Random</span>.<span class="k">new</span>
+<pre><code class="language-crystal">random <span class="o">=</span> <span class="t">Alea</span><span class="t">::</span><span class="t">Random</span>(<span class="t">Alea</span><span class="t">::</span><span class="t">XSR128</span>).<span class="k">new</span>
 random.normal(loc: <span class="n">0</span>, sigma: <span class="n">0</span>)      <span class="c"># raises Alea::UndefinedError: sigma is 0 or negative.</span>
 random.next_normal(loc: <span class="n">0</span>, sigma: <span class="n">0</span>) <span class="c"># these might raise internal exceptions.</span></code></pre>
 
@@ -359,26 +359,15 @@ exquisite statistical properties as well.</p>
 <a href="http://www.math.sci.hiroshima-u.ac.jp/~m-mat/MT/emt.html" target="_blank">Mersenne Twister</a>, developed by Makoto
 Matsumoto and Takuji Nishimura: the most widely used PRNG passing most strict statistical tests.</p>
 
-<p>By default, the PRNG in use by <code>Random</code> is <code>XSR128</code>. You can, though, pass the desired
-engine as an argument to the constructor. Here is an example using <code>XSR256</code>:</p>
-
-<pre><code class="language-crystal">random <span class="o">=</span> <span class="t">Alea</span><span class="t">::</span><span class="t">Random</span>.<span class="k">new</span>(<span class="t">Alea</span><span class="t">::</span><span class="t">XSR256</span>)
-random.float <span class="c"># =&gt; 0.6533582874035311 : Float64</span>
-random.prng  <span class="c"># =&gt; Alea::XSR256</span>
-
-<span class="c"># Or seeded as well</span>
-random <span class="o">=</span> <span class="t">Alea</span><span class="t">::</span><span class="t">Random</span>.<span class="k">new</span>(<span class="n">193</span>, <span class="t">Alea</span><span class="t">::</span><span class="t">XSR256</span>)
-random.float <span class="c"># =&gt; 0.4507930323670787 : Float64</span></code></pre>
-
 <h4><a id="custom-prng" class="anchor" href="#custom-prng">
   <svg class="octicon-link" aria-hidden="true">
     <use href="#octicon-link"/>
   </svg>
 </a>Custom PRNG</h4>
 
-<p>All PRNGs in this library inherit from <code>PRNG</code>. You are allowed to build your own custom
-PRNG by inheriting the above parent class and defining the methods needed by <code><a href="Alea/Random.html">Alea::Random</a></code>
-to ensure proper repeatability and sampling, as described in this 
+<p>All PRNGs in this library inherit from a module: <code>PRNG</code>. You are allowed to build
+your own custom PRNG by including the module and defining the methods needed by
+<code><a href="Alea/Random.html">Alea::Random</a></code> to ensure proper repeatability and sampling, as described in this 
 <a href="https://github.com/nin93/alea/blob/master/custom_prng.cr" target="_blank">example</a>.</p>
 
 <p>It is worth noting that in these implementations <code>#next_u32</code> and <code>#next_u64</code>

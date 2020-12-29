@@ -11,7 +11,6 @@ module Alea
   # seed = 9377
   # random = Alea::Random(Alea::XSR128).new(seed)
   # random.float # => 0.08153691876972058
-  # ```
   #
   # # Passing an instance of a PRNG:
   # xsr = Alea::XSR256.new 9377, 2353
@@ -25,8 +24,6 @@ module Alea
   #
   # The following implementations are taken from **numpy**.
   struct Random(G)
-    DEFAULT = Alea::XSR128
-
     # The PRNG in use by this struct.
     getter prng : G
 

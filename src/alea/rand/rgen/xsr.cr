@@ -4,14 +4,9 @@ require "../../core/cgen"
 require "./prng"
 
 module Alea
-  # `Alea::XSR128` is the default pseudo-random number generator, with a state of 128 bits, and therefore
-  # a period of 2^64 -1. It is as fast as `Random::PCG32`, but yielding a 64-bit unsigned integer.
-  # If more state is needed, check `Alea::XSR256`.
-  #
-  # ```text
-  #  - period:     2^128 -1
-  #  - state type: UInt64
-  # ```
+  # `Alea::XSR128`, pseudo-random number generator loaded with a state of 128 bits
+  # and therefore a period of 2^128 -1. It is as fast as `Random::PCG32`.
+  # If more period is needed, check out `Alea::XSR256`.
   class XSR128
     include Alea::PRNG(UInt32, UInt64)
 
@@ -177,13 +172,9 @@ module Alea
     end
   end
 
-  # `Alea::XSR256` is the alternative PRNG loaded with 256 bits of state.
-  # As a result of this, double steps are needed and therefore performance is affected.
-  #
-  # ```text
-  #  - period:     2^256 -1
-  #  - state type: UInt64
-  # ```
+  # `Alea::XSR256`, pseudo-random number generator loaded with 256 bits of state
+  # and therefore a period of 2^256 -1. It is slower (2x) than `Alea::XSR128`.
+  # If more period is needed, check out `Alea::MT19937`.
   class XSR256
     include Alea::PRNG(UInt64, UInt64)
 

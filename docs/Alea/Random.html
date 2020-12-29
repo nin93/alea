@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="generator" content="Crystal Docs 0.35.1">
-<meta name="crystal_docs.project_version" content="mersenne-twister-dev">
+<meta name="crystal_docs.project_version" content="prng-module-dev">
 <meta name="crystal_docs.project_name" content="alea">
 
 
@@ -18,7 +18,7 @@
 </svg>
 
   <meta id="repository-name" content="alea">
-  <title>Alea::Random - alea mersenne-twister-dev</title>
+  <title>Alea::Random(G) - alea prng-module-dev</title>
   <script type="text/javascript">
     CrystalDocs.base_path = "../";
   </script>
@@ -39,7 +39,7 @@
       </h1>
 
       <span class="project-version">
-        mersenne-twister-dev
+        prng-module-dev
       </span>
     </div>
   </div>
@@ -146,12 +146,12 @@
       
     </li>
   
-  <li class=" " data-id="alea/Alea/PRNG" data-name="alea::prng">
+  <li class=" " data-id="alea/Alea/PRNG" data-name="alea::prng(s32, s64)">
       <a href="../Alea/PRNG.html">PRNG</a>
       
     </li>
   
-  <li class=" current" data-id="alea/Alea/Random" data-name="alea::random">
+  <li class=" current" data-id="alea/Alea/Random" data-name="alea::random(g)">
       <a href="../Alea/Random.html">Random</a>
       
     </li>
@@ -185,12 +185,12 @@
 <div class="main-content">
 <h1 class="type-name">
 
-  <span class="kind">struct</span> Alea::Random
+  <span class="kind">struct</span> Alea::Random(G)
 
 </h1>
 
 
-  <ul class="superclass-hierarchy"><li class="superclass"><a href="../Alea/Random.html">Alea::Random</a></li><li class="superclass">Struct</li><li class="superclass">Value</li><li class="superclass">Object</li></ul>
+  <ul class="superclass-hierarchy"><li class="superclass"><a href="../Alea/Random.html">Alea::Random(G)</a></li><li class="superclass">Struct</li><li class="superclass">Value</li><li class="superclass">Object</li></ul>
 
 
 
@@ -206,26 +206,21 @@
 
   <p><code><a href="../Alea/Random.html">Alea::Random</a></code> provides the interface for pseudo-random generations and distribution sampling.</p>
 
+<p><span class="flag purple">NOTE</span>  due to <a href="https://github.com/crystal-lang/crystal/issues/4678" target="_blank">this</a>, you still need
+to specify the generator as the generic type, as it does not accept a default one.</p>
+
 <pre><code>seed <span class="o">=</span> <span class="n">9377</span>
-random <span class="o">=</span> <span class="t">Alea</span><span class="t">::</span><span class="t">Random</span>.<span class="k">new</span>(seed)
-random       <span class="c"># =&gt; Alea::Random</span>
-random.float <span class="c"># =&gt; 0.08153691876972058</span></code></pre>
+random <span class="o">=</span> <span class="t">Alea</span><span class="t">::</span><span class="t">Random</span>(<span class="t">Alea</span><span class="t">::</span><span class="t">XSR128</span>).<span class="k">new</span>(seed)
+random.float <span class="c"># =&gt; 0.08153691876972058</span>
 
-<p>The default generator is <code><a href="../Alea/XSR128.html">Alea::XSR128</a></code>. To use any other PRNG in this library call the constructor
-passing its class name. Here is an example using <code><a href="../Alea/XSR256.html">Alea::XSR256</a></code>, loaded with 256 bits of state:</p>
-
-<pre><code>seed <span class="o">=</span> <span class="n">12345</span>
-random <span class="o">=</span> <span class="t">Alea</span><span class="t">::</span><span class="t">Random</span>.<span class="k">new</span>(seed, <span class="t">Alea</span><span class="t">::</span><span class="t">XSR256</span>)
-random.prng <span class="c"># =&gt; Alea::XSR256</span>
-
-<span class="c"># Works with an instance as well:</span>
+<span class="c"># Passing an instance of a PRNG:</span>
 xsr <span class="o">=</span> <span class="t">Alea</span><span class="t">::</span><span class="t">XSR256</span>.<span class="k">new</span> <span class="n">9377</span>, <span class="n">2353</span>
 random <span class="o">=</span> <span class="t">Alea</span><span class="t">::</span><span class="t">Random</span>.<span class="k">new</span> xsr
 random.prng <span class="c"># =&gt; Alea::XSR256</span></code></pre>
 
-<p><code><a href="../Alea/Random.html">Alea::Random</a></code> can accept a custom PRNG as well: check <code><a href="../Alea/PRNG.html">Alea::PRNG</a></code> and the
-<a href="https://github.com/nin93/alea/blob/master/custom_prng.cr" target="_blank">example</a>
-provided to build your own.</p>
+<p>As long as it includes the <code><a href="../Alea/PRNG.html">Alea::PRNG</a></code> module, you can build your own generator: check
+out the <a href="https://github.com/nin93/alea/blob/master/custom_prng.cr" target="_blank">example</a> provided in
+the documentation to make it a valid extension for <code><a href="../Alea/Random.html">Alea::Random</a></code>.</p>
 
 <p>The following implementations are taken from <strong>numpy</strong>.</p>
 
@@ -254,25 +249,6 @@ provided to build your own.</p>
 
 
 
-  
-    <h2>
-      <a id="constant-summary" class="anchor" href="#constant-summary">
-  <svg class="octicon-link" aria-hidden="true">
-    <use href="#octicon-link"/>
-  </svg>
-</a>
-      Constant Summary
-    </h2>
-  
-  <dl>
-    
-      <dt class="entry-const" id="DEFAULT">
-        <strong>DEFAULT</strong> = <code><span class="t">Alea</span><span class="t">::</span><span class="t">XSR128</span></code>
-      </dt>
-      
-    
-  </dl>
-
 
 
   <h2>
@@ -286,28 +262,28 @@ provided to build your own.</p>
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#new(seed32:Int,seed64:Int,prng:Alea::PRNG.class=DEFAULT)-class-method" class="signature"><strong>.new</strong>(seed32 : Int, seed64 : Int, prng : <span class="t">Alea</span><span class="t">::</span><span class="t">PRNG</span>.<span class="k">class</span> = <span class="t">DEFAULT</span>)</a>
+        <a href="#new(seed32:Int,seed64:Int)-class-method" class="signature"><strong>.new</strong>(seed32 : Int, seed64 : Int)</a>
         
           <div class="summary"><p>Initializes the PRNG with initial seeds.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#new(prng:Alea::PRNG)-class-method" class="signature"><strong>.new</strong>(prng : Alea::PRNG)</a>
-        
-          <div class="summary"><p>Initializes the PRNG with initial instance.</p></div>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#new(seed:Int,prng:Alea::PRNG.class=DEFAULT)-class-method" class="signature"><strong>.new</strong>(seed : Int, prng : <span class="t">Alea</span><span class="t">::</span><span class="t">PRNG</span>.<span class="k">class</span> = <span class="t">DEFAULT</span>)</a>
+        <a href="#new(seed:Int)-class-method" class="signature"><strong>.new</strong>(seed : Int)</a>
         
           <div class="summary"><p>Initializes the PRNG with initial seed.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#new(prng:Alea::PRNG.class=DEFAULT)-class-method" class="signature"><strong>.new</strong>(prng : <span class="t">Alea</span><span class="t">::</span><span class="t">PRNG</span>.<span class="k">class</span> = <span class="t">DEFAULT</span>)</a>
+        <a href="#new(prng:G)-class-method" class="signature"><strong>.new</strong>(prng : G)</a>
+        
+          <div class="summary"><p>Initializes the PRNG with initial instance.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#new-class-method" class="signature"><strong>.new</strong></a>
         
           <div class="summary"><p>Initializes the PRNG with initial state readed from system resources.</p></div>
         
@@ -841,7 +817,7 @@ provided to build your own.</p>
       </li>
     
       <li class="entry-summary">
-        <a href="#prng:Alea::PRNG-instance-method" class="signature"><strong>#prng</strong> : Alea::PRNG</a>
+        <a href="#prng:G-instance-method" class="signature"><strong>#prng</strong> : G</a>
         
           <div class="summary"><p>The PRNG in use by this struct.</p></div>
         
@@ -967,12 +943,12 @@ provided to build your own.</p>
     Constructor Detail
   </h2>
   
-    <div class="entry-detail" id="new(seed32:Int,seed64:Int,prng:Alea::PRNG.class=DEFAULT)-class-method">
+    <div class="entry-detail" id="new(seed32:Int,seed64:Int)-class-method">
       <div class="signature">
         
-        def self.<strong>new</strong>(seed32 : Int, seed64 : Int, prng : <span class="t">Alea</span><span class="t">::</span><span class="t">PRNG</span>.<span class="k">class</span> = <span class="t">DEFAULT</span>)
+        def self.<strong>new</strong>(seed32 : Int, seed64 : Int)
 
-        <a class="method-permalink" href="#new(seed32:Int,seed64:Int,prng:Alea::PRNG.class=DEFAULT)-class-method">#</a>
+        <a class="method-permalink" href="#new(seed32:Int,seed64:Int)-class-method">#</a>
       </div>
       
         <div class="doc">
@@ -981,7 +957,7 @@ provided to build your own.</p>
 
 <p><strong>@parameters</strong>:</p>
 
-<ul><li><code>seed32</code>: value as input to init. the state of 32-bit generators of <code><a href="../Alea/Random.html#prng:Alea::PRNG-instance-method">#prng</a></code>.</li><li><code>seed64</code>: value as input to init. the state of 64-bit generators of <code><a href="../Alea/Random.html#prng:Alea::PRNG-instance-method">#prng</a></code>.</li><li><code><a href="../Alea/Random.html#prng:Alea::PRNG-instance-method">#prng</a></code>: the PRNG in use by this instance.</li></ul>
+<ul><li><code>seed32</code>: value as input to init. the state of 32-bit generators of <code><a href="../Alea/Random.html#prng:G-instance-method">#prng</a></code>.</li><li><code>seed64</code>: value as input to init. the state of 64-bit generators of <code><a href="../Alea/Random.html#prng:G-instance-method">#prng</a></code>.</li></ul>
 
 <p><strong>@exceptions</strong>:</p>
 
@@ -994,35 +970,12 @@ provided to build your own.</p>
       </div>
     </div>
   
-    <div class="entry-detail" id="new(prng:Alea::PRNG)-class-method">
+    <div class="entry-detail" id="new(seed:Int)-class-method">
       <div class="signature">
         
-        def self.<strong>new</strong>(prng : <a href="../Alea/PRNG.html">Alea::PRNG</a>)
+        def self.<strong>new</strong>(seed : Int)
 
-        <a class="method-permalink" href="#new(prng:Alea::PRNG)-class-method">#</a>
-      </div>
-      
-        <div class="doc">
-          
-          <p>Initializes the PRNG with initial instance.</p>
-
-<p><strong>@parameters</strong>:</p>
-
-<ul><li><code><a href="../Alea/Random.html#prng:Alea::PRNG-instance-method">#prng</a></code>: the PRNG instance itself.</li></ul>
-        </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="new(seed:Int,prng:Alea::PRNG.class=DEFAULT)-class-method">
-      <div class="signature">
-        
-        def self.<strong>new</strong>(seed : Int, prng : <span class="t">Alea</span><span class="t">::</span><span class="t">PRNG</span>.<span class="k">class</span> = <span class="t">DEFAULT</span>)
-
-        <a class="method-permalink" href="#new(seed:Int,prng:Alea::PRNG.class=DEFAULT)-class-method">#</a>
+        <a class="method-permalink" href="#new(seed:Int)-class-method">#</a>
       </div>
       
         <div class="doc">
@@ -1031,7 +984,7 @@ provided to build your own.</p>
 
 <p><strong>@parameters</strong>:</p>
 
-<ul><li><code>seed</code>: initial seed as input for generating the state of <code><a href="../Alea/Random.html#prng:Alea::PRNG-instance-method">#prng</a></code>.</li><li><code><a href="../Alea/Random.html#prng:Alea::PRNG-instance-method">#prng</a></code>: the PRNG in use by this instance.</li></ul>
+<ul><li><code>seed</code>: initial seed as input for generating the state of <code><a href="../Alea/Random.html#prng:G-instance-method">#prng</a></code>.</li></ul>
 
 <p><strong>@exceptions</strong>:</p>
 
@@ -1044,21 +997,43 @@ provided to build your own.</p>
       </div>
     </div>
   
-    <div class="entry-detail" id="new(prng:Alea::PRNG.class=DEFAULT)-class-method">
+    <div class="entry-detail" id="new(prng:G)-class-method">
       <div class="signature">
         
-        def self.<strong>new</strong>(prng : <span class="t">Alea</span><span class="t">::</span><span class="t">PRNG</span>.<span class="k">class</span> = <span class="t">DEFAULT</span>)
+        def self.<strong>new</strong>(prng : G)
 
-        <a class="method-permalink" href="#new(prng:Alea::PRNG.class=DEFAULT)-class-method">#</a>
+        <a class="method-permalink" href="#new(prng:G)-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Initializes the PRNG with initial instance.</p>
+
+<p><span class="flag purple">NOTE</span>  due to <a href="https://github.com/crystal-lang/crystal/issues/4678" target="_blank">this</a>, you still need
+to specify the generator as the generic type, as it does not accept a default one.</p>
+
+<p><strong>@parameters</strong>:</p>
+
+<ul><li><code><a href="../Alea/Random.html#prng:G-instance-method">#prng</a></code>: the PRNG instance itself.</li></ul>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="new-class-method">
+      <div class="signature">
+        
+        def self.<strong>new</strong>
+
+        <a class="method-permalink" href="#new-class-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Initializes the PRNG with initial state readed from system resources.</p>
-
-<p><strong>@parameters</strong>:</p>
-
-<ul><li><code><a href="../Alea/Random.html#prng:Alea::PRNG-instance-method">#prng</a></code>: the PRNG in use by this instance.</li></ul>
         </div>
       
       <br/>
@@ -3036,12 +3011,12 @@ Unparsed version for <code><a href="../Alea/Random.html#uint32:UInt32-instance-m
       </div>
     </div>
   
-    <div class="entry-detail" id="prng:Alea::PRNG-instance-method">
+    <div class="entry-detail" id="prng:G-instance-method">
       <div class="signature">
         
-        def <strong>prng</strong> : <a href="../Alea/PRNG.html">Alea::PRNG</a>
+        def <strong>prng</strong> : G
 
-        <a class="method-permalink" href="#prng:Alea::PRNG-instance-method">#</a>
+        <a class="method-permalink" href="#prng:G-instance-method">#</a>
       </div>
       
         <div class="doc">
