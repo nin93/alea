@@ -2,7 +2,7 @@ require "../core/cerr"
 require "./rchisq"
 
 module Alea
-  struct Random
+  struct Random(G)
     # Generate a *f-snedecor-distributed*, pseudo-random `Float64`.
     #
     # **@parameters**:

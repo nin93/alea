@@ -1,7 +1,7 @@
 require "./rgamma"
 
 module Alea
-  struct Random
+  struct Random(G)
     # Generate a *chi-square-distributed*, pseudo-random `Float64`.
     #
     # **@parameters**:

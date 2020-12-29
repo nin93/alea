@@ -1,7 +1,7 @@
 require "./rint"
 
 module Alea
-  struct Random
+  struct Random(G)
     # Generate a *uniform-distributed*, pseudo-random `Float64` in range `[0.0, 1.0)`.
     #
     # **@references**: `#next_f64`.

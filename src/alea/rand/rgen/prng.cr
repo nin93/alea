@@ -1,8 +1,9 @@
 module Alea
-  # `Alea::PRNG(S32, S64)` is the module all PRNGs include in order to work with `Alea::Random`.
+  # `Alea::PRNG` is the module all PRNGs include in order to work with `Alea::Random`.
   #
-  # Include this module to build your custom engine, like in the
-  # [example](https://github.com/nin93/alea/blob/master/custom_prng.cr) provided in the documentation.
+  # As long as it includes the `Alea::PRNG` module, you can build your own generator: check
+  # out the [example](https://github.com/nin93/alea/blob/master/custom_prng.cr) provided in
+  # the documentation to make it a valid extension for `Alea::Random`.
   module PRNG(S32, S64)
     # Must initialize states from seeds.
     abstract def initialize(seed32 : S32, seed64 : S64)

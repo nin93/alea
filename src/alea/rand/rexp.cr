@@ -2,7 +2,7 @@ require "../core/czig"
 require "../core/cerr"
 
 module Alea
-  struct Random
+  struct Random(G)
     # Generate a *exp-distributed*, pseudo-random `Float64`.
     #
     # **@parameters**:

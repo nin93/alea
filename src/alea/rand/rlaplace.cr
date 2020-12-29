@@ -1,7 +1,7 @@
 require "../core/cerr"
 
 module Alea
-  struct Random
+  struct Random(G)
     # Generate a *laplace-distributed*, pseudo-random `Float64`.
     #
     # **@parameters**:

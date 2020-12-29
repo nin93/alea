@@ -2,7 +2,7 @@ require "../core/cerr"
 require "./rnorm"
 
 module Alea
-  struct Random
+  struct Random(G)
     # Generate a *log-normal-distributed*, pseudo-random `Float64`.
     #
     # **@parameters**:
