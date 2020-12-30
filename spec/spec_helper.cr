@@ -5,6 +5,12 @@ require "../src/alea"
 SpecRng   = Alea::Random(Alea::XSR128).new 9377
 SpecNdata = 5_000_000
 
+AleaEngines = [
+  Alea::XSR128,
+  Alea::XSR256,
+  Alea::MT19937,
+]
+
 def stdev(ary, mean, n)
   ans = 0.0
   ary.each do |e|

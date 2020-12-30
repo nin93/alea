@@ -3,54 +3,51 @@ require "./spec_helper"
 describe Alea do
   describe Alea::Random do
     describe "new" do
-      it "creates a new instance from class" do
-        Alea::Random(Alea::XSR128).new.should be_a(Alea::Random(Alea::XSR128))
-      end
+      {% for engine in AleaEngines %}
+        context "{{engine.id}}" do
+          it "creates a new instance from generic type" do
+            Alea::Random({{engine.id}}).new.should be_a(Alea::Random({{engine.id}}))
+          end
 
-      it "creates a new instance from seeds" do
-        Alea::Random(Alea::XSR128).new(12345).should be_a(Alea::Random(Alea::XSR128))
-        Alea::Random(Alea::XSR128).new(12345, 54321).should be_a(Alea::Random(Alea::XSR128))
-      end
+          it "creates a new instance from instance" do
+            Alea::Random.new({{engine.id}}).should be_a(Alea::Random({{engine.id}}))
+          end
 
-      context "XSR128" do
-        it "creates a new instance from class" do
-          Alea::Random(Alea::XSR128).new.should be_a(Alea::Random(Alea::XSR128))
+          it "creates a new instance from seeds" do
+            Alea::Random({{engine.id}}).new(12345).should be_a(Alea::Random({{engine.id}}))
+            Alea::Random({{engine.id}}).new(12345, 54321).should be_a(Alea::Random({{engine.id}}))
+          end
+
+          it "generates sames numbers from same initial state concurrently" do
+            rng1 = Alea::Random({{engine.id}}).new 93
+            rng2 = Alea::Random({{engine.id}}).new 93
+
+            1_000_000.times do
+              rng1.next_u64.should eq(rng2.next_u64)
+            end
+          end
         end
-
-        it "creates a new instance from seeds" do
-          Alea::Random(Alea::XSR128).new(12345).should be_a(Alea::Random(Alea::XSR128))
-          Alea::Random(Alea::XSR128).new(12345, 54321).should be_a(Alea::Random(Alea::XSR128))
-        end
-      end
-
-      context "XSR256" do
-        it "creates a new instance from class" do
-          Alea::Random(Alea::XSR256).new.should be_a(Alea::Random(Alea::XSR256))
-        end
-
-        it "creates a new instance from seeds" do
-          Alea::Random(Alea::XSR256).new(12345).should be_a(Alea::Random(Alea::XSR256))
-          Alea::Random(Alea::XSR256).new(12345, 54321).should be_a(Alea::Random(Alea::XSR256))
-        end
-      end
+      {% end %}
     end
 
-    it "generates sames numbers from same initial state concurrently" do
-      rng1 = Alea::Random(Alea::XSR128).new 93
-      rng2 = Alea::Random(Alea::XSR128).new 93
+    {% for method, type in {
+                             "next_i32" => "Int32",
+                             "next_i64" => "Int64",
+                             "next_u32" => "UInt32",
+                             "next_u64" => "UInt64",
+                             "next_f32" => "Float32",
+                             "next_f64" => "Float64",
+                           } %}
 
-      1_000_000.times do
-        rng1.next_u64.should eq(rng2.next_u64)
+      describe "{{method.id}}" do
+        {% for engine in AleaEngines %}
+          context "{{engine.id}}" do
+            it "returns the next generated {{type.id}}" do
+              Alea::Random({{engine.id}}).new.{{method.id}}.should be_a({{type.id}})
+            end
+          end
+        {% end %}
       end
-    end
-
-    it "generates different numbers from different initial state" do
-      rng1 = Alea::Random(Alea::XSR128).new 93
-      rng2 = Alea::Random(Alea::XSR128).new 193
-
-      1_000_000.times do
-        rng1.next_u64.should_not eq(rng2.next_u64)
-      end
-    end
+    {% end %}
   end
 end
