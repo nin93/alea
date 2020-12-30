@@ -68,6 +68,16 @@ module Alea
       new G.secure
     end
 
+    # Returns the next generated `Int32`.
+    def next_i32 : Int32
+      @prng.next_i32
+    end
+
+    # Returns the next generated `Int64`.
+    def next_i64 : Int64
+      @prng.next_i64
+    end
+
     # Returns the next generated `UInt32`.
     def next_u32 : UInt32
       @prng.next_u32
