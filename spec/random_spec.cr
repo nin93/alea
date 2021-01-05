@@ -10,7 +10,7 @@ describe Alea do
           end
 
           it "creates a new instance from instance" do
-            Alea::Random.new({{engine.id}}).should be_a(Alea::Random({{engine.id}}))
+            Alea::Random.new({{engine.id}}.new).should be_a(Alea::Random({{engine.id}}))
           end
 
           it "creates a new instance from seeds" do
