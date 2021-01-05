@@ -1,5 +1,20 @@
 module Alea
   struct Random(G)
+    # Wrapper around `#uint`: extends sampling capabilities to Crystal
+    # stdlib `Indexable(T)` module includers.
+    #
+    # ```
+    # rng = Alea::Random(Alea::MT19937).new 27
+    # ary = [6, 3, 2, 9]
+    # tup = {6, 3, 2, 9}
+    #
+    # ary.sample rng # => 6
+    # typ.sample rng # => 9
+    # ```
+    def rand(*args)
+      uint *args
+    end
+
     # Generate a *uniform-distributed*, pseudo-random `UInt64`.
     #
     # **@references**: `#next_u64`.

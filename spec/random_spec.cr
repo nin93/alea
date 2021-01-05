@@ -49,5 +49,13 @@ describe Alea do
         {% end %}
       end
     {% end %}
+
+    describe "rand" do
+      it "correctly samples from arrays" do
+        rng = Alea::Random(Alea::MT19937).new 27
+        [6, 3, 2, 9].sample(rng).should be_a Int32
+        {6, 3, 2, 9}.sample(rng).should be_a Int32
+      end
+    end
   end
 end
