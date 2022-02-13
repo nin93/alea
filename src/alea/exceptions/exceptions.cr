@@ -9,5 +9,5 @@ module Alea
   class InfinityError < Exception; end
 
   # Exception raised when algorithm has not converged within a fixed limit of iterations.
-  class NoConvergeError < Exception; end
+  class DivergencenceError < Exception; end
 end

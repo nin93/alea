@@ -1,5 +1,5 @@
 module Alea::Fn
-  # Iteration limits within which `Alea::NoConvergeError` is not raised
+  # Iteration limits within which `Alea::DivergencenceError` is not raised
   MAX_ITER = 10_000
 
   # Single precision tolerance
@@ -77,7 +77,7 @@ module Alea::Fn
     # * `uorl`: symbol to request the `:upper` or `:lower` inc. gamma function.
     #
     # **@exceptions**:
-    # * `Alea::NoConvergeError` if no convergence occurs within `MAX_ITER` iterations.
+    # * `Alea::DivergencenceError` if no convergence occurs within `MAX_ITER` iterations.
     def self.incomplete(a : Float64, x : Float64, uorl : Symbol) : Float64
       if x > (a + 1.0)
         # Compute the Upper Incomplete Gamma function
@@ -128,7 +128,7 @@ module Alea::Fn
     # * `Alea::Fn::Gamma.incomplete`
     #
     # **@exceptions**:
-    # * `Alea::NoConvergeError` if no convergence occurs within `MAX_ITER` iterations.
+    # * `Alea::DivergencenceError` if no convergence occurs within `MAX_ITER` iterations.
     def self.incomplete_reg(a : Float64, x : Float64, uorl : Symbol) : Float64
       self.incomplete(a, x, uorl) / Math.gamma(a)
     end
@@ -144,7 +144,7 @@ module Alea::Fn
     # * `Alea::Fn::Gamma.incomplete`
     #
     # **@exceptions**:
-    # * `Alea::NoConvergeError` if no convergence occurs within `MAX_ITER` iterations.
+    # * `Alea::DivergencenceError` if no convergence occurs within `MAX_ITER` iterations.
     def self.incomplete_reg(a : Float32, x : Float32, uorl : Symbol) : Float32
       self.incomplete(a, x, uorl) / Math.gamma(a)
     end
@@ -191,7 +191,7 @@ module Alea::Fn
       #   -- if abs(Delta_j-1) < TOL then exit for loop
       # - return fj
       #
-      # Raises `Alea::NoConvergeError` if no convergence has occurred within *MAX_ITER* iterations.
+      # Raises `Alea::DivergencenceError` if no convergence has occurred within *MAX_ITER* iterations.
       private def self.continued_fractions_eval{{s}}(fa : Proc(Int32, Float{{s}}), fb : Proc(Int32, Float{{s}})) : Float{{s}}
         fi = fb.call(0)
 
@@ -229,7 +229,7 @@ module Alea::Fn
 
         # Check if expansion has converged
         if itr >= MAX_ITER
-          raise Alea::NoConvergeError.new "Iteration out of bounds"
+          raise Alea::DivergencenceError.new "Iteration out of bounds"
         end
 
         fi
@@ -261,7 +261,7 @@ module Alea::Fn
         end
         # Check if series has converged
         if itr >= MAX_ITER
-          raise Alea::NoConvergeError.new "Iteration out of bounds"
+          raise Alea::DivergencenceError.new "Iteration out of bounds"
         end
         ginc
       end
