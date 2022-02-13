@@ -8,6 +8,7 @@ module Alea
   # Exception raised when `Infinity` is passed as argument.
   class InfinityError < Exception; end
 
-  # Exception raised when algorithm has not converged within a fixed limit of iterations.
-  class DivergencenceError < Exception; end
+  # Exception raised when algorithm has not converged within a fixed
+  # number of iterations.
+  class DivergenceError < Exception; end
 end
