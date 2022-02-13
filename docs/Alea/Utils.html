@@ -13,7 +13,7 @@
 <script type="text/javascript" src="../js/doc.js"></script>
 
   <meta name="repository-name" content="alea">
-  <title>Alea::UndefinedError - alea develop</title>
+  <title>Alea::Utils - alea develop</title>
   <script type="text/javascript">
     CrystalDocs.base_path = "../";
   </script>
@@ -166,12 +166,12 @@
       
     </li>
   
-  <li class=" current" data-id="alea/Alea/UndefinedError" data-name="alea::undefinederror">
+  <li class=" " data-id="alea/Alea/UndefinedError" data-name="alea::undefinederror">
       <a href="../Alea/UndefinedError.html">UndefinedError</a>
       
     </li>
   
-  <li class=" " data-id="alea/Alea/Utils" data-name="alea::utils">
+  <li class=" current" data-id="alea/Alea/Utils" data-name="alea::utils">
       <a href="../Alea/Utils.html">Utils</a>
       
     </li>
@@ -200,26 +200,13 @@
 <div class="main-content">
 <h1 class="type-name">
 
-  <span class="kind">class</span> Alea::UndefinedError
+  <span class="kind">module</span> Alea::Utils
 
 </h1>
 
 
-  <ul class="superclass-hierarchy"><li class="superclass"><a href="../Alea/UndefinedError.html">Alea::UndefinedError</a></li><li class="superclass">Exception</li><li class="superclass">Reference</li><li class="superclass">Object</li></ul>
 
 
-
-
-  <h2>
-    <a id="overview" class="anchor" href="#overview">
-  <svg class="octicon-link" aria-hidden="true">
-    <use href="#octicon-link"/>
-  </svg>
-</a>
-    Overview
-  </h2>
-
-  <p>Exception raised when distribution conditions are not met.</p>
 
 
 
@@ -244,8 +231,15 @@
   </h2>
   
     
-      <a href="https://github.com/nin93/alea/blob/6be7ba2209831de003a0638ada377e6b775a974b/src/alea/exceptions/exceptions.cr#L3" target="_blank">
-        alea/exceptions/exceptions.cr
+      <a href="https://github.com/nin93/alea/blob/6be7ba2209831de003a0638ada377e6b775a974b/src/alea/utils/macros/param_check.cr#L1" target="_blank">
+        alea/utils/macros/param_check.cr
+      </a>
+    
+    <br/>
+  
+    
+      <a href="https://github.com/nin93/alea/blob/6be7ba2209831de003a0638ada377e6b775a974b/src/alea/utils/macros/sanity_check.cr#L1" target="_blank">
+        alea/utils/macros/sanity_check.cr
       </a>
     
     <br/>
@@ -261,39 +255,35 @@
 
 
 
+  <h2>
+    <a id="macro-summary" class="anchor" href="#macro-summary">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Macro Summary
+  </h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#param_check%28x%2Cop%2Cy%2Cparam%2Ccaller%29-macro" class="signature"><strong>param_check</strong>(x, op, y, param, caller)</a>
+        
+          <div class="summary"><p>Compile-time expansion for dist.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#sanity_check%28x%2Cparam%2Ccaller%29-macro" class="signature"><strong>sanity_check</strong>(x, param, caller)</a>
+        
+          <div class="summary"><p>Compile-time expansion for sanity (NaN/Infinity) checks over arguments.</p></div>
+        
+      </li>
+    
+  </ul>
+
 
 
 <div class="methods-inherited">
-  
-    
-
-
-    
-
-
-    
-
-
-  
-    
-
-
-    
-
-
-    
-
-
-  
-    
-
-
-    
-
-
-    
-
-
   
 </div>
 
@@ -303,6 +293,81 @@
 
 
 
+
+  <h2>
+    <a id="macro-detail" class="anchor" href="#macro-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Macro Detail
+  </h2>
+  
+    <div class="entry-detail" id="param_check(x,op,y,param,caller)-macro">
+      <div class="signature">
+        
+        macro <strong>param_check</strong>(x, op, y, param, caller)
+
+        <a class="method-permalink" href="#param_check%28x%2Cop%2Cy%2Cparam%2Ccaller%29-macro">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Compile-time expansion for dist. definition checks over arguments.</p>
+<p><strong>@parameters</strong>:</p>
+<ul>
+<li><code>{{x}}</code>: parameter to check through <code>{{op}}</code> with <code>{{y}}</code>.</li>
+<li><code>{{op}}</code>: operator that performs the comparison.</li>
+<li><code>{{y}}</code>: parameter to check through <code>{{op}}</code> with <code>{{x}}</code>.</li>
+<li><code>{{param}}</code>: name of the parameter to display in exception messages.</li>
+<li><code>{{caller}}</code>: name of the method to display in exception messages.</li>
+</ul>
+<p><strong>@exceptions</strong>:</p>
+<ul>
+<li><code><a href="../Alea/UndefinedError.html">Alea::UndefinedError</a></code> if <code>{{x}}</code> <code>{{op}}</code> <code>{{y}}</code> returns <code>true</code>.</li>
+</ul>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/nin93/alea/blob/6be7ba2209831de003a0638ada377e6b775a974b/src/alea/utils/macros/param_check.cr#L13" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="sanity_check(x,param,caller)-macro">
+      <div class="signature">
+        
+        macro <strong>sanity_check</strong>(x, param, caller)
+
+        <a class="method-permalink" href="#sanity_check%28x%2Cparam%2Ccaller%29-macro">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Compile-time expansion for sanity (NaN/Infinity) checks over arguments.</p>
+<p><strong>@parameters</strong>:</p>
+<ul>
+<li><code>{{x}}</code>: parameter to check.</li>
+<li><code>{{param}}</code>: name of the parameter to display in exception messages.</li>
+<li><code>{{caller}}</code>: name of the method to display in exception messages.</li>
+</ul>
+<p><strong>@exceptions</strong>:</p>
+<ul>
+<li><code><a href="../Alea/NaNError.html">Alea::NaNError</a></code> if <code>{{x}}</code> is <code>NaN</code>.</li>
+<li><code><a href="../Alea/InfinityError.html">Alea::InfinityError</a></code> if <code>{{x}}</code> is <code>Infinity</code>.</li>
+</ul>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/nin93/alea/blob/6be7ba2209831de003a0638ada377e6b775a974b/src/alea/utils/macros/sanity_check.cr#L12" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
 
 
 </div>

@@ -13,7 +13,7 @@
 <script type="text/javascript" src="../js/doc.js"></script>
 
   <meta name="repository-name" content="alea">
-  <title>Alea::UndefinedError - alea develop</title>
+  <title>Alea::Limits - alea develop</title>
   <script type="text/javascript">
     CrystalDocs.base_path = "../";
   </script>
@@ -111,7 +111,7 @@
       
     </li>
   
-  <li class=" " data-id="alea/Alea/Limits" data-name="alea::limits">
+  <li class=" current" data-id="alea/Alea/Limits" data-name="alea::limits">
       <a href="../Alea/Limits.html">Limits</a>
       
     </li>
@@ -166,7 +166,7 @@
       
     </li>
   
-  <li class=" current" data-id="alea/Alea/UndefinedError" data-name="alea::undefinederror">
+  <li class=" " data-id="alea/Alea/UndefinedError" data-name="alea::undefinederror">
       <a href="../Alea/UndefinedError.html">UndefinedError</a>
       
     </li>
@@ -200,26 +200,13 @@
 <div class="main-content">
 <h1 class="type-name">
 
-  <span class="kind">class</span> Alea::UndefinedError
+  <span class="kind">module</span> Alea::Limits
 
 </h1>
 
 
-  <ul class="superclass-hierarchy"><li class="superclass"><a href="../Alea/UndefinedError.html">Alea::UndefinedError</a></li><li class="superclass">Exception</li><li class="superclass">Reference</li><li class="superclass">Object</li></ul>
 
 
-
-
-  <h2>
-    <a id="overview" class="anchor" href="#overview">
-  <svg class="octicon-link" aria-hidden="true">
-    <use href="#octicon-link"/>
-  </svg>
-</a>
-    Overview
-  </h2>
-
-  <p>Exception raised when distribution conditions are not met.</p>
 
 
 
@@ -244,14 +231,102 @@
   </h2>
   
     
-      <a href="https://github.com/nin93/alea/blob/6be7ba2209831de003a0638ada377e6b775a974b/src/alea/exceptions/exceptions.cr#L3" target="_blank">
-        alea/exceptions/exceptions.cr
+      <a href="https://github.com/nin93/alea/blob/6be7ba2209831de003a0638ada377e6b775a974b/src/alea/limits.cr#L2" target="_blank">
+        alea/limits.cr
       </a>
     
     <br/>
   
 
 
+
+  
+    <h2>
+      <a id="constant-summary" class="anchor" href="#constant-summary">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+      Constant Summary
+    </h2>
+  
+  <dl>
+    
+      <dt class="entry-const" id="OVERFLOW_MATH_EXP32">
+        <strong>OVERFLOW_MATH_EXP32</strong> = <code><span class="n">8.8722835540771484374e+01</span></code>
+      </dt>
+      
+      <dd class="entry-const-doc">
+        <p>Max value within which <code>Math.exp : Float32</code> returns non-<code>Infinity</code>.</p>
+      </dd>
+      
+    
+      <dt class="entry-const" id="OVERFLOW_MATH_EXP64">
+        <strong>OVERFLOW_MATH_EXP64</strong> = <code><span class="n">7.0978271289338402993e+02</span></code>
+      </dt>
+      
+      <dd class="entry-const-doc">
+        <p>Max value within which <code>Math.exp : Float64</code> returns non-<code>Infinity</code>.</p>
+      </dd>
+      
+    
+      <dt class="entry-const" id="OVERFLOW_MATH_GAMMA32">
+        <strong>OVERFLOW_MATH_GAMMA32</strong> = <code><span class="n">3.504009819030761e+01</span></code>
+      </dt>
+      
+      <dd class="entry-const-doc">
+        <p>Max value within which <code>Math.gamma : Float32</code> returns non-<code>Infinity</code>.</p>
+      </dd>
+      
+    
+      <dt class="entry-const" id="OVERFLOW_MATH_GAMMA64">
+        <strong>OVERFLOW_MATH_GAMMA64</strong> = <code><span class="n">1.716243769563027e+02</span></code>
+      </dt>
+      
+      <dd class="entry-const-doc">
+        <p>Max value within which <code>Math.gamma : Float64</code> returns non-<code>Infinity</code>.</p>
+      </dd>
+      
+    
+      <dt class="entry-const" id="UNDERFLOW_MATH_EXP32">
+        <strong>UNDERFLOW_MATH_EXP32</strong> = <code><span class="n">0.0e+00</span></code>
+      </dt>
+      
+      <dd class="entry-const-doc">
+        <p><span class="flag orange">TODO</span> 
+Min value within which <code>Math.exp : Float32</code> returns non-<code>Infinity</code>.</p>
+      </dd>
+      
+    
+      <dt class="entry-const" id="UNDERFLOW_MATH_EXP64">
+        <strong>UNDERFLOW_MATH_EXP64</strong> = <code><span class="n">0.0e+00</span></code>
+      </dt>
+      
+      <dd class="entry-const-doc">
+        <p><span class="flag orange">TODO</span> 
+Min value within which <code>Math.exp : Float64</code> returns non-<code>Infinity</code>.</p>
+      </dd>
+      
+    
+      <dt class="entry-const" id="UNDERFLOW_MATH_GAMMA32">
+        <strong>UNDERFLOW_MATH_GAMMA32</strong> = <code><span class="n">2.9387365777049509324e-39_f32</span></code>
+      </dt>
+      
+      <dd class="entry-const-doc">
+        <p>Min value within which <code>Math.gamma : Float32</code> returns non-<code>Infinity</code>.</p>
+      </dd>
+      
+    
+      <dt class="entry-const" id="UNDERFLOW_MATH_GAMMA64">
+        <strong>UNDERFLOW_MATH_GAMMA64</strong> = <code><span class="n">5.5626846462680059280e-309</span></code>
+      </dt>
+      
+      <dd class="entry-const-doc">
+        <p>Min value within which <code>Math.gamma : Float64</code> returns non-<code>Infinity</code>.</p>
+      </dd>
+      
+    
+  </dl>
 
 
 
@@ -264,36 +339,6 @@
 
 
 <div class="methods-inherited">
-  
-    
-
-
-    
-
-
-    
-
-
-  
-    
-
-
-    
-
-
-    
-
-
-  
-    
-
-
-    
-
-
-    
-
-
   
 </div>
 

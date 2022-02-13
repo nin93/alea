@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Crystal Docs 1.3.0">
+<meta name="crystal_docs.project_version" content="develop">
+<meta name="crystal_docs.project_name" content="alea">
+
+
+
+<link href="../../css/style.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../../js/doc.js"></script>
+
+  <meta name="repository-name" content="alea">
+  <title>Alea::Fn::Gamma - alea develop</title>
+  <script type="text/javascript">
+    CrystalDocs.base_path = "../../";
+  </script>
+</head>
+<body>
+
+<svg class="hidden">
+  <symbol id="octicon-link" viewBox="0 0 16 16">
+    <path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path>
+  </symbol>
+</svg>
+<div class="sidebar">
+  <div class="sidebar-header">
+    <div class="search-box">
+      <input type="search" class="search-input" placeholder="Search..." spellcheck="false" aria-label="Search">
+    </div>
+
+    <div class="project-summary">
+      <h1 class="project-name">
+        <a href="../../index.html">
+          alea
+        </a>
+      </h1>
+
+      <span class="project-version">
+        develop
+      </span>
+    </div>
+  </div>
+
+  <div class="search-results hidden">
+    <ul class="search-list"></ul>
+  </div>
+
+  <div class="types-list">
+    <ul>
+  
+  <li class="parent open current" data-id="alea/Alea" data-name="alea">
+      <a href="../../Alea.html">Alea</a>
+      
+        <ul>
+  
+  <li class=" " data-id="alea/Alea/CDF" data-name="alea::cdf">
+      <a href="../../Alea/CDF.html">CDF</a>
+      
+    </li>
+  
+  <li class=" " data-id="alea/Alea/DivergenceError" data-name="alea::divergenceerror">
+      <a href="../../Alea/DivergenceError.html">DivergenceError</a>
+      
+    </li>
+  
+  <li class="parent open current" data-id="alea/Alea/Fn" data-name="alea::fn">
+      <a href="../../Alea/Fn.html">Fn</a>
+      
+        <ul>
+  
+  <li class=" current" data-id="alea/Alea/Fn/Gamma" data-name="alea::fn::gamma">
+      <a href="../../Alea/Fn/Gamma.html">Gamma</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="alea/Alea/InfinityError" data-name="alea::infinityerror">
+      <a href="../../Alea/InfinityError.html">InfinityError</a>
+      
+    </li>
+  
+  <li class="parent " data-id="alea/Alea/InitEngines" data-name="alea::initengines">
+      <a href="../../Alea/InitEngines.html">InitEngines</a>
+      
+        <ul>
+  
+  <li class=" " data-id="alea/Alea/InitEngines/Knuth32" data-name="alea::initengines::knuth32(n)">
+      <a href="../../Alea/InitEngines/Knuth32.html">Knuth32</a>
+      
+    </li>
+  
+  <li class=" " data-id="alea/Alea/InitEngines/Mulberry32" data-name="alea::initengines::mulberry32(n)">
+      <a href="../../Alea/InitEngines/Mulberry32.html">Mulberry32</a>
+      
+    </li>
+  
+  <li class=" " data-id="alea/Alea/InitEngines/SplitMix64" data-name="alea::initengines::splitmix64(n)">
+      <a href="../../Alea/InitEngines/SplitMix64.html">SplitMix64</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="alea/Alea/Limits" data-name="alea::limits">
+      <a href="../../Alea/Limits.html">Limits</a>
+      
+    </li>
+  
+  <li class=" " data-id="alea/Alea/MT19937" data-name="alea::mt19937">
+      <a href="../../Alea/MT19937.html">MT19937</a>
+      
+    </li>
+  
+  <li class=" " data-id="alea/Alea/NaNError" data-name="alea::nanerror">
+      <a href="../../Alea/NaNError.html">NaNError</a>
+      
+    </li>
+  
+  <li class=" " data-id="alea/Alea/PRNG" data-name="alea::prng(s32, s64)">
+      <a href="../../Alea/PRNG.html">PRNG</a>
+      
+    </li>
+  
+  <li class=" " data-id="alea/Alea/Random" data-name="alea::random(g)">
+      <a href="../../Alea/Random.html">Random</a>
+      
+    </li>
+  
+  <li class="parent " data-id="alea/Alea/Tables" data-name="alea::tables">
+      <a href="../../Alea/Tables.html">Tables</a>
+      
+        <ul>
+  
+  <li class="parent " data-id="alea/Alea/Tables/Ziggurat" data-name="alea::tables::ziggurat">
+      <a href="../../Alea/Tables/Ziggurat.html">Ziggurat</a>
+      
+        <ul>
+  
+  <li class=" " data-id="alea/Alea/Tables/Ziggurat/Exponential" data-name="alea::tables::ziggurat::exponential">
+      <a href="../../Alea/Tables/Ziggurat/Exponential.html">Exponential</a>
+      
+    </li>
+  
+  <li class=" " data-id="alea/Alea/Tables/Ziggurat/Normal" data-name="alea::tables::ziggurat::normal">
+      <a href="../../Alea/Tables/Ziggurat/Normal.html">Normal</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="alea/Alea/UndefinedError" data-name="alea::undefinederror">
+      <a href="../../Alea/UndefinedError.html">UndefinedError</a>
+      
+    </li>
+  
+  <li class=" " data-id="alea/Alea/Utils" data-name="alea::utils">
+      <a href="../../Alea/Utils.html">Utils</a>
+      
+    </li>
+  
+  <li class=" " data-id="alea/Alea/XSR128" data-name="alea::xsr128">
+      <a href="../../Alea/XSR128.html">XSR128</a>
+      
+    </li>
+  
+  <li class=" " data-id="alea/Alea/XSR256" data-name="alea::xsr256">
+      <a href="../../Alea/XSR256.html">XSR256</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+
+  </div>
+</div>
+
+
+<div class="main-content">
+<h1 class="type-name">
+
+  <span class="kind">module</span> Alea::Fn::Gamma
+
+</h1>
+
+
+
+
+
+  <h2>
+    <a id="overview" class="anchor" href="#overview">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Overview
+  </h2>
+
+  <p>Implementation of the Gamma Special functions (incomplete, incomplete regularized).</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <h2>
+    <a id="defined-in" class="anchor" href="#defined-in">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Defined in:
+  </h2>
+  
+    
+      <a href="https://github.com/nin93/alea/blob/6be7ba2209831de003a0638ada377e6b775a974b/src/alea/functions/gamma.cr#L21" target="_blank">
+        alea/functions/gamma.cr
+      </a>
+    
+    <br/>
+  
+
+
+
+
+
+
+
+  <h2>
+    <a id="class-method-summary" class="anchor" href="#class-method-summary">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Class Method Summary
+  </h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#incomplete%28a%3AFloat64%2Cx%3AFloat64%2Cuorl%3ASymbol%29%3AFloat64-class-method" class="signature"><strong>.incomplete</strong>(a : Float64, x : Float64, uorl : Symbol) : Float64</a>
+        
+          <div class="summary"><p>Estimates the Incomplete Gamma Function</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#incomplete%28a%3AFloat32%2Cx%3AFloat32%2Cuorl%3ASymbol%29%3AFloat32-class-method" class="signature"><strong>.incomplete</strong>(a : Float32, x : Float32, uorl : Symbol) : Float32</a>
+        
+          <div class="summary"><p>Estimates the Incomplete Gamma Function</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#incomplete_reg%28a%3AFloat64%2Cx%3AFloat64%2Cuorl%3ASymbol%29%3AFloat64-class-method" class="signature"><strong>.incomplete_reg</strong>(a : Float64, x : Float64, uorl : Symbol) : Float64</a>
+        
+          <div class="summary"><p>Estimates the Incomplete Regularized Gamma function in double precision.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#incomplete_reg%28a%3AFloat32%2Cx%3AFloat32%2Cuorl%3ASymbol%29%3AFloat32-class-method" class="signature"><strong>.incomplete_reg</strong>(a : Float32, x : Float32, uorl : Symbol) : Float32</a>
+        
+          <div class="summary"><p>Estimates the Incomplete Regularized Gamma function in single precision.</p></div>
+        
+      </li>
+    
+  </ul>
+
+
+
+
+
+
+
+<div class="methods-inherited">
+  
+</div>
+
+
+
+
+  <h2>
+    <a id="class-method-detail" class="anchor" href="#class-method-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Class Method Detail
+  </h2>
+  
+    <div class="entry-detail" id="incomplete(a:Float64,x:Float64,uorl:Symbol):Float64-class-method">
+      <div class="signature">
+        
+        def self.<strong>incomplete</strong>(a : Float64, x : Float64, uorl : Symbol) : Float64
+
+        <a class="method-permalink" href="#incomplete%28a%3AFloat64%2Cx%3AFloat64%2Cuorl%3ASymbol%29%3AFloat64-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Estimates the Incomplete Gamma Function</p>
+<p>When <code>x &gt; (a+1)</code>, the upper gamma function can be evaluated as</p>
+<pre><code class="language-text">                -x    a
+               e   * x
+  G(a,x) ~= --------------
+               cf(a,x)</code></pre>
+<p>where <code>cf(a,x)</code> is the continued fraction defined above, its coefficients
+<code>a(i)</code> and <code>b(i)</code> are implemented in <code>#inc_ctdfr_proc</code>.</p>
+<p>When <code>x &lt; (a+1)</code>, it is more convenient to apply the following Taylor series
+that evaluates the lower incomplete gamma function:</p>
+<pre><code class="language-text">                         inf
+                        -----
+             -x    a    \        G(a)       i
+  g(a,x) ~= e   * x  *   &gt;    ---------- * x
+                        /      G(a+1+i)
+                        -----
+                         i=0</code></pre>
+<p>Applying the following property of the gamma function:</p>
+<pre><code class="language-text">  G(a+1) = a * G(a)</code></pre>
+<p>The Taylor series above can be further simplified to:</p>
+<pre><code class="language-text">                         inf
+                        -----              i
+             -x    a    \                 x
+  g(a,x) ~= e   * x  *   &gt;    -------------------------
+                        /      a * (a+1) * ... * (a+i)
+                        -----
+                         i=0</code></pre>
+<p>Once either a lower or an upper incomplete gamma function is evaluated,
+the other value may be quickly obtained by applying the following
+property of the incomplete gamma function:</p>
+<pre><code class="language-text">  G(a,x) + g(a,x) = G(a)</code></pre>
+<p><strong>@parameters</strong>:</p>
+<ul>
+<li><code>a</code>: parameter of the Incomplete Gamma function.</li>
+<li><code>x</code>: the upper integration limit.</li>
+<li><code>uorl</code>: symbol to request the <code>:upper</code> or <code>:lower</code> inc. gamma function.</li>
+</ul>
+<p><strong>@exceptions</strong>:</p>
+<ul>
+<li><code><a href="../../Alea/DivergenceError.html">Alea::DivergenceError</a></code> if no convergence occurs within <code><a href="../../Alea/Fn.html#MAX_ITER">MAX_ITER</a></code> iterations.</li>
+</ul>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/nin93/alea/blob/6be7ba2209831de003a0638ada377e6b775a974b/src/alea/functions/gamma.cr#L81" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="incomplete(a:Float32,x:Float32,uorl:Symbol):Float32-class-method">
+      <div class="signature">
+        
+        def self.<strong>incomplete</strong>(a : Float32, x : Float32, uorl : Symbol) : Float32
+
+        <a class="method-permalink" href="#incomplete%28a%3AFloat32%2Cx%3AFloat32%2Cuorl%3ASymbol%29%3AFloat32-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Estimates the Incomplete Gamma Function</p>
+<p>When <code>x &gt; (a+1)</code>, the upper gamma function can be evaluated as</p>
+<pre><code class="language-text">                -x    a
+               e   * x
+  G(a,x) ~= --------------
+               cf(a,x)</code></pre>
+<p>where <code>cf(a,x)</code> is the continued fraction defined above, its coefficients
+<code>a(i)</code> and <code>b(i)</code> are implemented in <code>#inc_ctdfr_proc</code>.</p>
+<p>When <code>x &lt; (a+1)</code>, it is more convenient to apply the following Taylor series
+that evaluates the lower incomplete gamma function:</p>
+<pre><code class="language-text">                         inf
+                        -----
+             -x    a    \        G(a)       i
+  g(a,x) ~= e   * x  *   &gt;    ---------- * x
+                        /      G(a+1+i)
+                        -----
+                         i=0</code></pre>
+<p>Applying the following property of the gamma function:</p>
+<pre><code class="language-text">  G(a+1) = a * G(a)</code></pre>
+<p>The Taylor series above can be further simplified to:</p>
+<pre><code class="language-text">                         inf
+                        -----              i
+             -x    a    \                 x
+  g(a,x) ~= e   * x  *   &gt;    -------------------------
+                        /      a * (a+1) * ... * (a+i)
+                        -----
+                         i=0</code></pre>
+<p>Once either a lower or an upper incomplete gamma function is evaluated,
+the other value may be quickly obtained by applying the following
+property of the incomplete gamma function:</p>
+<pre><code class="language-text">  G(a,x) + g(a,x) = G(a)</code></pre>
+<p><strong>@parameters</strong>:</p>
+<ul>
+<li><code>a</code>: parameter of the Incomplete Gamma function.</li>
+<li><code>x</code>: the upper integration limit.</li>
+<li><code>uorl</code>: symbol to request the <code>:upper</code> or <code>:lower</code> inc. gamma function.</li>
+</ul>
+<p><strong>@exceptions</strong>:</p>
+<ul>
+<li><code><a href="../../Alea/DivergenceError.html">Alea::DivergenceError</a></code> if no convergence occurs within <code><a href="../../Alea/Fn.html#MAX_ITER">MAX_ITER</a></code> iterations.</li>
+</ul>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/nin93/alea/blob/6be7ba2209831de003a0638ada377e6b775a974b/src/alea/functions/gamma.cr#L101" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="incomplete_reg(a:Float64,x:Float64,uorl:Symbol):Float64-class-method">
+      <div class="signature">
+        
+        def self.<strong>incomplete_reg</strong>(a : Float64, x : Float64, uorl : Symbol) : Float64
+
+        <a class="method-permalink" href="#incomplete_reg%28a%3AFloat64%2Cx%3AFloat64%2Cuorl%3ASymbol%29%3AFloat64-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Estimates the Incomplete Regularized Gamma function in double precision.</p>
+<p><strong>@parameters</strong>:</p>
+<ul>
+<li><code>a</code>: parameter of the Incomplete Gamma function.</li>
+<li><code>x</code>: the upper integration limit.</li>
+<li><code>uorl</code>: symbol to request the <code>:upper</code> or <code>:lower</code> inc. reg. gamma function.</li>
+</ul>
+<p><strong>@references</strong>:</p>
+<ul>
+<li><code><a href="../../Alea/Fn/Gamma.html#incomplete%28a%3AFloat64%2Cx%3AFloat64%2Cuorl%3ASymbol%29%3AFloat64-class-method">Alea::Fn::Gamma.incomplete</a></code></li>
+</ul>
+<p><strong>@exceptions</strong>:</p>
+<ul>
+<li><code><a href="../../Alea/DivergenceError.html">Alea::DivergenceError</a></code> if no convergence occurs within <code><a href="../../Alea/Fn.html#MAX_ITER">MAX_ITER</a></code> iterations.</li>
+</ul>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/nin93/alea/blob/6be7ba2209831de003a0638ada377e6b775a974b/src/alea/functions/gamma.cr#L132" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="incomplete_reg(a:Float32,x:Float32,uorl:Symbol):Float32-class-method">
+      <div class="signature">
+        
+        def self.<strong>incomplete_reg</strong>(a : Float32, x : Float32, uorl : Symbol) : Float32
+
+        <a class="method-permalink" href="#incomplete_reg%28a%3AFloat32%2Cx%3AFloat32%2Cuorl%3ASymbol%29%3AFloat32-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Estimates the Incomplete Regularized Gamma function in single precision.</p>
+<p><strong>@parameters</strong>:</p>
+<ul>
+<li><code>a</code>: parameter of the Incomplete Gamma function.</li>
+<li><code>x</code>: the upper integration limit.</li>
+<li><code>uorl</code>: symbol to request the <code>:upper</code> or <code>:lower</code> inc. reg. gamma function.</li>
+</ul>
+<p><strong>@references</strong>:</p>
+<ul>
+<li><code><a href="../../Alea/Fn/Gamma.html#incomplete%28a%3AFloat64%2Cx%3AFloat64%2Cuorl%3ASymbol%29%3AFloat64-class-method">Alea::Fn::Gamma.incomplete</a></code></li>
+</ul>
+<p><strong>@exceptions</strong>:</p>
+<ul>
+<li><code><a href="../../Alea/DivergenceError.html">Alea::DivergenceError</a></code> if no convergence occurs within <code><a href="../../Alea/Fn.html#MAX_ITER">MAX_ITER</a></code> iterations.</li>
+</ul>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/nin93/alea/blob/6be7ba2209831de003a0638ada377e6b775a974b/src/alea/functions/gamma.cr#L148" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+
+
+
+
+
+
+</div>
+
+</body>
+</html>
