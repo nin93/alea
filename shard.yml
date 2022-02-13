@@ -4,6 +4,6 @@ version: 0.3.0
 authors:
   - Elia Franzella <eliafranzella@hotmail.it>
 
-crystal: 0.36.0
+crystal: '>= 1.0.0'
 
 license: MIT
