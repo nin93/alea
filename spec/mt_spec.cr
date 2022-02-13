@@ -2,12 +2,6 @@ require "./spec_helper"
 
 describe Alea do
   describe Alea::MT19937 do
-    describe "Alea::MT19937.secure" do
-      it "returns a new instance from class" do
-        Alea::MT19937.secure.should be_a(Alea::MT19937)
-      end
-    end
-
     it "returns a new instance from class" do
       Alea::MT19937.new.should be_a(Alea::MT19937)
     end

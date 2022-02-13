@@ -35,16 +35,19 @@ module Alea
 
       # Initializes the PRNG with initial seeds readed from system resources.
       def self.new
-        self.secure
-      end
-
-      # Returns an instamce of this PRNG with initial seeds readed from system resources.
-      def self.secure
         # Cryptographically secure PRNG
         secure = ::Random::ISAAC.new
         seed32 = secure.rand S32
         seed64 = secure.rand S64
         new seed32, seed64
+      end
+
+      # Returns an instamce of this PRNG with initial seeds readed from system resources.
+      #
+      # Deprecated: use `Random.new`.
+      @[Deprecated]
+      def self.secure
+        new
       end
     end
 

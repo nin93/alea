@@ -64,7 +64,7 @@ module Alea
 
     # Initializes the PRNG with initial state readed from system resources.
     def self.new
-      new G.secure
+      new G.new
     end
 
     # Returns the next generated `Int32`.
