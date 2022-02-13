@@ -65,37 +65,37 @@ describe Alea do
 
         it "raises Alea::NaNError if left bound is NaN" do
           expect_raises(Alea::NaNError) do
-            SpecRng.float32 ((0.0 / 0.0)..0.0)
+            SpecRng.float32 (0.0 / 0.0)..0.0
           end
         end
 
         it "raises Alea::InfinityError if left bound is Infinity" do
           expect_raises(Alea::InfinityError) do
-            SpecRng.float32 ((1.0 / 0.0)..0.0)
+            SpecRng.float32 (1.0 / 0.0)..0.0
           end
         end
 
         it "raises Alea::NaNError if right bound is NaN" do
           expect_raises(Alea::NaNError) do
-            SpecRng.float32 (0.0..(0.0 / 0.0))
+            SpecRng.float32 0.0..(0.0 / 0.0)
           end
         end
 
         it "raises Alea::InfinityError if right bound is Infinity" do
           expect_raises(Alea::InfinityError) do
-            SpecRng.float32 (0.0..(1.0 / 0.0))
+            SpecRng.float32 0.0..(1.0 / 0.0)
           end
         end
 
         it "raises Alea::UndefinedError if range is badly ordered" do
           expect_raises(Alea::UndefinedError) do
-            SpecRng.float32 (1.0..0.0)
+            SpecRng.float32 1.0..0.0
           end
         end
 
         it "raises Alea::UndefinedError if range is badly choosen" do
           expect_raises(Alea::UndefinedError) do
-            SpecRng.float32 (1.0...1.0)
+            SpecRng.float32 1.0...1.0
           end
         end
 

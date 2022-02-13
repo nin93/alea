@@ -105,7 +105,7 @@ module Alea
     private def __next_normal32 : Float32
       while true
         r = @prng.next_u32
-        rabs = Int32.new (r >> 9)
+        rabs = Int32.new(r >> 9)
         idx = r & 0xff
         x = ((r >> 8) & 0x1 == 1 ? -rabs : rabs) * Core::Normal::W32[idx]
         # this returns 99.3% of the time on 1st try
