@@ -9,7 +9,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        crystal: [latest, nightly]
+        crystal: [latest]
     runs-on: ubuntu-latest
     steps:
       - name: Download source
