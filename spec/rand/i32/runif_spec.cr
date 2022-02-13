@@ -65,19 +65,19 @@ describe Alea do
 
         it "raises Alea::UndefinedError if range is negative" do
           expect_raises(Alea::UndefinedError) do
-            SpecRng.uint32 (-1..0)
+            SpecRng.uint32 -1..0
           end
         end
 
         it "raises Alea::UndefinedError if range is badly ordered" do
           expect_raises(Alea::UndefinedError) do
-            SpecRng.uint32 (1..0)
+            SpecRng.uint32 1..0
           end
         end
 
         it "raises Alea::UndefinedError if range is badly choosen" do
           expect_raises(Alea::UndefinedError) do
-            SpecRng.uint32 (1...1)
+            SpecRng.uint32 1...1
           end
         end
 
