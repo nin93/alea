@@ -19,12 +19,18 @@ module Alea
     # * `Alea::NaNError` if any of the arguments is `NaN`.
     # * `Alea::InfinityError` if any of the arguments is `Infinity`.
     # * `Alea::UndefinedError` if `df` is negative or zero.
+    def fs(df1, df2)
+      __fs64 df1, df2
+    end
+
+    # Deprecated: use `Random#fs`
+    @[Deprecated]
     def f(df1, df2)
-      __f64 df1, df2
+      __fs64 df1, df2
     end
 
     # Run-time argument sanitizer for `#f`.
-    private def __f64(df1 : Number, df2 : Number) : Float64
+    private def __fs64(df1 : Number, df2 : Number) : Float64
       if df1.class < Float
         Alea::Utils.sanity_check(df1, :df1, :f)
       end
@@ -72,12 +78,18 @@ module Alea
     # * `Alea::NaNError` if any of the arguments is `NaN`.
     # * `Alea::InfinityError` if any of the arguments is `Infinity`.
     # * `Alea::UndefinedError` if `df` is negative or zero.
+    def fs32(df1, df2)
+      __fs32 df1, df2
+    end
+
+    # Deprecated: use `Random#fs32`
+    @[Deprecated]
     def f32(df1, df2)
-      __f32 df1, df2
+      __fs32 df1, df2
     end
 
     # Run-time argument sanitizer for `#f32`.
-    private def __f32(df1 : Number, df2 : Number) : Float32
+    private def __fs32(df1 : Number, df2 : Number) : Float32
       if df1.class < Float
         Alea::Utils.sanity_check(df1, :df1, :f32)
       end

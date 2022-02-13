@@ -6,7 +6,7 @@ describe Alea do
       describe "#f32" do
         arg_test("accepts any sized Int/UInt/Float as argument(s)",
           caller: SpecRng,
-          method: :f32,
+          method: :fs32,
           params: {df1: 1.0, df2: 1.0},
           return_type: Float32,
           types: [Int8, Int16, Int32, Int64, Int128,
@@ -17,14 +17,14 @@ describe Alea do
 
         sanity_test(
           caller: SpecRng,
-          method: :f32,
+          method: :fs32,
           params: {df1: 1.0, df2: 1.0},
           params_to_check: [:df1, :df2],
         )
 
         param_test(
           caller: SpecRng,
-          method: :f32,
+          method: :fs32,
           params: {df1: 1.0, df2: 1.0},
           params_to_check: [:df1, :df2],
           check_negatives: true,
