@@ -30,7 +30,7 @@ module Alea
       # **@parameters**:
       # * `seed`: initial seed as input for generating the state of `prng`.
       def self.new(seed : Int)
-        new S32.new!(seed), S64.new!(seed)
+        new seed, seed
       end
 
       # Initializes the PRNG with initial seeds readed from system resources.
