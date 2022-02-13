@@ -1,8 +1,3 @@
-require "./alea/rand/rgen/*"
-require "./alea/rand/*"
-require "./alea/prob/*"
-require "./alea/*"
-
 # `Alea` is a library for generating pseudo-random samples from most known probability distributions,
 # written in pure Crystal.
 #
@@ -11,3 +6,9 @@ require "./alea/*"
 module Alea
   VERSION = "0.3.0"
 end
+
+require "./alea/exceptions"
+require "./alea/init_engines"
+require "./alea/random"
+require "./alea/tables"
+require "./alea/cdf"

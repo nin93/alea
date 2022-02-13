@@ -19,7 +19,7 @@ class CustomEngine
 
   # A constructor which take both seeds as arguments is needed
   def initialize(@seed32 : UInt64, @seed64 : UInt64)
-    # It is recommended to use `Alea::Core::SplitMix64` and `Alea::Core::Mulberry32`
+    # It is recommended to use `Alea::InitEngines::SplitMix64` and `Alea::InitEngines::Mulberry32`
     # to initialize 64 and 32 state bits, respectively; use `self.init_state` to
     # obtain the generated state. If you want to use them as initializers,
     # remember that they actually return `StaticArray` of unsigned integers.
@@ -28,10 +28,10 @@ class CustomEngine
     # integers, it stores 64-bit unsigned integers internally.
     # 4 is the number of integers stored: this means that this state is
     # loaded with 256 bits.
-    @state32 = Alea::Core::SplitMix64(4).init_state @seed32
+    @state32 = Alea::InitEngines::SplitMix64(4).init_state @seed32
 
     # Same applies to @state64
-    @state64 = Alea::Core::SplitMix64(4).init_state @seed64
+    @state64 = Alea::InitEngines::SplitMix64(4).init_state @seed64
   end
 
   # Implement the engine that generates 32-bit unisigned integers
