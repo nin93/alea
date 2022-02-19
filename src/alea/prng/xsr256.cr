@@ -1,5 +1,3 @@
-require "random/isaac"
-
 require "./prng"
 
 module Alea

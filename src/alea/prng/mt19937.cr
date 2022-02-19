@@ -1,4 +1,4 @@
-require "../../init_engines"
+require "../init_engines"
 require "./prng"
 
 module Alea

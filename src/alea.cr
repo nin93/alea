@@ -9,6 +9,7 @@ end
 
 require "./alea/exceptions"
 require "./alea/init_engines"
+require "./alea/prng"
 require "./alea/random"
 require "./alea/tables"
 require "./alea/cdf"

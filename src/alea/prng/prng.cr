@@ -1,3 +1,5 @@
+require "random/isaac"
+
 module Alea
   # `Alea::PRNG` is the module all PRNGs include in order to work with `Alea::Random`.
   #

@@ -1,4 +1,5 @@
 require "../utils"
+require "../prng"
 
 module Alea
   # `Alea::Random` provides the interface for pseudo-random generations and distribution sampling.
@@ -99,5 +100,4 @@ module Alea
   end
 end
 
-require "./prng"
 require "./pdf"
