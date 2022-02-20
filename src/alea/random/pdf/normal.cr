@@ -108,16 +108,16 @@ module Alea
     private def __next_normal32 : Float32
       while true
         r = @prng.next_u32
-        rabs = Int32.new(r >> 9)
+        rabs = Int32.new(r.unsafe_shr 9)
         idx = r & 0xff
-        x = ((r >> 8) & 0x1 == 1 ? -rabs : rabs) * Normal::W32[idx]
+        x = (r.unsafe_shr(8) & 0x1 == 1 ? -rabs : rabs) * Normal::W32[idx]
         # this returns 99.3% of the time on 1st try
         rabs < Normal::K32[idx] && return x
         if idx == 0
           while true
             xx = -Normal::RINV32 * Math.log(1.0f32 - @prng.next_f32)
             yy = -Math.log(1.0f32 - @prng.next_f32)
-            (yy + yy > xx * xx) && return (rabs >> 8) & 0x1 == 1 ? -Normal::R32 - xx : Normal::R32 + xx
+            (yy + yy > xx * xx) && return rabs.unsafe_shr(8) & 0x1 == 1 ? -Normal::R32 - xx : Normal::R32 + xx
           end
         else
           # return from the triangular area
@@ -166,8 +166,8 @@ module Alea
     # Unwrapped version of `#normal`.
     private def __next_normal64 : Float64
       while true
-        r = @prng.next_u64 >> 12
-        rabs = Int64.new(r >> 1)
+        r = @prng.next_u64.unsafe_shr 12
+        rabs = Int64.new(r.unsafe_shr 1)
         idx = rabs & 0xff
         x = (r & 0x1 == 1 ? -rabs : rabs) * Normal::W64[idx]
         # this returns 99.3% of the time on 1st try
@@ -176,7 +176,7 @@ module Alea
           while true
             xx = -Normal::RINV64 * Math.log(@prng.next_f64)
             yy = -Math.log(@prng.next_f64)
-            (yy + yy > xx * xx) && return (rabs >> 8) & 0x1 == 1 ? -Normal::R64 - xx : Normal::R64 + xx
+            (yy + yy > xx * xx) && return rabs.unsafe_shr(8) & 0x1 == 1 ? -Normal::R64 - xx : Normal::R64 + xx
           end
         else
           # return from the triangular area

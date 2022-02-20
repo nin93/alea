@@ -75,10 +75,10 @@ module Alea
       @pos32 += 1
 
       # Tempering
-      rnd ^= rnd.unsafe_shr(11)
+      rnd ^= rnd.unsafe_shr 11
       rnd ^= rnd.unsafe_shl(7) & TEMPERING_B
       rnd ^= rnd.unsafe_shl(15) & TEMPERING_C
-      rnd ^ rnd.unsafe_shr(18)
+      rnd ^ rnd.unsafe_shr 18
     end
 
     # Generate a uniform-distributed random `UInt64`.
@@ -98,10 +98,10 @@ module Alea
 
       # Tempering
       {% for i in ["0".id, "1".id] %}
-        rnd{{i}} ^= rnd{{i}}.unsafe_shr(11)
+        rnd{{i}} ^= rnd{{i}}.unsafe_shr 11
         rnd{{i}} ^= rnd{{i}}.unsafe_shl(7) & TEMPERING_B
         rnd{{i}} ^= rnd{{i}}.unsafe_shl(15) & TEMPERING_C
-        rnd{{i}} ^= rnd{{i}}.unsafe_shr(18)
+        rnd{{i}} ^= rnd{{i}}.unsafe_shr 18
       {% end %}
 
       (0u64 | rnd0).unsafe_shl(32) | rnd1

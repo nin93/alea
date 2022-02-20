@@ -124,7 +124,7 @@ module Alea
 
     @[AlwaysInline]
     protected def xsr32_next_state
-      tmp = @state32[1].unsafe_shl(9)
+      tmp = @state32[1].unsafe_shl 9
       @state32[2] ^= @state32[0]
       @state32[3] ^= @state32[1]
       @state32[1] ^= @state32[2]
@@ -138,7 +138,7 @@ module Alea
       tmp0 = @state64[0]
       tmp1 = @state64[1]
       tmp1 ^= tmp0
-      @state64[0] = rotate(tmp0, 49, size: 64) ^ tmp1 ^ tmp1.unsafe_shl(21)
+      @state64[0] = rotate(tmp0, 49, size: 64) ^ tmp1 ^ tmp1.unsafe_shl 21
       @state64[1] = rotate(tmp1, 28, size: 64)
     end
 

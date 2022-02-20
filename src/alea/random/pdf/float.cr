@@ -50,7 +50,7 @@ module Alea
     # Unwrapped version for `#float`.
     private def __next_float64(max : Float64) : Float64
       # Float64, excluding mantissa, has 2^53 values
-      max_prec = 1u64.unsafe_shl(53)
+      max_prec = 1u64.unsafe_shl 53
       __next_uint64(max_prec) / max_prec.to_f64 * max
     end
 
@@ -203,7 +203,7 @@ module Alea
     # Unwrapped version for `#float32`.
     private def __next_float32(max : Float32) : Float32
       # Float32, excluding mantissa, has 2^24 values
-      max_prec = 1u32.unsafe_shl(24)
+      max_prec = 1u32.unsafe_shl 24
       __next_uint32(max_prec) / max_prec.to_f32 * max
     end
 

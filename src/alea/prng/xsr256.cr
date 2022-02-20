@@ -61,7 +61,7 @@ module Alea
         # Unpack `UInt64` into two `UInt32`
         tmp = rotate(@state32[0] &+ @state32[3], 23, size: 64) &+ @state32[0]
         # Store value for next call
-        @pending = 0u32 | tmp.unsafe_shr(32)
+        @pending = 0u32 | tmp.unsafe_shr 32
         rnd = 0u32 | tmp
       end
       rnd
@@ -152,7 +152,7 @@ module Alea
 
     @[AlwaysInline]
     protected def xsr32_next_state
-      tmp = @state32[1].unsafe_shl(17)
+      tmp = @state32[1].unsafe_shl 17
       @state32[2] ^= @state32[0]
       @state32[3] ^= @state32[1]
       @state32[1] ^= @state32[2]
@@ -163,7 +163,7 @@ module Alea
 
     @[AlwaysInline]
     protected def xsr64_next_state
-      tmp = @state64[1].unsafe_shl(17)
+      tmp = @state64[1].unsafe_shl 17
       @state64[2] ^= @state64[0]
       @state64[3] ^= @state64[1]
       @state64[1] ^= @state64[2]

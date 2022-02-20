@@ -24,9 +24,9 @@ module Alea::InitEngines
     def self.init_state(seed : UInt64)
       StaticArray(UInt64, N).new do
         tmp = (seed &+= 0x9e3779b97f4a7c15)
-        tmp = (tmp ^ (tmp >> 30)) &* 0xbf58476d1ce4e5b9
-        tmp = (tmp ^ (tmp >> 27)) &* 0x94d049bb133111eb
-        tmp ^ (tmp >> 31)
+        tmp = (tmp ^ tmp.unsafe_shr 30) &* 0xbf58476d1ce4e5b9
+        tmp = (tmp ^ tmp.unsafe_shr 27) &* 0x94d049bb133111eb
+        tmp ^ tmp.unsafe_shr 31
       end
     end
   end

@@ -54,7 +54,7 @@ module Alea
     # Unwrapped version of `exp`.
     private def __next_exp64 : Float64
       while true
-        r = @prng.next_u64 >> 12
+        r = @prng.next_u64.unsafe_shr 12
         idx = r & 0xff
         x = r * Exponential::W64[idx]
         # this returns 98.9% of the time on 1st try
@@ -114,9 +114,9 @@ module Alea
     # Unwrapped version of `exp32`.
     private def __next_exp32 : Float32
       while true
-        r = @prng.next_u32 >> 1
+        r = @prng.next_u32.unsafe_shr 1
         idx = r & 0xff
-        r >>= 8
+        r = r.unsafe_shr 8
         x = r * Exponential::W32[idx]
         # this returns 98.9% of the time on 1st try
         r < Exponential::K32[idx] && return x

@@ -17,7 +17,7 @@ module Alea::InitEngines
       seed &= 0xffffffffu32
       StaticArray(UInt32, N).new do |i|
         tmp = seed
-        seed = (1812433253u32 &* (seed ^ (seed >> 30)) &+ i &+ 1)
+        seed = (1812433253u32 &* (seed ^ seed.unsafe_shr 30) &+ i &+ 1)
         seed &= 0xffffffffu32
         tmp
       end
