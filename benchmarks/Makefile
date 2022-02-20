@@ -7,7 +7,7 @@ BINS := $(SRCS:%.cr=%)
 all: $(BINS)
 
 % : %.cr
-	crystal build $(FLGS) $<
+	crystal build $(FLGS) $< -o $@.bin
 
 clean:
 	rm -rvf $(BINS)

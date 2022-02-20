@@ -3,6 +3,7 @@
 /.shards/
 *.dwarf
 /.editorconfig
+/benchmarks/*.bin
 /src/alea/lib/*.o
 tags
 
