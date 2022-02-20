@@ -69,14 +69,14 @@ module Alea
     @[AlwaysInline]
     def next_f32 : Float32
       # 5.9604645e-8 is ldexp(1.0, -24.0).
-      (next_u32 >> 8) * 5.9604645e-08f32
+      next_u32.unsafe_shr(8) * 5.9604645e-08f32
     end
 
     # Generate a uniform-distributed random `Float64` in `[0, 1)`.
     @[AlwaysInline]
     def next_f64 : Float64
       # 1.1102230246251565e-16 is ldexp(1.0, -53.0).
-      (next_u64 >> 11) * 1.1102230246251565e-16f64
+      next_u64.unsafe_shr(11) * 1.1102230246251565e-16f64
     end
   end
 end

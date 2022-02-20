@@ -75,10 +75,10 @@ module Alea
       @pos32 += 1
 
       # Tempering
-      rnd ^= (rnd >> 11)
-      rnd ^= (rnd << 7) & TEMPERING_B
-      rnd ^= (rnd << 15) & TEMPERING_C
-      rnd ^ (rnd >> 18)
+      rnd ^= rnd.unsafe_shr(11)
+      rnd ^= rnd.unsafe_shl(7) & TEMPERING_B
+      rnd ^= rnd.unsafe_shl(15) & TEMPERING_C
+      rnd ^ rnd.unsafe_shr(18)
     end
 
     # Generate a uniform-distributed random `UInt64`.
@@ -98,13 +98,13 @@ module Alea
 
       # Tempering
       {% for i in ["0".id, "1".id] %}
-        rnd{{i}} ^= (rnd{{i}} >> 11)
-        rnd{{i}} ^= (rnd{{i}} << 7) & TEMPERING_B
-        rnd{{i}} ^= (rnd{{i}} << 15) & TEMPERING_C
-        rnd{{i}} ^= (rnd{{i}} >> 18)
+        rnd{{i}} ^= rnd{{i}}.unsafe_shr(11)
+        rnd{{i}} ^= rnd{{i}}.unsafe_shl(7) & TEMPERING_B
+        rnd{{i}} ^= rnd{{i}}.unsafe_shl(15) & TEMPERING_C
+        rnd{{i}} ^= rnd{{i}}.unsafe_shr(18)
       {% end %}
 
-      ((0u64 | rnd0) << 32) | rnd1
+      (0u64 | rnd0).unsafe_shl(32) | rnd1
     end
 
     {% for s in ["32".id, "64".id] %}
@@ -114,18 +114,18 @@ module Alea
         step.times do |i|
           tmp = (@state{{s}}[i] & UPPER_MASK) | (@state{{s}}[i + 1] & LOWER_MASK)
           sig = (-Int{{s}}.new!(tmp & 1) & MATRIX_A)
-          @state{{s}}[i] = @state{{s}}[i + STATE_LEN_M] ^ (tmp >> 1) ^ sig
+          @state{{s}}[i] = @state{{s}}[i + STATE_LEN_M] ^ tmp.unsafe_shr(1) ^ sig
         end
 
         (step...STATE_LEN_N-1).each do |i|
           tmp = (@state{{s}}[i] & UPPER_MASK) | (@state{{s}}[i + 1] & LOWER_MASK)
           sig = (-Int{{s}}.new!(tmp & 1) & MATRIX_A)
-          @state{{s}}[i] = @state{{s}}[i + (STATE_LEN_M - STATE_LEN_N)] ^ (tmp >> 1) ^ sig
+          @state{{s}}[i] = @state{{s}}[i + (STATE_LEN_M - STATE_LEN_N)] ^ tmp.unsafe_shr(1) ^ sig
         end
 
         tmp = (@state{{s}}[STATE_LEN_N - 1] & UPPER_MASK) | (@state{{s}}[0] & LOWER_MASK)
         sig = (-Int{{s}}.new!(tmp & 1) & MATRIX_A)
-        @state{{s}}[STATE_LEN_N - 1] = @state{{s}}[STATE_LEN_M - 1] ^ (tmp >> 1) ^ sig
+        @state{{s}}[STATE_LEN_N - 1] = @state{{s}}[STATE_LEN_M - 1] ^ tmp.unsafe_shr(1) ^ sig
 
         @pos{{s}} = 0
       end

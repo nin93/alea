@@ -119,12 +119,12 @@ module Alea
 
     @[AlwaysInline]
     protected def rotate(x, k, size)
-      (x << k) | (x >> (size - k))
+      x.unsafe_shl(k) | x.unsafe_shr(size - k)
     end
 
     @[AlwaysInline]
     protected def xsr32_next_state
-      tmp = @state32[1] << 9
+      tmp = @state32[1].unsafe_shl(9)
       @state32[2] ^= @state32[0]
       @state32[3] ^= @state32[1]
       @state32[1] ^= @state32[2]
@@ -138,7 +138,7 @@ module Alea
       tmp0 = @state64[0]
       tmp1 = @state64[1]
       tmp1 ^= tmp0
-      @state64[0] = rotate(tmp0, 49, size: 64) ^ tmp1 ^ (tmp1 << 21)
+      @state64[0] = rotate(tmp0, 49, size: 64) ^ tmp1 ^ tmp1.unsafe_shl(21)
       @state64[1] = rotate(tmp1, 28, size: 64)
     end
 
@@ -146,7 +146,7 @@ module Alea
       tmp = StaticArray(UInt32, STATE_STORAGE_32).new 0_u32
       STATE_STORAGE_32.times do |i|
         32.times do |j|
-          if const[i] & (1_u32 << j) != 0
+          if const[i] & 1_u32.unsafe_shl(j) != 0
             STATE_STORAGE_32.times { |k| tmp[k] ^= @state32[k] }
           end
           xsr32_next_state
@@ -159,7 +159,7 @@ module Alea
       tmp = StaticArray(UInt64, STATE_STORAGE_64).new 0_u64
       STATE_STORAGE_64.times do |i|
         64.times do |j|
-          if const[i] & (1_u64 << j) != 0
+          if const[i] & 1_u64.unsafe_shl(j) != 0
             STATE_STORAGE_64.times { |k| tmp[k] ^= @state64[k] }
           end
           xsr64_next_state
